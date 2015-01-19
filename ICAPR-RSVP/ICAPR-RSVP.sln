@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICAPR-RSVP", "ICAPR-RSVP\ICAPR-RSVP.csproj", "{E46A24ED-6B6B-45A8-8981-B937F9CD9D06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICAPR-RSVP.Broker", "ICAPR-RSVP.Broker\ICAPR-RSVP.Broker.csproj", "{FCC2A784-508B-42F5-8205-CA97855EAB07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICAPR-RSVP.Core", "ICAPR-RSVP.Core\ICAPR-RSVP.Core.csproj", "{2D8A6FB2-B942-48A7-9511-1158461B7F0A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E46A24ED-6B6B-45A8-8981-B937F9CD9D06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E46A24ED-6B6B-45A8-8981-B937F9CD9D06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E46A24ED-6B6B-45A8-8981-B937F9CD9D06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E46A24ED-6B6B-45A8-8981-B937F9CD9D06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCC2A784-508B-42F5-8205-CA97855EAB07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCC2A784-508B-42F5-8205-CA97855EAB07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCC2A784-508B-42F5-8205-CA97855EAB07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCC2A784-508B-42F5-8205-CA97855EAB07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D8A6FB2-B942-48A7-9511-1158461B7F0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D8A6FB2-B942-48A7-9511-1158461B7F0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D8A6FB2-B942-48A7-9511-1158461B7F0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D8A6FB2-B942-48A7-9511-1158461B7F0A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
