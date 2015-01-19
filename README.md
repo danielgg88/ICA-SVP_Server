@@ -11,7 +11,7 @@ ICAPR-RSVP is a real-time ICA measuring tool that analyses pupillary activity sa
 
 Technology
 ---------
-TheEyeTribeSDK-0.9.41 (https://theeyetribe.com/)
-C#
+C#, TheEyeTribeSDK-0.9.41 (https://theeyetribe.com/)
+
 
 [IT University of Copenhagen](www.itu.dk/en)
