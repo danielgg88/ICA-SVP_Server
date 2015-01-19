@@ -3,6 +3,7 @@
 
 */*/bin
 */*/obj
+*/libs/*.pdb
 
 # User-specific files
 *.suo
