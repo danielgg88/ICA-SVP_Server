@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICAPR-RSVP.Broker", "ICAPR-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICAPR-RSVP.Core", "ICAPR-RSVP.Core\ICAPR-RSVP.Core.csproj", "{2D8A6FB2-B942-48A7-9511-1158461B7F0A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICAPR-RSVP.Misc", "ICAPR-RSVP.Misc\ICAPR-RSVP.Misc.csproj", "{2BCF60DD-D05C-4F07-B372-E1E2B5477CFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{2D8A6FB2-B942-48A7-9511-1158461B7F0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D8A6FB2-B942-48A7-9511-1158461B7F0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D8A6FB2-B942-48A7-9511-1158461B7F0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BCF60DD-D05C-4F07-B372-E1E2B5477CFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BCF60DD-D05C-4F07-B372-E1E2B5477CFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BCF60DD-D05C-4F07-B372-E1E2B5477CFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BCF60DD-D05C-4F07-B372-E1E2B5477CFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

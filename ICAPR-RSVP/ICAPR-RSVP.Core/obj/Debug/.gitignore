@@ -2,3 +2,5 @@
 *.Core.csproj.FileListAbsolute.txt
 *.Core.csprojResolveAssemblyReference.cache
 *.Core.dll
+*.cs
+*.cache

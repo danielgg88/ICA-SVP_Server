@@ -2,3 +2,5 @@
 *.Broker.csproj.FileListAbsolute.txt
 *.Broker.csprojResolveAssemblyReference.cache
 *.Broker.dll
+*.cache
+*.cs
