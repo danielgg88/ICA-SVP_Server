@@ -1,6 +1,1 @@
-*.pdb
-*.Broker.dll
-*.Core.dll
-*.exe
-*.exe.config
-*.vshost.exe.manifest
+*
