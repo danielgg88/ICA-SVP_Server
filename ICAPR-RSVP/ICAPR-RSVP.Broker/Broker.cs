@@ -69,17 +69,6 @@ namespace ICAPR_RSVP.Broker
             StopPorts(this._listOutputPort);
         }
 
-        public Item getItem(int id)
-        {
-            //Get item from 
-            foreach (Port port in this._listOutputPort)
-            {   
-                if(port.ID == id)
-                    return port.GetItem();
-            }
-            return null;
-        }
-
         #endregion Private methods
 
         #region Private methods

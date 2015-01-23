@@ -1,14 +1,14 @@
-﻿using TETCSharpClient;
+﻿using System;
+using TETCSharpClient;
 using TETCSharpClient.Data;
 
 using ICAPR_RSVP.Misc;
 
 namespace ICAPR_RSVP.Broker
 {
-    public class PortInputEyeTribe : Port, IConnectionStateListener, IGazeListener
+    public class PortBlockingInputEyeTribe : PortBlocking, IConnectionStateListener, IGazeListener
     {
         #region Properties
-
         public override bool IsRunning
         {
             get { return GazeManager.Instance.IsActivated; }
@@ -21,9 +21,7 @@ namespace ICAPR_RSVP.Broker
 
         #region Public methods
 
-        public PortInputEyeTribe() : base(){
-               //Do nothing
-        }
+        public PortBlockingInputEyeTribe() : base() { /*Do nothing*/ }
 
         public void OnConnectionStateChanged(bool IsActivated)
         {
@@ -37,13 +35,15 @@ namespace ICAPR_RSVP.Broker
             //Update receieved from EyeDroid. If system calibrated, store data.
             if (this.IsCalibrated)
             {
-                //Get pupils size from EyeDroid
-                Eyes eyes = new Eyes();
-                eyes.Timestamp = gazeData.TimeStamp;
-                eyes.PupilSizeLeft = gazeData.LeftEye.PupilSize;
-                eyes.PupilSizeRight = gazeData.RightEye.PupilSize;
+                //Get left eye data
+                Misc.Eye leftEye = new Misc.Eye();
+                leftEye.PupilSize = Math.Round(gazeData.LeftEye.PupilSize, 2); ;
+                //Get right eye data
+                Misc.Eye rightEye = new Misc.Eye();
+                rightEye.PupilSize = Math.Round(gazeData.RightEye.PupilSize, 2);
                 //Create a new item and push into the port queue
-                Bundle<Eyes> bundle = new Bundle<Eyes>(ItemTypes.EyesData, eyes);
+                Eyes eyes = new Eyes(gazeData.TimeStamp, leftEye, rightEye);
+                Bundle<Eyes> bundle = new Bundle<Eyes>(ItemTypes.Eyes, eyes);
                 PushItem(bundle);
             }
         }

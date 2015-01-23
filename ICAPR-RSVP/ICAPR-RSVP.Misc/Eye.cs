@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace ICAPR_RSVP.Misc
 {
-        public enum ItemTypes
-        {
-            Eyes,
-            Word,
-            WordAndEyes
-        }
+    public class Eye
+    {
+        public double PupilSize{ get; set; }
+    }
 }

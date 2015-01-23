@@ -1,6 +1,6 @@
 ﻿namespace ICAPR_RSVP.Broker
 {
-    public class PortOutputMergedData : Port
+    public class PortBlockingOutputCore : PortBlocking
     {
         private bool _isRunning;
 
@@ -12,7 +12,7 @@
         #endregion
 
         #region Public methods
-        public PortOutputMergedData() : base()
+        public PortBlockingOutputCore() : base()
         {
                //Do nothing
         }

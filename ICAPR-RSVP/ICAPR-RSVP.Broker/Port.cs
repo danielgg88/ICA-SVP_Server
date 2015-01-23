@@ -1,11 +1,9 @@
 ﻿using ICAPR_RSVP.Misc;
-using System.Collections.Concurrent;
 
 namespace ICAPR_RSVP.Broker
 {
     public abstract class Port
     {
-        private BlockingCollection<Item> _itemQueue;
         private static int _count = 0;
         private int _id;
        
@@ -20,35 +18,30 @@ namespace ICAPR_RSVP.Broker
         {
             get { return _id; }
         }
-        public abstract bool IsRunning { get; }
         #endregion
 
-        #region Queue methods
-        public Item GetItem(){
-            return _itemQueue.Take();
-        }
-
-        public void PushItem(Item item)
-        {
-            if (item != null)
-                _itemQueue.Add(item);
-        }
+        #region Abstract
+        public abstract Item GetItem();             //Implemented by the port type (bloking/non-blocking)
+        public abstract void PushItem(Item item);   //Implemented by the port type (bloking/non-blocking)
+        protected abstract void OnStartPort();      //Implemented by the port type (bloking/non-blocking)
+        protected abstract void OnStopPort();       //Implemented by the port type (bloking/non-blocking)
+        public abstract bool IsRunning { get; }     //Implemented by the port spcific implementation
+        protected abstract void OnStart();          //Implemented by the port spcific implementation
+        protected abstract void OnStop();           //Implemented by the port spcific implementation
         #endregion
 
         #region Port behavior
         public void Start()
         {
-            _itemQueue = new BlockingCollection<Item>();
+            OnStartPort();
             OnStart();
         }
 
         public void Stop()
         {
             OnStop();
-            _itemQueue = null;
+            OnStartPort();
         }
-        protected abstract void OnStart();
-        protected abstract void OnStop();
         #endregion
     }
 }

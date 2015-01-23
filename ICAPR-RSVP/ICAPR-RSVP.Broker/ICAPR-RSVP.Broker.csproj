@@ -51,9 +51,12 @@
   <ItemGroup>
     <Compile Include="Broker.cs" />
     <Compile Include="BrokerEyeTribeSpritz.cs" />
-    <Compile Include="PortInputEyeTribe.cs" />
+    <Compile Include="PortBlocking.cs" />
+    <Compile Include="PortBlockingInputEyeTribe.cs" />
     <Compile Include="Port.cs" />
-    <Compile Include="PortOutputMergedData.cs" />
+    <Compile Include="PortNonBlocking.cs" />
+    <Compile Include="PortBlockingOutputCore.cs" />
+    <Compile Include="PortNonBlockingInputSpritz.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

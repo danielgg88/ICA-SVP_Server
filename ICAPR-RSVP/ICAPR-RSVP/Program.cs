@@ -1,33 +1,31 @@
 ﻿using System;
 
 using ICAPR_RSVP.Misc;
+using ICAPR_RSVP.Core;
 
 namespace ICAPR_RSVP
 {
     class Program
     {
-
         static void Main(string[] args)
         {
+            //Create inputs
+            Broker.Port inputPortEyeTribe = new Broker.PortBlockingInputEyeTribe();
+            Broker.Port inputPortSpritz = new Broker.PortNonBlockingInputSpritz();
+            //Create Outputs
+            Broker.Port outputPort = new Broker.PortBlockingOutputCore();
+            //Create Broker
             Broker.Broker broker = new Broker.BrokerEyeTribeSpritz();
-            Broker.Port input = new Broker.PortInputEyeTribe();
-            broker.AddInput(input);
-            Broker.Port output = new Broker.PortOutputMergedData();
-            broker.AddOutput(output);
+            broker.AddInput(inputPortEyeTribe);
+            broker.AddInput(inputPortSpritz);
+            broker.AddOutput(outputPort);
             broker.Start();
-
-            Item item;
-            for (int i = 0; i < 50; i++)
-            {
-                item = broker.getItem(output.ID);
-                if (item.Type == ItemTypes.EyesData)
-                {
-                    Eyes eyes = (Eyes)item.Value;
-                    Console.WriteLine("Timestamp:" + eyes.Timestamp + 
-                        " Left" + eyes.PupilSizeLeft + " Right" + eyes.PupilSizeRight);
-                }
-            }
-
+            //Create core
+            Core.Core core = new Core.Core(outputPort);
+            core.Test();
+            //Stop application
+            Console.WriteLine("Press a key to close");
+            Console.Read();
             broker.Stop();
         }
     }

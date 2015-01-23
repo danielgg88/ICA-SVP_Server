@@ -44,6 +44,16 @@
     <Compile Include="Core.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ICAPR-RSVP.Broker\ICAPR-RSVP.Broker.csproj">
+      <Project>{fcc2a784-508b-42f5-8205-ca97855eab07}</Project>
+      <Name>ICAPR-RSVP.Broker</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ICAPR-RSVP.Misc\ICAPR-RSVP.Misc.csproj">
+      <Project>{2bcf60dd-d05c-4f07-b372-e1e2b5477cfc}</Project>
+      <Name>ICAPR-RSVP.Misc</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
