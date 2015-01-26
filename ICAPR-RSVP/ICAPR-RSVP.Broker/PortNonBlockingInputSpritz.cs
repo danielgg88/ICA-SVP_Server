@@ -11,19 +11,33 @@ namespace ICAPR_RSVP.Broker
     {
         private bool _isRunning;
 
+        private Network _network;
+
+        public PortNonBlockingInputSpritz(String host, String path, int port)
+        {
+            _network = new Network(this, host, path, port);
+        }
+
+
         #region Properties
-        public override bool IsRunning { get { return _isRunning;  } }
+        public override bool IsRunning
+        {
+            get
+            {
+                return _network.IsConnected;
+            }
+        }
         #endregion
 
         #region Protected methods
         protected override void OnStart()
         {
-            this._isRunning = true;
+            _network.startNetwork();
         }
 
         protected override void OnStop()
         {
-            this._isRunning = false;
+            _network.stopNetwork();
         }
         #endregion
     }

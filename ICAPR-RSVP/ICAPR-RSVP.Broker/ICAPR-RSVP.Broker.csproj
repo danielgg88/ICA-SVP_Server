@@ -33,6 +33,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Fleck, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\Fleck.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\libs\Newtonsoft.Json.dll</HintPath>
@@ -51,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Broker.cs" />
     <Compile Include="BrokerEyeTribeSpritz.cs" />
+    <Compile Include="Network.cs" />
     <Compile Include="PortBlocking.cs" />
     <Compile Include="PortBlockingInputEyeTribe.cs" />
     <Compile Include="Port.cs" />

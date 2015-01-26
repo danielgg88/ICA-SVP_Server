@@ -13,7 +13,7 @@ namespace ICAPR_RSVP
         {
             //Create inputs
             Broker.Port inputPortEyeTribe = new Broker.PortBlockingInputEyeTribe();
-            Broker.Port inputPortSpritz = new Broker.PortNonBlockingInputSpritz();
+            Broker.Port inputPortSpritz = new Broker.PortNonBlockingInputSpritz("0.0.0.0" , "api" , 8181);
             //Create Outputs
             Broker.Port outputPort = new Broker.PortBlockingOutputCore();
 
