@@ -15,8 +15,6 @@ namespace ICAPR_RSVP.Broker
         public override bool IsRunning { get { return _isRunning;  } }
         #endregion
 
-        public PortNonBlockingInputSpritz() : base(){ /*Do nothing*/ }
-
         #region Protected methods
         protected override void OnStart()
         {

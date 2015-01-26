@@ -7,8 +7,6 @@ namespace ICAPR_RSVP.Broker
     {
         private BlockingCollection<Item> _itemQueueBlocking;   //For blocking mode
 
-        public PortBlocking() : base() { }
-
         #region Queue methods
         public override Item GetItem()
         {

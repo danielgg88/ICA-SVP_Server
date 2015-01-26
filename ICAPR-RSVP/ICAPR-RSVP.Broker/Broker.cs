@@ -68,18 +68,6 @@ namespace ICAPR_RSVP.Broker
             StopPorts(this._listInputPort);
             StopPorts(this._listOutputPort);
         }
-
-        public int GetInputIndexByID(int id)
-        {
-            //Get index in input list by providing port ID
-            for (int i = 0; i < _listInputPort.Count; i++)
-            {
-                if (_listInputPort[i].ID == id)
-                    return i;
-            }
-            return -1;
-        }
-
         #endregion Private methods
 
         #region Private methods
@@ -89,6 +77,7 @@ namespace ICAPR_RSVP.Broker
             //Add port to list
             if (port != null)
             {
+                port.Index = list.Count;
                 list.Add(port);
                 return true;
             }

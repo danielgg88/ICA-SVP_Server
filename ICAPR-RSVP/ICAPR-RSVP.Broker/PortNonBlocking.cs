@@ -7,8 +7,6 @@ namespace ICAPR_RSVP.Broker
     {
         private ConcurrentQueue<Item> _itemQueue; //Non-blocking mode
 
-        public PortNonBlocking() : base() { }
-
         #region Queue methods
         public override Item GetItem()
         {

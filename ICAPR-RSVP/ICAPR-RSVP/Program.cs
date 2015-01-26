@@ -2,6 +2,7 @@
 
 using ICAPR_RSVP.Misc;
 using ICAPR_RSVP.Core;
+using ICAPR_RSVP.Test.MockupImplementations;
 
 namespace ICAPR_RSVP
 {
@@ -10,21 +11,28 @@ namespace ICAPR_RSVP
         static void Main(string[] args)
         {
             //Create inputs
-            Broker.Port inputPortEyeTribe = new Broker.PortBlockingInputEyeTribe();
-            Broker.Port inputPortSpritz = new Broker.PortNonBlockingInputSpritz();
+            //Broker.Port inputPortEyeTribe = new Broker.PortBlockingInputEyeTribe();
+            //Broker.Port inputPortSpritz = new Broker.PortNonBlockingInputSpritz();
             //Create Outputs
-            Broker.Port outputPort = new Broker.PortBlockingOutputCore();
+            //Broker.Port outputPort = new Broker.PortBlockingOutputCore();
+
+            //TESTING
+            Broker.Port inputPortEyeTribe = new PortBlockingInputTest();
+            Broker.Port inputPortSpritz = new PortNonBlockingInputTest();
+            //Create Outputs
+            Broker.Port outputPort = new PortBlockingOutputTest();
+
             //Create Broker
-            Broker.Broker broker = new Broker.BrokerEyeTribeSpritz<String>(inputPortEyeTribe.ID, inputPortSpritz.ID);
+            Broker.Broker broker = new Broker.BrokerEyeTribeSpritz<String>();
             broker.AddInput(inputPortEyeTribe);
             broker.AddInput(inputPortSpritz);
             broker.AddOutput(outputPort);
             broker.Start();
             //Create core
             Core.Core core = new Core.Core(outputPort);
-            core.Test();
+            //core.TestBrokerDataMerging();
             //Stop application
-            Console.WriteLine("Press a key to close");
+            Console.WriteLine("Press any key to close..");
             Console.Read();
             broker.Stop();
         }

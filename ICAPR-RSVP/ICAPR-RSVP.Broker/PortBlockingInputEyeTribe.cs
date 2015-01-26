@@ -21,8 +21,6 @@ namespace ICAPR_RSVP.Broker
 
         #region Public methods
 
-        public PortBlockingInputEyeTribe() : base() { /*Do nothing*/ }
-
         public void OnConnectionStateChanged(bool IsActivated)
         {
             // The connection state listener detects when the connection to the EyeTribe server changes

@@ -4,20 +4,8 @@ namespace ICAPR_RSVP.Broker
 {
     public abstract class Port
     {
-        private static int _count = 0;
-        private int _id;
-       
-        public Port()
-        {
-            _id = _count;
-            _count++;
-        }
-
         #region Properties
-        public int ID
-        {
-            get { return _id; }
-        }
+        public int Index { get; set; }
         #endregion
 
         #region Abstract
@@ -40,7 +28,7 @@ namespace ICAPR_RSVP.Broker
         public void Stop()
         {
             OnStop();
-            OnStartPort();
+            OnStopPort();
         }
         #endregion
     }

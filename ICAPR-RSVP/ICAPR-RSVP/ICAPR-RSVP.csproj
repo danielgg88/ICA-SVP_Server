@@ -70,6 +70,10 @@
       <Project>{2bcf60dd-d05c-4f07-b372-e1e2b5477cfc}</Project>
       <Name>ICAPR-RSVP.Misc</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ICAPR-RSVP.Test\ICAPR-RSVP.Test.csproj">
+      <Project>{052888de-d869-4149-9f93-667b317fab4b}</Project>
+      <Name>ICAPR-RSVP.Test</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

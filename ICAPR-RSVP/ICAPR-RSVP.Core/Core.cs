@@ -18,18 +18,27 @@ namespace ICAPR_RSVP.Core
             this._inputPort = port;
         }
 
-        public void Test()
+        public void TestBrokerDataMerging()
         {
-            //Testing function
+            //Test input merging
             Item item;
+
             for (int i = 0; i < 50; i++)
             {
                 item = this._inputPort.GetItem();
-                if (item.Type == ItemTypes.Eyes)
+                if (item.Type == ItemTypes.WordAndEyes)
                 {
-                    Eyes eyes = (Eyes)item.Value;
-                    Console.WriteLine("Timestamp:" + eyes.Timestamp +
-                        " Left: " + eyes.LeftEye.PupilSize + " Right: " + eyes.RightEye.PupilSize);
+                    WordAndEyes<String> wordAndEyes = (WordAndEyes<String>)item.Value;
+                    Queue<Eyes> listEyes = wordAndEyes.Eyes;
+                    Word<String> word = wordAndEyes.Word;
+                    Console.WriteLine("------------------------------------");
+                    Console.WriteLine(word.Timestamp + " Word: " + word.Value + " Duration: " + word.Duration);
+
+                    foreach (Eyes eyes in listEyes)
+                    {
+                        Console.WriteLine(eyes.Timestamp + " EyeLeft:" + eyes.LeftEye.PupilSize +
+                            " EyeRight:" + eyes.RightEye.PupilSize);
+                    }
                 }
             }
         }

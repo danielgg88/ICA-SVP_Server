@@ -1,4 +1,5 @@
 using ICAPR_RSVP.Misc;
+using System;
 using System.Collections.Generic;
 
 namespace ICAPR_RSVP.Broker
@@ -6,23 +7,18 @@ namespace ICAPR_RSVP.Broker
     //<T> content message type
     public class BrokerEyeTribeSpritz<T> : Broker
     {
-        private int _indexEyeTribe = -1;        //EyeTribe index in input list
-        private int _indexSpritz = -1;          //Sprits index in input list
-
+        private int _indexEyeTribe = 0;         //EyeTribe index in input list
+        private int _indexSpritz = 1;           //Sprits index in input list
         private Queue<Eyes> _listCurrentEyes;   //Temporal list to store EyeData values
         private Eyes _currentEyesData;          //Most recently EyeData read
         private Word<T> _currentWord;           //Most recently Word read
         private bool _isExpectingNewWord;       //Broker is expecting a new word
 
-        public BrokerEyeTribeSpritz(int eyeTribeID, int spritzID)
+        public BrokerEyeTribeSpritz()
             : base()
         {
             this._listCurrentEyes = new Queue<Eyes>();
             this._isExpectingNewWord = true;
-
-            //Get index from ID
-            this._indexEyeTribe = base.GetInputIndexByID(eyeTribeID);
-            this._indexSpritz = base.GetInputIndexByID(spritzID);
         }
 
         protected override void Run()
@@ -34,16 +30,15 @@ namespace ICAPR_RSVP.Broker
             {
                 //No word has been receieved
                 if ((item = base._listInputPort[_indexSpritz].GetItem()) != null)
+                {
                     this._currentWord = (Word<T>)item.Value;
+                }
             }
             else
             {
-                //A word has been already receieved. If currentEyesData is null it has not been processed yet
-                if (this._currentEyesData == null)
-                {
-                    item = base._listInputPort[_indexEyeTribe].GetItem();
-                    this._currentEyesData = (Eyes)item.Value;
-                }
+                //A word has been already receieved.
+                item = base._listInputPort[_indexEyeTribe].GetItem();
+                this._currentEyesData = (Eyes)item.Value;
 
                 if (this._currentEyesData.Timestamp >= this._currentWord.Timestamp
                     && this._currentEyesData.Timestamp <= (this._currentWord.Timestamp + this._currentWord.Duration))
@@ -61,15 +56,9 @@ namespace ICAPR_RSVP.Broker
                     sendToOutput(_currentWord);
                     this._isExpectingNewWord = true;
                     this._currentWord = null;
+                    Console.WriteLine(_currentWord.Timestamp);
                 }
-
-                //If currentWord has just been sent, do not process EyeData. 
-                //Wait to check if current eyes data belong to next word.
-                if (this._isExpectingNewWord)
-                {
-                    this._listCurrentEyes.Enqueue(_currentEyesData);
-                    this._currentEyesData = null;
-                }
+                this._listCurrentEyes.Enqueue(_currentEyesData);
             }
         }
 
