@@ -12,7 +12,7 @@ namespace ICAPR_RSVP.Test.MockupImplementations
 {
     public class PortNonBlockingInputTest : PortNonBlocking
     {
-        public static readonly int COUNT = 100000;
+        public static readonly int COUNT = 1000000;
         private Thread _workerThread;
         private bool _isRunning;
 
