@@ -12,7 +12,7 @@ namespace ICAPR_RSVP.Test.MockupImplementations
 {
     public class PortNonBlockingInputTest : PortNonBlocking
     {
-        public static readonly int COUNT = 10000;
+        public static readonly int COUNT = 100000;
         private Thread _workerThread;
         private bool _isRunning;
 
@@ -49,8 +49,8 @@ namespace ICAPR_RSVP.Test.MockupImplementations
 
             for (int i = 0; i < COUNT; i++)
             {
-                timestamp += rnd.Next(1, 1000);
-                word = new Word<String>(timestamp, 5000, "test");
+                timestamp += rnd.Next(1000, 2000);
+                word = new Word<String>(timestamp, 1000, "test");
                 base.PushItem(new Bundle<Word<String>>(ItemTypes.Word, word));
             }
         }

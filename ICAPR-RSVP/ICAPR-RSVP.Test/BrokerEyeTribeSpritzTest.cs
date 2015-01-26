@@ -35,9 +35,9 @@ namespace ICAPR_RSVP.Test
         {
             //Test input merging
             Item item;
-            long wordTimestamp;
-            long wordDuration;
-            long oldTimestamp;
+            long wordTimestamp = 0;
+            long wordDuration = 0;
+            long oldTimestamp = 0;
 
             for (int i = 0; i < PortNonBlockingInputTest.COUNT; i++)
             {
@@ -48,24 +48,30 @@ namespace ICAPR_RSVP.Test
                     Queue<Eyes> listEyes = wordAndEyes.Eyes;
                     Word<String> word = wordAndEyes.Word;
 
-                    wordTimestamp = word.Timestamp;
-                    wordDuration = word.Duration;
-                    oldTimestamp = word.Timestamp;
-
-                    //Check word timestamps
-                    Assert.IsTrue(wordTimestamp >= oldTimestamp, "Word timestamps not ordered");
+                    if (word != null)
+                    {
+                        wordTimestamp = word.Timestamp;
+                        wordDuration = word.Duration;
+                        Assert.IsTrue(wordTimestamp >= oldTimestamp, "Word timestamps not ordered");
+                        oldTimestamp = word.Timestamp;
+                    }
 
                     foreach (Eyes eyes in listEyes)
                     {
-                        //Assert ordered timestamps
-                        Assert.IsTrue(eyes.Timestamp >= wordTimestamp 
-                            && eyes.Timestamp <= wordTimestamp + wordDuration, "Eyes timestamp out of word timing");
-                        //Check eye timestamps ordered
-                        Assert.IsTrue(eyes.Timestamp >= oldTimestamp, "Eye timestamps not ordered");
-
+                        if (word != null)
+                        {
+                            //Assert ordered timestamps
+                            Assert.IsTrue(
+                                eyes.Timestamp >= oldTimestamp
+                                && eyes.Timestamp < (wordTimestamp + wordDuration), "Eyes timestamp out of word timing");
+                        }
+                        else
+                        {
+                            Assert.IsTrue(eyes.Timestamp >= oldTimestamp, "Eyes timestamp not in increasing order");
+                        }
+                        
                         oldTimestamp = eyes.Timestamp;
                     }
-                    oldTimestamp = wordTimestamp;
                 }
             }
         }

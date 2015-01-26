@@ -77,7 +77,6 @@ namespace ICAPR_RSVP.Broker
             //Add port to list
             if (port != null)
             {
-                port.Index = list.Count;
                 list.Add(port);
                 return true;
             }
