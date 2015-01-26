@@ -8,10 +8,10 @@ namespace ICAPR_RSVP.Misc
 {
     public class WordAndEyes<T>
     {
-        public Word<T> Word { get; private set; }
-        public Eyes Eyes { get; private set; }
+        public Word<T> Word { get; private set; }   //Null when idle time
+        public Queue<Eyes> Eyes { get; private set; }
 
-        public WordAndEyes(Eyes eyes, Word<T> word)
+        public WordAndEyes(Queue<Eyes> eyes, Word<T> word)
         {
             Word = word;
             Eyes = eyes;

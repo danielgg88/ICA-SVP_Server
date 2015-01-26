@@ -1,40 +1,87 @@
-﻿using ICAPR_RSVP.Misc;
+using ICAPR_RSVP.Misc;
+using System.Collections.Generic;
 
 namespace ICAPR_RSVP.Broker
 {
-   public  class BrokerEyeTribeSpritz : Broker
+    //<T> content message type
+    public class BrokerEyeTribeSpritz<T> : Broker
     {
-        public BrokerEyeTribeSpritz() : base() { /*Do nothing*/ }
+        private int _indexEyeTribe = -1;        //EyeTribe index in input list
+        private int _indexSpritz = -1;          //Sprits index in input list
+
+        private Queue<Eyes> _listCurrentEyes;   //Temporal list to store EyeData values
+        private Eyes _currentEyesData;          //Most recently EyeData read
+        private Word<T> _currentWord;           //Most recently Word read
+        private bool _isExpectingNewWord;       //Broker is expecting a new word
+
+        public BrokerEyeTribeSpritz(int eyeTribeID, int spritzID)
+            : base()
+        {
+            this._listCurrentEyes = new Queue<Eyes>();
+            this._isExpectingNewWord = true;
+
+            //Get index from ID
+            this._indexEyeTribe = base.GetInputIndexByID(eyeTribeID);
+            this._indexSpritz = base.GetInputIndexByID(spritzID);
+        }
 
         protected override void Run()
         {
             //Merge input from Spritz and EyeTribe
-            Item item = null;
-            foreach (Port port in base._listInputPort)
-            {
-                item = port.GetItem();
+            Item item;
 
-                if (item != null)
+            if (this._currentWord == null)
+            {
+                //No word has been receieved
+                if ((item = base._listInputPort[_indexSpritz].GetItem()) != null)
+                    this._currentWord = (Word<T>)item.Value;
+            }
+            else
+            {
+                //A word has been already receieved. If currentEyesData is null it has not been processed yet
+                if (this._currentEyesData == null)
                 {
-                    switch (item.Type)
-                    {
-                        case ItemTypes.Word:
-                            //TODO
-                            break;
-                        case ItemTypes.Eyes:
-                            //TODO
-                            break;
-                        default:
-                            break;
-                    }
+                    item = base._listInputPort[_indexEyeTribe].GetItem();
+                    this._currentEyesData = (Eyes)item.Value;
                 }
 
-                //Add to output queues
-                foreach (Port output in base._listOutputPort)
+                if (this._currentEyesData.Timestamp >= this._currentWord.Timestamp
+                    && this._currentEyesData.Timestamp <= (this._currentWord.Timestamp + this._currentWord.Duration))
                 {
-                    output.PushItem(item);
+                    //Eyes data belongs to a word. If new word has just been received. Clean idle time data
+                    if (this._isExpectingNewWord)
+                    {
+                        sendToOutput(null);
+                        this._isExpectingNewWord = false;
+                    }
+                }
+                else if (this._currentEyesData.Timestamp > (this._currentWord.Timestamp + this._currentWord.Duration))
+                {
+                    //Current word has finished
+                    sendToOutput(_currentWord);
+                    this._isExpectingNewWord = true;
+                    this._currentWord = null;
+                }
+
+                //If currentWord has just been sent, do not process EyeData. 
+                //Wait to check if current eyes data belong to next word.
+                if (this._isExpectingNewWord)
+                {
+                    this._listCurrentEyes.Enqueue(_currentEyesData);
+                    this._currentEyesData = null;
                 }
             }
         }
-    }  
+
+        private void sendToOutput(Word<T> word)
+        {
+            //Create object to output
+            if (this._listCurrentEyes.Count > 0)
+            {
+                WordAndEyes<T> wordAndEyes = new WordAndEyes<T>(new Queue<Eyes>(this._listCurrentEyes), word);
+                this._listCurrentEyes.Clear();
+                base.sendToOutput(new Bundle<WordAndEyes<T>>(ItemTypes.WordAndEyes, wordAndEyes));
+            }
+        }
+    }
 }

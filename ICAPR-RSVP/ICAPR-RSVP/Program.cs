@@ -15,7 +15,7 @@ namespace ICAPR_RSVP
             //Create Outputs
             Broker.Port outputPort = new Broker.PortBlockingOutputCore();
             //Create Broker
-            Broker.Broker broker = new Broker.BrokerEyeTribeSpritz();
+            Broker.Broker broker = new Broker.BrokerEyeTribeSpritz<String>(inputPortEyeTribe.ID, inputPortSpritz.ID);
             broker.AddInput(inputPortEyeTribe);
             broker.AddInput(inputPortSpritz);
             broker.AddOutput(outputPort);
