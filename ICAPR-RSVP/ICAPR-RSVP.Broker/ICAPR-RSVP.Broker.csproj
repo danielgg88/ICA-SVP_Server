@@ -14,8 +14,8 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\libs\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -53,15 +53,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Broker.cs" />
-    <Compile Include="BrokerEyeTribeSpritz.cs" />
+    <Compile Include="Broker\Broker.cs" />
+    <Compile Include="Broker\BrokerEyeTribeSpritz.cs" />
     <Compile Include="Network.cs" />
-    <Compile Include="PortBlocking.cs" />
-    <Compile Include="PortBlockingInputEyeTribe.cs" />
-    <Compile Include="Port.cs" />
-    <Compile Include="PortNonBlocking.cs" />
-    <Compile Include="PortBlockingOutputCore.cs" />
-    <Compile Include="PortNonBlockingInputSpritz.cs" />
+    <Compile Include="Ports\PortBlocking.cs" />
+    <Compile Include="Ports\PortBlockingInputEyeTribe.cs" />
+    <Compile Include="Ports\Port.cs" />
+    <Compile Include="Ports\PortNonBlocking.cs" />
+    <Compile Include="Ports\PortBlockingOutputCore.cs" />
+    <Compile Include="Ports\PortNonBlockingInputSpritz.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
