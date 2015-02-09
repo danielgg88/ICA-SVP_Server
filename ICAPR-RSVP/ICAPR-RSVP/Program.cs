@@ -44,33 +44,11 @@ namespace ICAPR_RSVP
 
         public static void TestBrokerDataMerging(Broker.Port port)
         {
-            //Test input merging
-            Item item;
-
+            //Used for testing. Reads items from the broker output and prints them into a log file
+            Misc.Utils.FileWritter fw = new Misc.Utils.FileWritter("test");
             for (int i = 0; i < 50; i++)
-            {
-                item = port.GetItem();
-                if (item.Type == ItemTypes.WordAndEyes)
-                {
-                    WordAndEyes<String> wordAndEyes = (WordAndEyes<String>)item.Value;
-                    Queue<Eyes> listEyes = wordAndEyes.Eyes;
-                    Word<String> word = wordAndEyes.Word;
-
-                    Console.WriteLine("------------------------------------");
-
-                    if (word.Value != null)
-                        Console.WriteLine(word.Timestamp + " Word: " + word.Value + " Duration: " + word.Duration);
-                    else
-                        Console.WriteLine(word.Timestamp + " **Delay**" + word.Value + " Duration: " + word.Duration);
-
-                    foreach (Eyes eyes in listEyes)
-                    {
-                        Console.WriteLine(eyes.Timestamp + " EyeLeft:" + eyes.LeftEye.PupilSize +
-                            " EyeRight:" + eyes.RightEye.PupilSize);
-                    }
-                    Console.WriteLine("End: " + (word.Timestamp + word.Duration - 1));
-                }
-            }
+                fw.AddToFile(port.GetItem());
+            fw.WriteWordAndEyesToFile();
         }
     }
 }
