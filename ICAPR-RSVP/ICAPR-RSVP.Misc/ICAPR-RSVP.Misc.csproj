@@ -50,7 +50,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Items\Word.cs" />
     <Compile Include="Items\WordAndEyes.cs" />
-    <Compile Include="Utils\FileWritter.cs" />
+    <Compile Include="Utils\FileManager.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

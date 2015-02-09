@@ -17,7 +17,7 @@ namespace ICAPR_RSVP
             //Create Outputs
             Broker.Port outputPort = new Broker.PortBlockingOutputCore();
 
-            //************TESTING********************
+            //************TESTING**********************
             //Broker.Port inputPortEyeTribe = new PortBlockingInputTest();
             //Broker.Port inputPortSpritz = new PortNonBlockingInputTest();
             //Broker.Port outputPort = new PortBlockingOutputTest();
@@ -32,7 +32,7 @@ namespace ICAPR_RSVP
             //Create core
             Core.Core core = new Core.Core(outputPort);
 
-            //************TESTING********************
+            //************TESTING**********************
             //TestBrokerDataMerging(outputPort);
             //***************************************** 
             
@@ -45,10 +45,18 @@ namespace ICAPR_RSVP
         public static void TestBrokerDataMerging(Broker.Port port)
         {
             //Used for testing. Reads items from the broker output and prints them into a log file
-            Misc.Utils.FileWritter fw = new Misc.Utils.FileWritter("test");
+            Misc.Utils.FileManager<String> fw = new Misc.Utils.FileManager<String>("test");
             for (int i = 0; i < 50; i++)
                 fw.AddToFile(port.GetItem());
-            fw.WriteWordAndEyesToFile();
+
+            //Create CSV and JSON files
+            fw.WriteCsvFile();
+            String jsonfile = fw.WriteJsonFile();
+            
+            //Read JSON files
+            Console.WriteLine(fw.getJsonFile(""));
+            Console.WriteLine(fw.getJsonFileList());
+            fw.Clear();
         }
     }
 }

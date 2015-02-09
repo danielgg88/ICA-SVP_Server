@@ -9,7 +9,7 @@
     public class Bundle<T> : Item
     {
         public ItemTypes Type { get; set; }    
-        private T Value { get; set; }
+        public T Value { get; set; }
 
         public Bundle(ItemTypes type, T value)
         {
