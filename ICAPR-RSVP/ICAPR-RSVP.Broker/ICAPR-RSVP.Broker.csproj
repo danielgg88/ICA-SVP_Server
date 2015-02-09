@@ -53,8 +53,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Broker\Broker.cs" />
-    <Compile Include="Broker\BrokerEyeTribeSpritz.cs" />
+    <Compile Include="Brokers\Broker.cs" />
+    <Compile Include="Brokers\BrokerEyeTribeSpritz.cs" />
     <Compile Include="Network.cs" />
     <Compile Include="Ports\PortBlocking.cs" />
     <Compile Include="Ports\PortBlockingInputEyeTribe.cs" />

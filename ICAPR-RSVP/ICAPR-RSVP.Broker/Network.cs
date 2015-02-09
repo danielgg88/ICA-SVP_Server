@@ -7,13 +7,13 @@ namespace ICAPR_RSVP.Broker
 {
     public class Network
     {
-        private Port brokerPort;
-        private volatile bool _isConnected;
-        private int _port;
-        private String _host;
-        private String _path;
-        private String _fullServerUrl;
-        private WebSocketServer _serverSocket;
+        private Port brokerPort;               //Broker input port
+        private volatile bool _isConnected;    //Is server running?
+        private int _port;                     //Server port
+        private String _host;                  //Host address
+        private String _path;                  //URL path
+        private String _fullServerUrl;         //Full server URL 
+        private WebSocketServer _serverSocket; //Server web socket
 
         public Network(Port brokerPort, String host, String path, int port)
         {

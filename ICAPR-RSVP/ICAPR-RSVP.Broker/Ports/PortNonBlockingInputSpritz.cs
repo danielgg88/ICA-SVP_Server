@@ -4,10 +4,11 @@ namespace ICAPR_RSVP.Broker
 {
     public class PortNonBlockingInputSpritz: PortNonBlocking
     {
-        private Network _network;
+        private Network _network;//Network server for clients
 
         public PortNonBlockingInputSpritz(String host, String path, int port)
         {
+            //Create a network server
             _network = new Network(this, host, path, port);
         }
 
@@ -16,6 +17,7 @@ namespace ICAPR_RSVP.Broker
         {
             get
             {
+                //Is newtork server running?
                 return _network.IsConnected;
             }
         }
@@ -24,11 +26,13 @@ namespace ICAPR_RSVP.Broker
         #region Protected methods
         protected override void OnStart()
         {
+            //Start network server
             _network.startNetwork();
         }
 
         protected override void OnStop()
         {
+            //Stop network server
             _network.stopNetwork();
         }
         #endregion

@@ -48,28 +48,18 @@ namespace ICAPR_RSVP.Test
                     Queue<Eyes> listEyes = wordAndEyes.Eyes;
                     Word<String> word = wordAndEyes.Word;
 
-                    if (word != null)
-                    {
-                        wordTimestamp = word.Timestamp;
-                        wordDuration = word.Duration;
-                        Assert.IsTrue(wordTimestamp >= oldTimestamp, "Word timestamps not ordered");
-                        oldTimestamp = word.Timestamp;
-                    }
+                    wordTimestamp = word.Timestamp;
+                    wordDuration = word.Duration;
+                    Assert.IsTrue(wordTimestamp >= oldTimestamp, "Word timestamps not ordered");
+                    oldTimestamp = wordTimestamp;
 
                     foreach (Eyes eyes in listEyes)
                     {
-                        if (word != null)
-                        {
-                            //Assert ordered timestamps
-                            Assert.IsTrue(
-                                eyes.Timestamp >= oldTimestamp
-                                && eyes.Timestamp < (wordTimestamp + wordDuration), "Eyes timestamp out of word timing");
-                        }
-                        else
-                        {
-                            Assert.IsTrue(eyes.Timestamp >= oldTimestamp, "Eyes timestamp not in increasing order");
-                        }
-                        
+                        //Assert ordered timestamps
+                        Assert.IsTrue(eyes.Timestamp >= oldTimestamp,
+                            "Eyes timestamp not greater or equal than previous");
+                        Assert.IsTrue(eyes.Timestamp <= (oldTimestamp + wordDuration - 1), 
+                            "Eyes timestamp greater than word timing");
                         oldTimestamp = eyes.Timestamp;
                     }
                 }

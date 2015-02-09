@@ -33,7 +33,8 @@ namespace ICAPR_RSVP
             Core.Core core = new Core.Core(outputPort);
 
             //************TESTING********************
-            //core.TestBrokerDataMerging();
+            //TestBrokerDataMerging(outputPort);
+            //***************************************** 
             
             //Stop application
             Console.WriteLine("Press any key to close..");
@@ -41,7 +42,7 @@ namespace ICAPR_RSVP
             broker.Stop();
         }
 
-        public void TestBrokerDataMerging(Broker.Port port)
+        public static void TestBrokerDataMerging(Broker.Port port)
         {
             //Test input merging
             Item item;
@@ -54,18 +55,20 @@ namespace ICAPR_RSVP
                     WordAndEyes<String> wordAndEyes = (WordAndEyes<String>)item.Value;
                     Queue<Eyes> listEyes = wordAndEyes.Eyes;
                     Word<String> word = wordAndEyes.Word;
+
                     Console.WriteLine("------------------------------------");
 
-                    if (word != null)
+                    if (word.Value != null)
                         Console.WriteLine(word.Timestamp + " Word: " + word.Value + " Duration: " + word.Duration);
                     else
-                        Console.WriteLine("***Word: Idle***");
+                        Console.WriteLine(word.Timestamp + " **Delay**" + word.Value + " Duration: " + word.Duration);
 
                     foreach (Eyes eyes in listEyes)
                     {
                         Console.WriteLine(eyes.Timestamp + " EyeLeft:" + eyes.LeftEye.PupilSize +
                             " EyeRight:" + eyes.RightEye.PupilSize);
                     }
+                    Console.WriteLine("End: " + (word.Timestamp + word.Duration - 1));
                 }
             }
         }
