@@ -33,9 +33,9 @@ namespace ICAPR_RSVP.Broker
             switch (type)
             {
                 case TYPE_STREAM:
-                    Word<String> word = JsonConvert.DeserializeObject<Word<String>>(json["content"].ToString());
+                    DisplayItem<String> word = JsonConvert.DeserializeObject<DisplayItem<String>>(json["content"].ToString());
                     Console.WriteLine(word.Value + "  " + word.Timestamp + "  " + word.Duration);
-                    Bundle<Word<String>> bundle = new Bundle<Word<String>>(ItemTypes.Word, word);
+                    Bundle<DisplayItem<String>> bundle = new Bundle<DisplayItem<String>>(ItemTypes.Word, word);
                     CorePort.PushItem(bundle);
                     break;
                 case TYPE_TRIAL_CONFIG:

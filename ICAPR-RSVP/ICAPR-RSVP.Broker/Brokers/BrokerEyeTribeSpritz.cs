@@ -11,7 +11,7 @@ namespace ICAPR_RSVP.Broker
         private readonly int INDEX_SPRIYZ = 1;           //Sprits index in input list
         private Queue<Eyes> _listCurrentEyes;           //Temporal list to store EyeData values
         private Eyes _currentEyesData;          //Most recently EyeData read
-        private Word<T> _currentWord;           //Most recently Word read
+        private DisplayItem<T> _currentWord;           //Most recently Word read
         private bool _isExpectingNewWord;       //Broker is expecting a new word
         private long _delayStartTimestamp = 0;  //Delay start timestamp. Used for delays between displayer items.
 
@@ -32,7 +32,7 @@ namespace ICAPR_RSVP.Broker
                 //No word has been receieved. Get a new word!
                 if ((item = base._listInputPort[INDEX_SPRIYZ].GetItem()) != null)
                 {
-                    this._currentWord = (Word<T>)item.Value;
+                    this._currentWord = (DisplayItem<T>)item.Value;
                 }
             }
             else
@@ -75,11 +75,11 @@ namespace ICAPR_RSVP.Broker
             }
         }
 
-        private void sendToOutput(Word<T> word)
+        private void sendToOutput(DisplayItem<T> word)
         {
             //Create object to output
 
-            Word<T> tmpWord;
+            DisplayItem<T> tmpWord;
             
             if (this._listCurrentEyes.Count > 0)
             {
@@ -95,16 +95,16 @@ namespace ICAPR_RSVP.Broker
                         start_timestamp = this._delayStartTimestamp;
 
                     //Calculate delay duration and create delay (word value = null)
-                    tmpWord = new Word<T>(start_timestamp,
+                    tmpWord = new DisplayItem<T>(start_timestamp,
                             this._currentWord.Timestamp - start_timestamp, default(T));
                 }
                 else
                     tmpWord = word;
 
                 //Sent to output pipe the created item
-                WordAndEyes<T> wordAndEyes = new WordAndEyes<T>(new Queue<Eyes>(this._listCurrentEyes), tmpWord);
+                DisplayItemAndEyes<T> wordAndEyes = new DisplayItemAndEyes<T>(new Queue<Eyes>(this._listCurrentEyes), tmpWord);
                 this._listCurrentEyes.Clear();
-                base.sendToOutput(new Bundle<WordAndEyes<T>>(ItemTypes.WordAndEyes, wordAndEyes));
+                base.sendToOutput(new Bundle<DisplayItemAndEyes<T>>(ItemTypes.WordAndEyes, wordAndEyes));
             }
 
             //If not null (end of the word) set it to null and calculate new starting point for incoming delays

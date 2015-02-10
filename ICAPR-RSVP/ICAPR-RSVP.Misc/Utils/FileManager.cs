@@ -44,9 +44,9 @@ namespace ICAPR_RSVP.Misc.Utils
             {
                 if (item.Type == ItemTypes.WordAndEyes)
                 {
-                    WordAndEyes<String> wordAndEyes = (WordAndEyes<String>)item.Value;
+                    DisplayItemAndEyes<String> wordAndEyes = (DisplayItemAndEyes<String>)item.Value;
                     Queue<Eyes> listEyes = wordAndEyes.Eyes;
-                    Word<String> word = wordAndEyes.Word;
+                    DisplayItem<String> word = wordAndEyes.Word;
 
                     tmp = word.Timestamp + ", ";
 
@@ -67,12 +67,12 @@ namespace ICAPR_RSVP.Misc.Utils
         public String WriteJsonFile()
         {
             List<Item> cpyList = new List<Item>(_itemQueue);
-            List<WordAndEyes<T>> tmp = new List<WordAndEyes<T>>();
+            List<DisplayItemAndEyes<T>> tmp = new List<DisplayItemAndEyes<T>>();
             
             foreach (Item item in cpyList)
             {
                 if (item.Type == ItemTypes.WordAndEyes)
-                    tmp.Add((WordAndEyes<T>)item.Value);
+                    tmp.Add((DisplayItemAndEyes<T>)item.Value);
             }
             if (tmp.Count > 0)
             {

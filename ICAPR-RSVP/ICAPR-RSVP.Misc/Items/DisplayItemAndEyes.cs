@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace ICAPR_RSVP.Misc
 {
-    public class WordAndEyes<T>
+    public class DisplayItemAndEyes<T>
     {
-        public Word<T> Word { get; private set; }   //Null when idle time
+        public DisplayItem<T> Word { get; private set; }   //Null when idle time
         public Queue<Eyes> Eyes { get; private set; }
 
-        public WordAndEyes(Queue<Eyes> eyes, Word<T> word)
+        public DisplayItemAndEyes(Queue<Eyes> eyes, DisplayItem<T> word)
         {
             Word = word;
             Eyes = eyes;

@@ -7,13 +7,13 @@ using Newtonsoft.Json;
 
 namespace ICAPR_RSVP.Misc
 {
-    public class Word<T>
+    public class DisplayItem<T>
     {
         public long Timestamp { get; private set; }
         public long Duration { get; private set; }
         public T Value { get; private set; }
 
-        public Word(long timestamp, long duration, T value)
+        public DisplayItem(long timestamp, long duration, T value)
         {
             Timestamp = timestamp;
             Duration = duration;

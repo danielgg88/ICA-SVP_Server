@@ -44,9 +44,9 @@ namespace ICAPR_RSVP.Test
                 item = this.outputPort.GetItem();
                 if (item.Type == ItemTypes.WordAndEyes)
                 {
-                    WordAndEyes<String> wordAndEyes = (WordAndEyes<String>)item.Value;
+                    DisplayItemAndEyes<String> wordAndEyes = (DisplayItemAndEyes<String>)item.Value;
                     Queue<Eyes> listEyes = wordAndEyes.Eyes;
-                    Word<String> word = wordAndEyes.Word;
+                    DisplayItem<String> word = wordAndEyes.Word;
 
                     wordTimestamp = word.Timestamp;
                     wordDuration = word.Duration;

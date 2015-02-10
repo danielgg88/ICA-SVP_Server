@@ -45,13 +45,13 @@ namespace ICAPR_RSVP.Test.MockupImplementations
             //Main testing method
             Random rnd = new Random();
             int timestamp = 0;
-            Misc.Word<String> word;
+            Misc.DisplayItem<String> word;
 
             for (int i = 0; i < COUNT; i++)
             {
                 timestamp += rnd.Next(1000, 2000);
-                word = new Word<String>(timestamp, 1000, "test");
-                base.PushItem(new Bundle<Word<String>>(ItemTypes.Word, word));
+                word = new DisplayItem<String>(timestamp, 1000, "test");
+                base.PushItem(new Bundle<DisplayItem<String>>(ItemTypes.Word, word));
             }
         }
     }
