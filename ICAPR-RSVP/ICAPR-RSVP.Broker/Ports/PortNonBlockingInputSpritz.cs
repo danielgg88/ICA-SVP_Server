@@ -2,14 +2,14 @@
 
 namespace ICAPR_RSVP.Broker
 {
-    public class PortNonBlockingInputSpritz: PortNonBlocking
+    public class PortNonBlockingInputSpritz: PortNonBlocking 
     {
         private Network _network;//Network server for clients
 
-        public PortNonBlockingInputSpritz(String host, String path, int port)
+        public PortNonBlockingInputSpritz(Network network)
         {
             //Create a network server
-            _network = new Network(this, host, path, port);
+            _network = network;
         }
 
         #region Properties
@@ -36,5 +36,6 @@ namespace ICAPR_RSVP.Broker
             _network.stopNetwork();
         }
         #endregion
+
     }
 }

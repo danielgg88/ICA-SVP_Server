@@ -7,17 +7,18 @@ namespace ICAPR_RSVP.Broker
 {
     public class Network
     {
-        private Port brokerPort;               //Broker input port
         private volatile bool _isConnected;    //Is server running?
         private int _port;                     //Server port
         private String _host;                  //Host address
         private String _path;                  //URL path
         private String _fullServerUrl;         //Full server URL 
         private WebSocketServer _serverSocket; //Server web socket
+        private INetworkDispather _dispatcher;
+        private IWebSocketConnection _clientSocket;
 
-        public Network(Port brokerPort, String host, String path, int port)
+        public Network(INetworkDispather dispatcher, String host, String path, int port)
         {
-            this.brokerPort = brokerPort;
+            this._dispatcher = dispatcher;
             this._port = port;
             this._host = host;
             this._path = path;
@@ -67,6 +68,11 @@ namespace ICAPR_RSVP.Broker
             this._isConnected = false;
         }
 
+        public void sendMessage(String msg)
+        {
+            _clientSocket.Send(msg);
+        }
+
         private void setUpNetwork()
         {
             _serverSocket = new WebSocketServer(this._fullServerUrl);
@@ -75,6 +81,7 @@ namespace ICAPR_RSVP.Broker
             {
                 socket.OnOpen = () =>
                 {
+                    _clientSocket = socket;
                     Console.WriteLine("Client connected : " + socket.ConnectionInfo.ClientIpAddress);
                     this._isConnected = true;
                 };
@@ -85,15 +92,10 @@ namespace ICAPR_RSVP.Broker
                 };
                 socket.OnMessage = message =>
                 {
-                    Console.WriteLine("Client sent : " + message);
-                    //TODO remove the echo at some point
-                    socket.Send(message);
-                    Word<String> word = JsonConvert.DeserializeObject<Word<String>>(message);
-                    Console.WriteLine(word.Value + "  " + word.Timestamp + "  " + word.Duration);
-                    Bundle<Word<String>> bundle = new Bundle<Word<String>>(ItemTypes.Word, word);
-                    this.brokerPort.PushItem(bundle);
+                    _dispatcher.dispatchMessage(message);
                 };
             });
         }
     }
+
 }

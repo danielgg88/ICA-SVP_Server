@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Items\ExperimentConfig.cs" />
     <Compile Include="Items\Eye.cs" />
     <Compile Include="Items\Eyes.cs" />
     <Compile Include="Items\Item.cs" />

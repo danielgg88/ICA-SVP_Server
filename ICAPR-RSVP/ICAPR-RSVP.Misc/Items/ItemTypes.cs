@@ -10,6 +10,7 @@ namespace ICAPR_RSVP.Misc
         {
             Eyes,
             Word,
-            WordAndEyes
+            WordAndEyes,
+            Config
         }
 }

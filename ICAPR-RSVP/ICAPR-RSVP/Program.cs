@@ -12,13 +12,19 @@ namespace ICAPR_RSVP
         static void Main(string[] args)
         {
             //Create inputs
-            Broker.Port inputPortEyeTribe = new Broker.PortBlockingInputEyeTribe();
-            Broker.Port inputPortSpritz = new Broker.PortNonBlockingInputSpritz("0.0.0.0" , "api" , 8181);
+            //Broker.Port inputPortEyeTribe = new Broker.PortBlockingInputEyeTribe();
+            Broker.SpritzNetworkDispatcher dispatcher = new Broker.SpritzNetworkDispatcher();
+            Broker.Network network = new Broker.Network(dispatcher , "0.0.0.0" , "api/" , 8181);
+            Broker.Port inputPortSpritz = new Broker.PortNonBlockingInputSpritz(network);
+            dispatcher.CorePort = inputPortSpritz;
+            dispatcher.CoreNetwork = network;
+
+
             //Create Outputs
             Broker.Port outputPort = new Broker.PortBlockingOutputCore();
 
             //************TESTING**********************
-            //Broker.Port inputPortEyeTribe = new PortBlockingInputTest();
+            Broker.Port inputPortEyeTribe = new PortBlockingInputTest();
             //Broker.Port inputPortSpritz = new PortNonBlockingInputTest();
             //Broker.Port outputPort = new PortBlockingOutputTest();
             //*****************************************
@@ -33,7 +39,7 @@ namespace ICAPR_RSVP
             Core.Core core = new Core.Core(outputPort);
 
             //************TESTING**********************
-            //TestBrokerDataMerging(outputPort);
+            TestBrokerDataMerging(outputPort);
             //***************************************** 
             
             //Stop application
@@ -54,7 +60,7 @@ namespace ICAPR_RSVP
             String jsonfile = fw.WriteJsonFile();
             
             //Read JSON files
-            Console.WriteLine(fw.getJsonFile(""));
+            //Console.WriteLine(fw.getJsonFile(jsonfile));
             Console.WriteLine(fw.getJsonFileList());
             fw.Clear();
         }

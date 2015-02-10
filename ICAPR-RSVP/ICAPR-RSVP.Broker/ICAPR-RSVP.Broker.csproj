@@ -55,7 +55,9 @@
   <ItemGroup>
     <Compile Include="Brokers\Broker.cs" />
     <Compile Include="Brokers\BrokerEyeTribeSpritz.cs" />
+    <Compile Include="INetworkDispather.cs" />
     <Compile Include="Network.cs" />
+    <Compile Include="SpritzNetworkDispatcher.cs" />
     <Compile Include="Ports\PortBlocking.cs" />
     <Compile Include="Ports\PortBlockingInputEyeTribe.cs" />
     <Compile Include="Ports\Port.cs" />
