@@ -47,13 +47,15 @@ namespace ICAPR_RSVP.Broker
                     FileManager<String> fm = new FileManager<string>("");
                     String trials = fm.getJsonFileList();
                     String wrapper = "{\"type\":\"" + NetworkConstants.TYPE_TRIALS + "\" , \"trials\": " + trials + "}";
-                    Console.WriteLine(wrapper);
                     result = wrapper;
                     break;
 
                 case NetworkConstants.TYPE_SINGLE_TRIAL:
                     Console.WriteLine("Received request for a single trial");
-                    break;
+                    FileManager<String> fmm = new FileManager<string>("");
+                    String response = fmm.getJsonFile((String)json["content"]);
+                    String wrapperResponse = "{\"type\":\"" + NetworkConstants.TYPE_SINGLE_TRIAL + "\" , \"trial\": " + response + "}";
+                    return wrapperResponse;
 
                 default:
                     break;
