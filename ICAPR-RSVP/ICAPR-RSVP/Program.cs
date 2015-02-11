@@ -33,7 +33,7 @@ namespace ICAPR_RSVP
             broker.Start();
             
             //Create core
-            Core.Core core = new Core.Core(outputPort);
+//            Core.Filter core = new Core.Filter(outputPort);
 
             //************TESTING**********************
             //TestBrokerDataMerging(outputPort);
