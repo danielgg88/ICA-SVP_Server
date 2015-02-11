@@ -50,7 +50,7 @@ namespace ICAPR_RSVP.Test.MockupImplementations
             Misc.Eye eye = new Eye();
             eye.PupilSize = 5;
 
-            for (int i = 0; i < PortNonBlockingInputTest.COUNT * 2; i++)
+            for (int i = 0; i < PortNonBlockingInputTest.WORD_COUNT * PortNonBlockingInputTest.NUMBER_TRIALS * 10; i++)
             {
                 timestamp += rnd.Next(1, 1000);
                 eyes = new Eyes(timestamp, eye, eye);

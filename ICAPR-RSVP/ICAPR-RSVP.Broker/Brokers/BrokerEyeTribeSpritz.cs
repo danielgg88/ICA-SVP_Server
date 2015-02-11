@@ -7,20 +7,16 @@ namespace ICAPR_RSVP.Broker
     //<T> content message type
     public class BrokerEyeTribeSpritz<T> : Broker
     {
-        private readonly int INDEX_EYE_TRIBE = 0;         //EyeTribe index in input list
-        private readonly int INDEX_SPRIYZ = 1;           //Sprits index in input list
+        private readonly int INDEX_EYE_TRIBE = 0;       //EyeTribe index in input list
+        private readonly int INDEX_SPRIYZ = 1;          //Sprits index in input list
         private Queue<Eyes> _listCurrentEyes;           //Temporal list to store EyeData values
-        private Eyes _currentEyesData;          //Most recently EyeData read
-        private DisplayItem<T> _currentWord;           //Most recently Word read
+        private Eyes _currentEyesData;                  //Most recently EyeData read
+        private DisplayItem<T> _currentWord;            //Most recently Word read
         private bool _isExpectingNewWord;       //Broker is expecting a new word
         private long _delayStartTimestamp = 0;  //Delay start timestamp. Used for delays between displayer items.
 
         public BrokerEyeTribeSpritz()
-            : base()
-        {
-            this._listCurrentEyes = new Queue<Eyes>();
-            this._isExpectingNewWord = true;
-        }
+            : base(){/*...*/}
 
         protected override void Run()
         {
@@ -32,7 +28,10 @@ namespace ICAPR_RSVP.Broker
                 //No word has been receieved. Get a new word!
                 if ((item = base._listInputPort[INDEX_SPRIYZ].GetItem()) != null)
                 {
-                    this._currentWord = (DisplayItem<T>)item.Value;
+                    if (item.Type == ItemTypes.Config)
+                        sendConfigToOutput(item);
+                    else
+                        this._currentWord = (DisplayItem<T>)item.Value;
                 }
             }
             else
@@ -75,10 +74,21 @@ namespace ICAPR_RSVP.Broker
             }
         }
 
+        private void sendConfigToOutput(Item item)
+        {
+            //When new configuration is received, clean the broker
+            this._listCurrentEyes = new Queue<Eyes>();
+            this._currentEyesData = null;
+            this._currentWord = null;
+            this._isExpectingNewWord = true;
+            this._delayStartTimestamp = 0;
+            //Send configuraction to the core
+            base.sendToOutput(item);
+        }
+
         private void sendToOutput(DisplayItem<T> word)
         {
             //Create object to output
-
             DisplayItem<T> tmpWord;
             
             if (this._listCurrentEyes.Count > 0)
@@ -104,7 +114,7 @@ namespace ICAPR_RSVP.Broker
                 //Sent to output pipe the created item
                 DisplayItemAndEyes<T> wordAndEyes = new DisplayItemAndEyes<T>(new Queue<Eyes>(this._listCurrentEyes), tmpWord);
                 this._listCurrentEyes.Clear();
-                base.sendToOutput(new Bundle<DisplayItemAndEyes<T>>(ItemTypes.WordAndEyes, wordAndEyes));
+                base.sendToOutput(new Bundle<DisplayItemAndEyes<T>>(ItemTypes.DisplayItemAndEyes, wordAndEyes));
             }
 
             //If not null (end of the word) set it to null and calculate new starting point for incoming delays

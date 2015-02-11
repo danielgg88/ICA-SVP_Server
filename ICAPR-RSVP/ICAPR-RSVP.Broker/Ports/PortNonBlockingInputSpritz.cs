@@ -27,7 +27,7 @@ namespace ICAPR_RSVP.Broker
         protected override void OnStart()
         {
             //Start network server
-            _network.startNetwork();
+            _network.startNetwork(this);
         }
 
         protected override void OnStop()

@@ -16,7 +16,7 @@ namespace ICAPR_RSVP.Misc
         public String UserName { get; set; }
 
         [JsonProperty(PropertyName = "user_age")]
-        public String UserAde { get; set; }
+        public String UserAge { get; set; }
 
         [JsonProperty(PropertyName = "file_name")]
         public String FileName { get; set; }

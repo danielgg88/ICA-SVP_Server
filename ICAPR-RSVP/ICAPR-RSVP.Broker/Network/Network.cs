@@ -13,10 +13,10 @@ namespace ICAPR_RSVP.Broker
         private String _path;                  //URL path
         private String _fullServerUrl;         //Full server URL 
         private WebSocketServer _serverSocket; //Server web socket
-        private INetworkDispather _dispatcher;
+        private NetworkDispatcher _dispatcher;
         private IWebSocketConnection _clientSocket;
 
-        public Network(INetworkDispather dispatcher, String host, String path, int port)
+        public Network(NetworkDispatcher dispatcher, String host, String path, int port)
         {
             this._dispatcher = dispatcher;
             this._port = port;
@@ -51,9 +51,10 @@ namespace ICAPR_RSVP.Broker
             }
         }
 
-        public void startNetwork()
+        public void startNetwork(Port dispatcherOutputPort)
         {
             stopNetwork();
+            _dispatcher.init(dispatcherOutputPort);
             System.Console.WriteLine("Starting network...");
             setUpNetwork();
         }
@@ -92,7 +93,9 @@ namespace ICAPR_RSVP.Broker
                 };
                 socket.OnMessage = message =>
                 {
-                    _dispatcher.dispatchMessage(message);
+                    String result = _dispatcher.dispatchMessage(message);
+                    if(result != null)
+                        sendMessage(result);
                 };
             });
         }

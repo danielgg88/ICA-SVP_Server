@@ -9,8 +9,9 @@ namespace ICAPR_RSVP.Misc
         public enum ItemTypes
         {
             Eyes,
-            Word,
-            WordAndEyes,
-            Config
+            DisplayItem,
+            DisplayItemAndEyes,
+            Config,
+            Trial
         }
 }

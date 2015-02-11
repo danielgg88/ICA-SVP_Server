@@ -39,14 +39,14 @@ namespace ICAPR_RSVP.Test
             long wordDuration = 0;
             long oldTimestamp = 0;
 
-            for (int i = 0; i < PortNonBlockingInputTest.COUNT; i++)
+            for (int i = 0; i < PortNonBlockingInputTest.WORD_COUNT * PortNonBlockingInputTest.NUMBER_TRIALS; i++)
             {
                 item = this.outputPort.GetItem();
-                if (item.Type == ItemTypes.WordAndEyes)
+                if (item.Type == ItemTypes.DisplayItemAndEyes)
                 {
                     DisplayItemAndEyes<String> wordAndEyes = (DisplayItemAndEyes<String>)item.Value;
                     Queue<Eyes> listEyes = wordAndEyes.Eyes;
-                    DisplayItem<String> word = wordAndEyes.Word;
+                    DisplayItem<String> word = wordAndEyes.DisplayItem;
 
                     wordTimestamp = word.Timestamp;
                     wordDuration = word.Duration;
@@ -62,6 +62,10 @@ namespace ICAPR_RSVP.Test
                             "Eyes timestamp greater than word timing");
                         oldTimestamp = eyes.Timestamp;
                     }
+                }
+                else{
+                    Assert.IsTrue(item.Type == ItemTypes.Config);
+                    i--;
                 }
             }
         }

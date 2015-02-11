@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ICAPR_RSVP.Broker
 {
-    public interface INetworkDispather
+    public interface NetworkDispatcher
     {
-        void dispatchMessage(String msg);
+        void init(Port outputPort);
+        String dispatchMessage(String msg);
     }
 }

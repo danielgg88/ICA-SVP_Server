@@ -13,13 +13,9 @@ namespace ICAPR_RSVP
         {
             //Create inputs
             //Broker.Port inputPortEyeTribe = new Broker.PortBlockingInputEyeTribe();
-            Broker.SpritzNetworkDispatcher dispatcher = new Broker.SpritzNetworkDispatcher();
+            Broker.NetworkDispatcherRsvpClient dispatcher = new Broker.NetworkDispatcherRsvpClient();
             Broker.Network network = new Broker.Network(dispatcher , "0.0.0.0" , "api/" , 8181);
             Broker.Port inputPortSpritz = new Broker.PortNonBlockingInputSpritz(network);
-            dispatcher.CorePort = inputPortSpritz;
-            dispatcher.CoreNetwork = network;
-
-
             //Create Outputs
             Broker.Port outputPort = new Broker.PortBlockingOutputCore();
 
@@ -35,11 +31,12 @@ namespace ICAPR_RSVP
             broker.AddInput(inputPortSpritz);
             broker.AddOutput(outputPort);
             broker.Start();
+            
             //Create core
             Core.Core core = new Core.Core(outputPort);
 
             //************TESTING**********************
-            TestBrokerDataMerging(outputPort);
+            //TestBrokerDataMerging(outputPort);
             //***************************************** 
             
             //Stop application
@@ -52,17 +49,16 @@ namespace ICAPR_RSVP
         {
             //Used for testing. Reads items from the broker output and prints them into a log file
             Misc.Utils.FileManager<String> fw = new Misc.Utils.FileManager<String>("test");
-            for (int i = 0; i < 50; i++)
-                fw.AddToFile(port.GetItem());
-
+            int i=0;
+            while(i < PortNonBlockingInputTest.WORD_COUNT  *  PortNonBlockingInputTest.NUMBER_TRIALS)
+            {
+                Item item = port.GetItem();
+                fw.AddToFile(item);
+                if (item.Type == ItemTypes.DisplayItemAndEyes)
+                    i++;
+            }
             //Create CSV and JSON files
-            fw.WriteCsvFile();
-            String jsonfile = fw.WriteJsonFile();
-            
-            //Read JSON files
-            //Console.WriteLine(fw.getJsonFile(jsonfile));
-            Console.WriteLine(fw.getJsonFileList());
-            fw.Clear();
+            fw.SaveLog();
         }
     }
 }
