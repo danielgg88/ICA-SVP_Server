@@ -30,8 +30,17 @@ namespace ICAPR_RSVP
             broker.AddInput(inputPortEyeTribe);
             broker.AddInput(inputPortSpritz);
             broker.AddOutput(outputPort);
-            broker.Start();
+            Console.WriteLine(broker.Start());
             
+
+            Misc.Utils.FileManager<String> fm = new Misc.Utils.FileManager<string>("test");
+            Broker.Port dataCleanerOutputPort = new Broker.PortBlockingOutputCore();
+            dataCleanerOutputPort.Start();
+            //Create data cleaning executor
+            Executor dataCleaner = new DataCleaningExecutor(fm, outputPort, dataCleanerOutputPort);
+            dataCleaner.startInBackground();
+
+
             //Create core
 //            Core.Filter core = new Core.Filter(outputPort);
 
@@ -42,7 +51,13 @@ namespace ICAPR_RSVP
             //Stop application
             Console.WriteLine("Press any key to close..");
             Console.Read();
+            dataCleaner.stop();
+            Console.WriteLine("Calling borker stop");
+
             broker.Stop();
+
+
+            Console.Read();
         }
 
         public static void TestBrokerDataMerging(Broker.Port port)

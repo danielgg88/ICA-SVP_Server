@@ -10,21 +10,21 @@ using ICAPR_RSVP.Misc;
 /* Usuful only if we have filters that have same input as output*/
 namespace ICAPR_RSVP.Core
 {
-    class FilterComposite<I> : Filter<I,I>
+    class FilterComposite<I> : Filter
     {
 
-        private LinkedList<Filter<I, I>> Filters { get; set; }
+        private LinkedList<Filter> Filters { get; set; }
 
         public FilterComposite(String name): base(name)
         {
-            Filters = new LinkedList<Filter<I, I>>();
+            Filters = new LinkedList<Filter>();
         }
 
-        public override Bundle<I> execute(Bundle<I> input)
+        public override Item execute(Item input)
         {
-            Bundle<I> output = null;
+            Item output = null;
 
-            foreach( Filter<I,I> filter in Filters ){
+            foreach( Filter filter in Filters ){
                 output = filter.execute(input);
                 input = output;
             }
@@ -32,13 +32,13 @@ namespace ICAPR_RSVP.Core
             return output;
         }
 
-        public void addFilter(Filter<I, I> filter)
+        public void addFilter(Filter filter)
         {
             Filters.AddLast(filter);
 
         }
 
-        public void removeFilter(Filter<I, I> filter)
+        public void removeFilter(Filter filter)
         {
             Filters.Remove(filter);
         }

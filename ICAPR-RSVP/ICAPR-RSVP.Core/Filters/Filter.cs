@@ -6,7 +6,7 @@ using ICAPR_RSVP.Misc;
 
 namespace ICAPR_RSVP.Core
 {
-    public abstract class Filter<I,O>
+    public abstract class Filter
     {
         public String Name { get; set; }
 
@@ -20,7 +20,7 @@ namespace ICAPR_RSVP.Core
             Name = name;
         }
 
-        public abstract Bundle<O> execute(Bundle<I> input);
+        public abstract Item execute(Item input);
         
     }
 }

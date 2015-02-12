@@ -41,8 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Filter.cs" />
-    <Compile Include="FilterComposite.cs" />
+    <Compile Include="DataCleaningExecutor.cs" />
+    <Compile Include="Executor.cs" />
+    <Compile Include="Filters\Filter.cs" />
+    <Compile Include="Filters\FilterComposite.cs" />
+    <Compile Include="Filters\LoggerFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

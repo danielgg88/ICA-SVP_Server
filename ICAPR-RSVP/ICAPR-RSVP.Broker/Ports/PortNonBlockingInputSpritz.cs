@@ -18,7 +18,9 @@ namespace ICAPR_RSVP.Broker
             get
             {
                 //Is newtork server running?
-                return _network.IsConnected;
+                //return _network.IsConnected;
+                //TODO the network connection is asynchronous this will always return false;
+                return true;
             }
         }
         #endregion
