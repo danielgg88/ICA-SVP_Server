@@ -23,7 +23,7 @@ namespace ICAPR_RSVP.Test
             //Create Outputs
             outputPort = new PortBlockingOutputTest();
             //Create Broker
-            broker = new Broker.BrokerEyeTribeSpritz<String>();
+            broker = new Broker.BrokerEyeTribeRSVP<String>();
             broker.AddInput(inputPortEyeTribe);
             broker.AddInput(inputPortSpritz);
             broker.AddOutput(outputPort);

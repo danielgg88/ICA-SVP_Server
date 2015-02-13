@@ -1,5 +1,0 @@
-C:\Users\centos\code\git\Thesis\ICAPR-RSVP\ICAPR-RSVP.Core\obj\Debug\ICAPR-RSVP.DataCleaning.csprojResolveAssemblyReference.cache
-C:\Users\centos\code\git\Thesis\ICAPR-RSVP\ICAPR-RSVP.Core\obj\Debug\ICAPR-RSVP.Core.dll
-C:\Users\centos\code\git\Thesis\ICAPR-RSVP\ICAPR-RSVP.Core\obj\Debug\ICAPR-RSVP.Core.pdb
-C:\Users\centos\code\git\Thesis\ICAPR-RSVP\libs\ICAPR-RSVP.Core.dll
-C:\Users\centos\code\git\Thesis\ICAPR-RSVP\libs\ICAPR-RSVP.Core.pdb

@@ -53,6 +53,7 @@
     <Compile Include="Items\DisplayItem.cs" />
     <Compile Include="Items\DisplayItemAndEyes.cs" />
     <Compile Include="Utils\FileManager.cs" />
+    <Compile Include="Utils\Utils.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

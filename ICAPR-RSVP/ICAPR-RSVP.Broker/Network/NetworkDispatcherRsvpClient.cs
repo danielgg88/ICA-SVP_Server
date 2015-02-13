@@ -29,9 +29,9 @@ namespace ICAPR_RSVP.Broker
             switch (type)
             {
                 case NetworkConstants.TYPE_STREAM:
-                    DisplayItem<String> word = JsonConvert.DeserializeObject<DisplayItem<String>>(json["content"].ToString());
-                    Console.WriteLine(word.Value + "  " + word.Timestamp + "  " + word.Duration);
-                    Bundle<DisplayItem<String>> bundle = new Bundle<DisplayItem<String>>(ItemTypes.DisplayItem, word);
+                    DisplayItem<String> displayItem = JsonConvert.DeserializeObject<DisplayItem<String>>(json["content"].ToString());
+                    Console.WriteLine(displayItem.Value + "  " + displayItem.Timestamp + "  " + displayItem.Duration);
+                    Bundle<DisplayItem<String>> bundle = new Bundle<DisplayItem<String>>(ItemTypes.DisplayItem, displayItem);
                     _outputPort.PushItem(bundle);
                     break;
 

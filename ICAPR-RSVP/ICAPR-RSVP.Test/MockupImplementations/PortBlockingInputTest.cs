@@ -7,7 +7,7 @@ using System.Threading;
 
 using ICAPR_RSVP.Broker;
 using ICAPR_RSVP.Misc;
-
+using ICAPR_RSVP.Misc.Utils;
 
 namespace ICAPR_RSVP.Test.MockupImplementations
 {
@@ -36,8 +36,8 @@ namespace ICAPR_RSVP.Test.MockupImplementations
 
         protected override void OnStop()
         {
-            _workerThread.Join();
             this._isRunning = false;
+            _workerThread.Join();
         }
         #endregion
 
@@ -45,16 +45,21 @@ namespace ICAPR_RSVP.Test.MockupImplementations
         {
             //Main testing method
             Random rnd = new Random();
-            int timestamp = 0;
+            long timestamp = 0;
             Misc.Eyes eyes;
-            Misc.Eye eye = new Eye();
-            eye.PupilSize = 5;
 
-            for (int i = 0; i < PortNonBlockingInputTest.WORD_COUNT * PortNonBlockingInputTest.NUMBER_TRIALS * 10; i++)
+            while(this._isRunning)
             {
-                timestamp += rnd.Next(1, 1000);
-                eyes = new Eyes(timestamp, eye, eye);
+                Misc.Eye eyeRight = new Eye();
+                eyeRight.PupilSize = rnd.Next(5, 10);
+
+                Misc.Eye eyeLeft = new Eye();
+                eyeLeft.PupilSize = rnd.Next(5, 10);
+
+                timestamp = Utils.MilliTimeStamp();
+                eyes = new Eyes(timestamp, eyeRight, eyeLeft);
                 base.PushItem(new Bundle<Eyes>(ItemTypes.Eyes, eyes));
+                Thread.Sleep(100);
             }
         }
     }

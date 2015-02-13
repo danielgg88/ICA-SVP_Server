@@ -5,17 +5,17 @@ using System.Collections.Generic;
 namespace ICAPR_RSVP.Broker
 {
     //<T> content message type
-    public class BrokerEyeTribeSpritz<T> : Broker
+    public class BrokerEyeTribeRSVP<T> : Broker
     {
         private readonly int INDEX_EYE_TRIBE = 0;       //EyeTribe index in input list
-        private readonly int INDEX_SPRIYZ = 1;          //Sprits index in input list
+        private readonly int INPUT_CLIENT = 1;          //Sprits index in input list
         private Queue<Eyes> _listCurrentEyes;           //Temporal list to store EyeData values
         private Eyes _currentEyesData;                  //Most recently EyeData read
         private DisplayItem<T> _currentWord;            //Most recently Word read
         private bool _isExpectingNewWord;       //Broker is expecting a new word
         private long _delayStartTimestamp = 0;  //Delay start timestamp. Used for delays between displayer items.
 
-        public BrokerEyeTribeSpritz()
+        public BrokerEyeTribeRSVP()
             : base(){/*...*/}
 
         protected override void Run()
@@ -26,7 +26,7 @@ namespace ICAPR_RSVP.Broker
             if (this._currentWord == null)
             {
                 //No word has been receieved. Get a new word!
-                if ((item = base._listInputPort[INDEX_SPRIYZ].GetItem()) != null)
+                if ((item = base._listInputPort[INPUT_CLIENT].GetItem()) != null)
                 {
                     if (item.Type == ItemTypes.Config)
                         sendConfigToOutput(item);

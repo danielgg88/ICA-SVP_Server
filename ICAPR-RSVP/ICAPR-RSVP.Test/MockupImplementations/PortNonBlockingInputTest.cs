@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using ICAPR_RSVP.Broker;
 using ICAPR_RSVP.Misc;
+using ICAPR_RSVP.Misc.Utils;
 using System.Threading;
 
 namespace ICAPR_RSVP.Test.MockupImplementations
@@ -13,7 +14,7 @@ namespace ICAPR_RSVP.Test.MockupImplementations
     public class PortNonBlockingInputTest : PortNonBlocking
     {
         public static readonly int NUMBER_TRIALS = 1;
-        public static readonly int WORD_COUNT = 20;
+        public static readonly int WORD_COUNT = 1000;
         private Thread _workerThread;
         private bool _isRunning;
 
@@ -36,8 +37,8 @@ namespace ICAPR_RSVP.Test.MockupImplementations
 
         protected override void OnStop()
         {
-            _workerThread.Join();
             this._isRunning = false;
+            _workerThread.Join();
         }
         #endregion
 
@@ -46,9 +47,9 @@ namespace ICAPR_RSVP.Test.MockupImplementations
             //Main testing method
             Random rnd = new Random();
             Misc.DisplayItem<String> word;
-            int timestamp = 0;
-
-            for (int j = 0; j < NUMBER_TRIALS; j++)
+            long timestamp = 0;
+            int j = 0;
+            while( _isRunning && j++ < NUMBER_TRIALS)
             {
                 ExperimentConfig trial = new ExperimentConfig();
                 trial.Trial = "trial " + j;
@@ -65,11 +66,13 @@ namespace ICAPR_RSVP.Test.MockupImplementations
 
                 base.PushItem(new Bundle<ExperimentConfig>(ItemTypes.Config, trial));
 
-                for (int i = 0; i < WORD_COUNT; i++)
+                int i = 0;
+                while( _isRunning && i++ < WORD_COUNT)
                 {
-                    timestamp += rnd.Next(1000, 2000);
-                    word = new DisplayItem<String>(timestamp, 1000, "test");
+                    timestamp = Utils.MilliTimeStamp();
+                    word = new DisplayItem<String>(timestamp, 10, "test");
                     base.PushItem(new Bundle<DisplayItem<String>>(ItemTypes.DisplayItem, word));
+                    Thread.Sleep(10);
                 }
             }
         }
