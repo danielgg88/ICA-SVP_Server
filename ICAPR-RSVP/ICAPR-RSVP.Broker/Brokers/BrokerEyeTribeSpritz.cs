@@ -16,7 +16,7 @@ namespace ICAPR_RSVP.Broker
         private long _delayStartTimestamp = 0;  //Delay start timestamp. Used for delays between displayer items.
 
         public BrokerEyeTribeRSVP()
-            : base(){/*...*/}
+            : base() {/*...*/}
 
         protected override void Run()
         {
@@ -29,7 +29,7 @@ namespace ICAPR_RSVP.Broker
                 if ((item = base._listInputPort[INPUT_CLIENT].GetItem()) != null)
                 {
                     if (item.Type == ItemTypes.Config)
-                        sendConfigToOutput(item);
+                        sendNewTrialConfigToOutput(item);
                     else
                         this._currentWord = (DisplayItem<T>)item.Value;
                 }
@@ -44,7 +44,7 @@ namespace ICAPR_RSVP.Broker
                     item = base._listInputPort[INDEX_EYE_TRIBE].GetItem();
                     this._currentEyesData = (Eyes)item.Value;
                 }
-                
+
                 //Eyes data belongs to the current word.
                 if (this._currentEyesData.Timestamp >= this._currentWord.Timestamp
                     && this._currentEyesData.Timestamp < (this._currentWord.Timestamp + this._currentWord.Duration))
@@ -74,8 +74,15 @@ namespace ICAPR_RSVP.Broker
             }
         }
 
-        private void sendConfigToOutput(Item item)
+        private void sendNewTrialConfigToOutput(Item item)
         {
+            //A new config item appeared. Send to output current item to finis the trial 
+            if (_currentWord != null)
+            {
+                sendToOutput(_currentWord);
+                this._isExpectingNewWord = true;
+            }
+
             //When new configuration is received, clean the broker
             this._listCurrentEyes = new Queue<Eyes>();
             this._currentEyesData = null;
@@ -89,32 +96,35 @@ namespace ICAPR_RSVP.Broker
         private void sendToOutput(DisplayItem<T> word)
         {
             //Create object to output
-            DisplayItem<T> tmpWord;
-            
+            DisplayItem<T> tmpWord = null;
+
             if (this._listCurrentEyes.Count > 0)
             {
                 //Null = delay between words
                 if (word == null)
                 {
-                    long start_timestamp;
-                    //If no previous word has been receieved yet. Use the first eye data timestamp as start
-                    if (this._delayStartTimestamp == 0)
-                        start_timestamp = this._listCurrentEyes.Peek().Timestamp;
-                    else
+                    long start_timestamp = 0;
                     //Use the end of the previous word as start for delay.
+                    //Do not create a delay if start_timestamp is 0 (Eye data collected before the trial started)
+                    if (this._delayStartTimestamp != 0)
+                    {
+                        //Calculate delay duration and create delay (word value = null)
                         start_timestamp = this._delayStartTimestamp;
-
-                    //Calculate delay duration and create delay (word value = null)
-                    tmpWord = new DisplayItem<T>(start_timestamp,
-                            this._currentWord.Timestamp - start_timestamp, default(T));
+                        tmpWord = new DisplayItem<T>(start_timestamp, this._currentWord.Timestamp - start_timestamp, default(T));
+                    }
                 }
                 else
                     tmpWord = word;
 
-                //Sent to output pipe the created item
-                DisplayItemAndEyes<T> wordAndEyes = new DisplayItemAndEyes<T>(new Queue<Eyes>(this._listCurrentEyes), tmpWord);
+                //tmpWord is null when eye data was collected before the trial started.
+                //In this case, do not send to the output, just clean.
+                if (tmpWord != null)
+                {
+                    //Sent to output pipe the created item
+                    DisplayItemAndEyes<T> wordAndEyes = new DisplayItemAndEyes<T>(new Queue<Eyes>(this._listCurrentEyes), tmpWord);
+                    base.sendToOutput(new Bundle<DisplayItemAndEyes<T>>(ItemTypes.DisplayItemAndEyes, wordAndEyes));
+                }
                 this._listCurrentEyes.Clear();
-                base.sendToOutput(new Bundle<DisplayItemAndEyes<T>>(ItemTypes.DisplayItemAndEyes, wordAndEyes));
             }
 
             //If not null (end of the word) set it to null and calculate new starting point for incoming delays

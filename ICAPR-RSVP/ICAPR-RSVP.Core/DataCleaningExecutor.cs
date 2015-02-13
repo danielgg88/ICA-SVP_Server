@@ -10,8 +10,8 @@ namespace ICAPR_RSVP.Core
 {
     public class DataCleaningExecutor : Executor
     {
-        public Port InputPort { get; set; }
-        public Port OutputPort { get; set; }
+        public Port InputPort { get; private set; }
+        public Port OutputPort { get; private set; }
 
         Misc.Utils.FileManager<String> FileManager { get; set; }
 
@@ -23,11 +23,15 @@ namespace ICAPR_RSVP.Core
             this.AddFilter(new Filters.LoggerFilter(this.FileManager));
         }
 
+        protected override void init()
+        {
+            if(OutputPort != null)
+                OutputPort.Start();
+        }
+
         protected override void loop()
         {
             Item item = InputPort.GetItem();
-            Console.WriteLine("Data cleaner received item");
-
             Item result = null;
             foreach (Filter filter in Filters)
             {

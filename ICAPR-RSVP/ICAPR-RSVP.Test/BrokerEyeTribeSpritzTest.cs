@@ -68,11 +68,6 @@ namespace ICAPR_RSVP.Test
                     i--;
                 }
             }
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
             broker.Stop();
         }
     }

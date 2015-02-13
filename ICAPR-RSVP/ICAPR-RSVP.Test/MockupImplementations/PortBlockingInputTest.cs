@@ -14,6 +14,7 @@ namespace ICAPR_RSVP.Test.MockupImplementations
     //Test simulating EyeTribe data input
     public class PortBlockingInputTest : PortBlocking
     {
+        public static readonly int SLEEP = 5;
         private Thread _workerThread;
         private bool _isRunning;
 
@@ -59,7 +60,7 @@ namespace ICAPR_RSVP.Test.MockupImplementations
                 timestamp = Utils.MilliTimeStamp();
                 eyes = new Eyes(timestamp, eyeRight, eyeLeft);
                 base.PushItem(new Bundle<Eyes>(ItemTypes.Eyes, eyes));
-                Thread.Sleep(100);
+                Thread.Sleep(SLEEP);
             }
         }
     }

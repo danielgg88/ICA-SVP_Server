@@ -1,6 +1,6 @@
 ﻿namespace ICAPR_RSVP.Broker
 {
-    public class PortBlockingOutputCore : PortBlocking
+    public class PortBlockingOutput : PortBlocking
     {
         private bool _isRunning;
 

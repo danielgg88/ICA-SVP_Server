@@ -10,23 +10,16 @@ namespace ICAPR_RSVP.Core
 {
     public abstract class Executor
     {
-
         protected LinkedList<Filter> Filters { get; set; }
-
         private volatile Boolean isRunning = false;
-        
         private volatile Boolean isPaused = false;
-
         private volatile Boolean keepRunning = false;
-
         private volatile Thread thread;
-
 
         public Executor()
         {
             Filters = new LinkedList<Filter>();
         }
-
 
         #region Public methods
 
@@ -40,12 +33,13 @@ namespace ICAPR_RSVP.Core
             Filters.Remove(filter);
         }
 
-
         public void startInBackground()
         {
+            init();
             thread = new Thread(run);
             thread.Start();
         }
+
         public Boolean isRunningg()
         {
             return isRunning;
@@ -90,7 +84,7 @@ namespace ICAPR_RSVP.Core
 
                     loop();
                 }
-                catch (ThreadInterruptedException e)
+                catch (ThreadInterruptedException)
                 {
                     Console.WriteLine("Data cleaning executor was interrupted...calling on stop");
                 }
@@ -104,8 +98,9 @@ namespace ICAPR_RSVP.Core
 
         protected abstract void loop();
 
+        protected abstract void init();
+
         protected abstract void onStop();
         #endregion
-
     }
 }

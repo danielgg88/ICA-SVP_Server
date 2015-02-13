@@ -14,7 +14,8 @@ namespace ICAPR_RSVP.Test.MockupImplementations
     public class PortNonBlockingInputTest : PortNonBlocking
     {
         public static readonly int NUMBER_TRIALS = 1;
-        public static readonly int WORD_COUNT = 1000;
+        public static readonly int WORD_COUNT = 10;
+        public static readonly int SLEEP = 10;
         private Thread _workerThread;
         private bool _isRunning;
 
@@ -70,9 +71,9 @@ namespace ICAPR_RSVP.Test.MockupImplementations
                 while( _isRunning && i++ < WORD_COUNT)
                 {
                     timestamp = Utils.MilliTimeStamp();
-                    word = new DisplayItem<String>(timestamp, 10, "test");
+                    word = new DisplayItem<String>(timestamp, SLEEP, "test");
                     base.PushItem(new Bundle<DisplayItem<String>>(ItemTypes.DisplayItem, word));
-                    Thread.Sleep(10);
+                    Thread.Sleep(SLEEP);
                 }
             }
         }

@@ -18,7 +18,7 @@ namespace ICAPR_RSVP
             Broker.Network network = new Broker.Network(dispatcher, "0.0.0.0", "api/", 8181);
             Broker.Port inputPortSpritz = new Broker.PortNonBlockingInputSpritz(network);
             //Create Outputs
-            Broker.Port outputPort = new Broker.PortBlockingOutputCore();
+            Broker.Port outputPort = new Broker.PortBlockingOutput();
 
             //************TESTING**********************
             Broker.Port inputPortEyeTribe = new PortBlockingInputTest();
@@ -33,14 +33,14 @@ namespace ICAPR_RSVP
             broker.AddOutput(outputPort);
             Console.WriteLine("Broker started: " + broker.Start());
 
-            //Create DataCleaning
+            //Create file manager
             Misc.Utils.FileManager<String> fm = new Misc.Utils.FileManager<string>("test");
-            Broker.Port dataCleanerOutputPort = new Broker.PortBlockingOutputCore();
-            dataCleanerOutputPort.Start();
+
             //Create data cleaning executor
+            Broker.Port dataCleanerOutputPort = new Broker.PortBlockingOutput();
             Executor dataCleaner = new DataCleaningExecutor(fm, outputPort, dataCleanerOutputPort);
             dataCleaner.startInBackground();
-
+           
             //************TESTING**********************
             /*
             Thread t = new Thread(() =>
@@ -52,7 +52,6 @@ namespace ICAPR_RSVP
                     try
                     {
                         Item item = outputPort.GetItem();
-                        Console.WriteLine("Received item from broker");
                         fw.AddToFile(item);
                         if (item.Type == ItemTypes.DisplayItemAndEyes)
                             i++;
