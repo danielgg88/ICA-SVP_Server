@@ -7,16 +7,21 @@ namespace ICAPR_RSVP.Broker
     //<T> content message type
     public class BrokerEyeTribeRSVP<T> : Broker
     {
+        private readonly int SAMPLING_FREQUENCY = 10;   //Reduce sampling to the given frequency (I.e. 10 samples/seg)
         private readonly int INDEX_EYE_TRIBE = 0;       //EyeTribe index in input list
         private readonly int INPUT_CLIENT = 1;          //Sprits index in input list
         private Queue<Eyes> _listCurrentEyes;           //Temporal list to store EyeData values
         private Eyes _currentEyesData;                  //Most recently EyeData read
         private DisplayItem<T> _currentWord;            //Most recently Word read
         private bool _isExpectingNewWord;       //Broker is expecting a new word
+        private bool _getFirstTimeStamp;        //Flag when trial has just started. Collect first eye data timestamp
         private long _delayStartTimestamp = 0;  //Delay start timestamp. Used for delays between displayer items.
+        private long _firstTrialTimestamp = 0;  //First timestamp recorder for a trial
 
         public BrokerEyeTribeRSVP()
-            : base() {/*...*/}
+            : base() {
+                _getFirstTimeStamp = false;
+        }
 
         protected override void Run()
         {
@@ -53,7 +58,7 @@ namespace ICAPR_RSVP.Broker
                     if (this._isExpectingNewWord)
                     {
                         sendToOutput(null);
-                        this._isExpectingNewWord = false;
+                        this._isExpectingNewWord = false; 
                     }
                 }
                 //Eye data does not belong to current word anymore. Attcach eye data to current word
@@ -88,6 +93,7 @@ namespace ICAPR_RSVP.Broker
             this._currentEyesData = null;
             this._currentWord = null;
             this._isExpectingNewWord = true;
+            this._getFirstTimeStamp = true;
             this._delayStartTimestamp = 0;
             //Send configuraction to the core
             base.sendToOutput(item);
@@ -120,8 +126,39 @@ namespace ICAPR_RSVP.Broker
                 //In this case, do not send to the output, just clean.
                 if (tmpWord != null)
                 {
+                    List<Eyes> reducedEyesList = new List<Eyes>();
+                    Eyes lastEyes = null;
+                    int time_window = 1000 / SAMPLING_FREQUENCY;
+                    
+                    foreach (Eyes eyes in _listCurrentEyes)
+                    {
+                        //Set first timestamp of the trial for graph client purpose
+                        if (this._getFirstTimeStamp)
+                        {
+                            this._firstTrialTimestamp = eyes.Timestamp;
+                            this._getFirstTimeStamp = false;
+                        }
+                        //Substract to make first point 0
+                        eyes.Timestamp -= this._firstTrialTimestamp;
+                        
+                        //Reduce the list of stored Eyes Data to the sampling frequency defined
+                        if (lastEyes != null)
+                        {
+                            if (eyes.Timestamp - lastEyes.Timestamp >= time_window)
+                            {
+                                reducedEyesList.Add(eyes);
+                                lastEyes = eyes;
+                            }
+                        }
+                        else
+                        {
+                            reducedEyesList.Add(eyes);
+                            lastEyes = eyes;
+                        }
+                    }
+
                     //Sent to output pipe the created item
-                    DisplayItemAndEyes<T> wordAndEyes = new DisplayItemAndEyes<T>(new Queue<Eyes>(this._listCurrentEyes), tmpWord);
+                    DisplayItemAndEyes<T> wordAndEyes = new DisplayItemAndEyes<T>(new Queue<Eyes>(reducedEyesList), tmpWord);
                     base.sendToOutput(new Bundle<DisplayItemAndEyes<T>>(ItemTypes.DisplayItemAndEyes, wordAndEyes));
                 }
                 this._listCurrentEyes.Clear();

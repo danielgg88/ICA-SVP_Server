@@ -5,7 +5,7 @@ namespace ICAPR_RSVP.Misc
     public class Eyes
     {
         [JsonProperty(PropertyName = "timestamp")]
-        public long Timestamp { get; private set; }
+        public long Timestamp { get;  set; }
         [JsonProperty(PropertyName = "left_eye")]
         public Eye LeftEye { get; private set; }
         [JsonProperty(PropertyName = "right_eye")]
