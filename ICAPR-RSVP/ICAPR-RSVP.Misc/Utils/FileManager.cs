@@ -31,16 +31,33 @@ namespace ICAPR_RSVP.Misc.Utils
         {
             //Add an item to print into the logs
             if (item != null)
-                _itemQueue.Enqueue(item);
+            {
+                //Create a new log if a new trial is started
+                if (item.Type == ItemTypes.Config)
+                {
+                    if (_itemQueue.Count > 0)
+                    {
+                        SaveLog();
+                        Clear();
+                    }
+                    _currentConfig = (ExperimentConfig)item.Value;
+                }
+                else
+                    _itemQueue.Enqueue(item);
+            }
         }
 
         public void SaveLog()
         {
-            //Creates JSON and CSV files
-            String fileName = _fileName + "_" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
-            WriteCsvFile(fileName);
-            WriteJsonFile(fileName);
-            Clear();
+            if (_currentConfig != null)
+            {
+                //Creates JSON and CSV files
+                String fileName = _fileName + "_" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
+                List<Item> items = new List<Item>(_itemQueue);
+                WriteCsvFile(fileName, items);
+                WriteJsonFile(fileName, items);
+                Clear();
+            }
         }
 
         #endregion
@@ -82,42 +99,27 @@ namespace ICAPR_RSVP.Misc.Utils
                 Directory.CreateDirectory(_basePath + LOGS_FOLDER);
         }
 
-        private void WriteCsvFile(String fileName)
+        private void WriteCsvFile(String fileName, List<Item> items)
         {
-            //Write all the WordAndEyes items into a file
-            List<String> outputList = new List<string>();
-            List<Item> cpyList = new List<Item>(_itemQueue);
+            //Write all the WordAndEyes items into a .CSV file
             String output = String.Empty;
             String tmp = String.Empty;
-            _currentConfig = null;
 
-            foreach (Item item in cpyList)
+            output = "Trial: " + _currentConfig.Trial + ", ";
+            output += "UserName: " + _currentConfig.UserName + ", ";
+            output += "UserAge: " + _currentConfig.UserAge + ", ";
+            output += "FileName: " + _currentConfig.FileName + ", ";
+            output += "ItemTime: " + _currentConfig.ItemTime + ", ";
+            output += "DelayTime: " + _currentConfig.DelayTime + ", ";
+            output += "FontSize: " + _currentConfig.FontSize + ", ";
+            output += "FontColor: " + _currentConfig.FontColor + ", ";
+            output += "AppBackground: " + _currentConfig.AppBackground + ", ";
+            output += "BoxBackground: " + _currentConfig.BoxBackground + "\n";
+            output += "Word time, Word, Duration, Eye time, L size, R size \n";
+
+            foreach (Item item in items)
             {
-                if (item.Type == ItemTypes.Config)
-                {
-                    //A config object is found the first time
-                    if (_currentConfig != null)
-                    {
-                        //Write file and start new trial
-                        outputList.Add(output);
-                    }
-
-                    ExperimentConfig trial = (ExperimentConfig)item.Value;
-                    output = "Trial: " + trial.Trial + ", ";
-                    output += "UserName: " + trial.UserName + ", ";
-                    output += "UserAge: " + trial.UserAge + ", ";
-                    output += "FileName: " + trial.FileName + ", ";
-                    output += "ItemTime: " + trial.ItemTime + ", ";
-                    output += "DelayTime: " + trial.DelayTime + ", ";
-                    output += "FontSize: " + trial.FontSize + ", ";
-                    output += "FontColor: " + trial.FontColor + ", ";
-                    output += "AppBackground: " + trial.AppBackground + ", ";
-                    output += "BoxBackground: " + trial.BoxBackground + "\n";
-
-                    output += "Word time, Word, Duration, Eye time, L size, R size \n";
-                    _currentConfig = trial;
-                }
-                else if (item.Type == ItemTypes.DisplayItemAndEyes)
+                if (item.Type == ItemTypes.DisplayItemAndEyes)
                 {
                     DisplayItemAndEyes<String> wordAndEyes = (DisplayItemAndEyes<String>)item.Value;
                     Queue<Eyes> listEyes = wordAndEyes.Eyes;
@@ -137,53 +139,30 @@ namespace ICAPR_RSVP.Misc.Utils
                             + eyes.LeftEye.PupilSize + ", " + eyes.RightEye.PupilSize + "\n";
                 }
             }
-            outputList.Add(output);
-            WriteFile(fileName, outputList, ".csv");
+            WriteFile(fileName, output, ".csv");
         }
 
-        private void WriteJsonFile(String fileName)
+        private void WriteJsonFile(String fileName, List<Item> items)
         {
-            //Returns the last file name written. Many files might be created if many config objects
-            //are added to the printing queue
-            List<Item> cpyList = new List<Item>(_itemQueue);
+            //Write all the WordAndEyes items into a .CSV file
             List<DisplayItemAndEyes<T>> trialData = new List<DisplayItemAndEyes<T>>();
-            List<String> json = new List<String>();
-            _currentConfig = null;
 
-            foreach (Item item in cpyList)
+            foreach (Item item in items)
             {
-                if (item.Type == ItemTypes.Config)
-                {
-                    //A config object is found the first time
-                    if (_currentConfig != null)
-                    {
-                        //Add to file and start new trial
-                        json.Add(Newtonsoft.Json.JsonConvert.SerializeObject(new Trial<T>(_currentConfig, trialData)));
-                        trialData = new List<DisplayItemAndEyes<T>>();
-                    }
-                    _currentConfig = (ExperimentConfig)item.Value;
-
-                }
-                else if (item.Type == ItemTypes.DisplayItemAndEyes)
+               if (item.Type == ItemTypes.DisplayItemAndEyes)
                     trialData.Add((DisplayItemAndEyes<T>)item.Value);
             }
 
-            json.Add(Newtonsoft.Json.JsonConvert.SerializeObject(new Trial<T>(_currentConfig, trialData)));
-            WriteFile(fileName, json, ".json");
+            if (trialData.Count > 0)
+            {
+                String json = Newtonsoft.Json.JsonConvert.SerializeObject(new Trial<T>(_currentConfig, trialData));
+                WriteFile(fileName, json, ".json");
+            }
         }
 
-        private void WriteFile(String fileName, List<String> content, String fileExtension)
+        private void WriteFile(String fileName, String content, String fileExtension)
         {
-            int fileCount = 0;
-            foreach (String trial in content)
-            {
-                //Write content into file
-                if (fileCount == 0)
-                    File.WriteAllText(_basePath + LOGS_FOLDER + fileName + fileExtension, trial);
-                else
-                    File.WriteAllText(_basePath + LOGS_FOLDER + fileName + "_" + fileCount + fileExtension, trial);
-                fileCount++;
-            }
+            File.WriteAllText(_basePath + LOGS_FOLDER + fileName + fileExtension, content);
         }
 
         private void Clear()
