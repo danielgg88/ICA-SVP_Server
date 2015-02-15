@@ -64,7 +64,7 @@ namespace ICAPR_RSVP.Test
                     }
                 }
                 else{
-                    Assert.IsTrue(item.Type == ItemTypes.Config);
+                    Assert.IsTrue(item.Type == ItemTypes.Config || item.Type == ItemTypes.EndOfTrial);
                     i--;
                 }
             }

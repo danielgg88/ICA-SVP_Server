@@ -35,6 +35,12 @@ namespace ICAPR_RSVP.Broker
                 {
                     if (item.Type == ItemTypes.Config)
                         sendNewTrialConfigToOutput(item);
+                    else if (item.Type == ItemTypes.EndOfTrial)
+                    {
+                        //Send delays before trial ends
+                        sendToOutput(null);
+                        base.sendToOutput(item);
+                    }
                     else
                         this._currentWord = (DisplayItem<T>)item.Value;
                 }
@@ -81,13 +87,6 @@ namespace ICAPR_RSVP.Broker
 
         private void sendNewTrialConfigToOutput(Item item)
         {
-            //A new config item appeared. Send to output current item to finis the trial 
-            if (_currentWord != null)
-            {
-                sendToOutput(_currentWord);
-                this._isExpectingNewWord = true;
-            }
-
             //When new configuration is received, clean the broker
             this._listCurrentEyes = new Queue<Eyes>();
             this._currentEyesData = null;

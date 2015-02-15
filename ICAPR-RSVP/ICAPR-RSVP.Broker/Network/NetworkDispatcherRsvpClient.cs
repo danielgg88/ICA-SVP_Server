@@ -57,6 +57,13 @@ namespace ICAPR_RSVP.Broker
                     String wrapperResponse = "{\"type\":\"" + NetworkConstants.TYPE_SINGLE_TRIAL + "\" , \"trial\": " + response + "}";
                     return wrapperResponse;
 
+                case NetworkConstants.NET_TYPE_SERVICE_STOPPED:
+                    Console.WriteLine("Client stopped experiment");
+                    EndOfTrial endOfTrial  = JsonConvert.DeserializeObject<EndOfTrial>(json["content"].ToString());
+                    Bundle<EndOfTrial> bb = new Bundle<EndOfTrial>(ItemTypes.EndOfTrial, endOfTrial);
+                    _outputPort.PushItem(bb);
+                    break;
+
                 default:
                     break;
             }

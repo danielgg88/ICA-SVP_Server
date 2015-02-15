@@ -12,6 +12,7 @@ namespace ICAPR_RSVP.Misc
             DisplayItem,
             DisplayItemAndEyes,
             Config,
-            Trial
+            Trial,
+            EndOfTrial
         }
 }

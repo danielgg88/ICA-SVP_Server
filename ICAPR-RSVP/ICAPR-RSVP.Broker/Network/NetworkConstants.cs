@@ -12,5 +12,9 @@ namespace ICAPR_RSVP.Broker
         public const String TYPE_TRIALS = "trials";
         public const String TYPE_SINGLE_TRIAL = "trial";
         public const String TYPE_TRIAL_CONFIG = "config";
+        public const String NET_TYPE_SERVICE_STARTED = "serviceStarted";
+        public const String NET_TYPE_SERVICE_STOPPED = "serviceStopped";
+        public const String NET_TYPE_SERVICE_PAUSED = "servicePaused";
+        public const String NET_TYPE_SERVICE_RESUMED = "serviceResumed";
     }
 }

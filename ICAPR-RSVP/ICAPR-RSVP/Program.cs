@@ -13,15 +13,15 @@ namespace ICAPR_RSVP
         static void Main(string[] args)
         {
             //Create inputs
-            //Broker.Port inputPortEyeTribe = new Broker.PortBlockingInputEyeTribe();
+            Broker.Port inputPortEyeTribe = new Broker.PortBlockingInputEyeTribe();
             Broker.NetworkDispatcherRsvpClient dispatcher = new Broker.NetworkDispatcherRsvpClient();
-            Broker.Network network = new Broker.Network(dispatcher, "0.0.0.0", "api/", 8181);
+            Broker.Network network = new Broker.Network(dispatcher, Config.NET_LOCAL_HOST, Config.NET_SERVER_URL, Config.NET_SERVER_PORT);
             Broker.Port inputPortSpritz = new Broker.PortNonBlockingInputSpritz(network);
             //Create Outputs
             Broker.Port outputPort = new Broker.PortBlockingOutput();
 
             //************TESTING**********************
-            Broker.Port inputPortEyeTribe = new PortBlockingInputTest();
+            //Broker.Port inputPortEyeTribe = new PortBlockingInputTest();
             //Broker.Port inputPortSpritz = new PortNonBlockingInputTest();
             //Broker.Port outputPort = new PortBlockingOutputTest();
             //*****************************************

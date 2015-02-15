@@ -1,13 +1,20 @@
 ﻿using System;
 using TETCSharpClient;
 using TETCSharpClient.Data;
-
+using System.Diagnostics;
+using System.Threading;
 using ICAPR_RSVP.Misc;
 
 namespace ICAPR_RSVP.Broker
 {
     public class PortBlockingInputEyeTribe : PortBlocking, IConnectionStateListener, IGazeListener
     {
+        public PortBlockingInputEyeTribe() 
+        {
+            Misc.Utils.Utils.launchEyeTribeServer();
+            Misc.Utils.Utils.launchEyeTribeCalibration();
+        }
+
         #region Properties
         public override bool IsRunning
         {
@@ -40,7 +47,7 @@ namespace ICAPR_RSVP.Broker
                 Misc.Eye rightEye = new Misc.Eye();
                 rightEye.PupilSize = Math.Round(gazeData.RightEye.PupilSize, 2);
                 //Create a new item and push into the port queue
-                Eyes eyes = new Eyes(gazeData.TimeStamp, leftEye, rightEye);
+                Eyes eyes = new Eyes(Misc.Utils.Utils.MilliTimeStamp(), leftEye, rightEye);
                 Bundle<Eyes> bundle = new Bundle<Eyes>(ItemTypes.Eyes, eyes);
                 PushItem(bundle);
             }

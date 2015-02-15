@@ -33,15 +33,16 @@ namespace ICAPR_RSVP.Misc.Utils
             if (item != null)
             {
                 //Create a new log if a new trial is started
-                if (item.Type == ItemTypes.Config)
+                if (item.Type == ItemTypes.EndOfTrial)
                 {
                     if (_itemQueue.Count > 0)
                     {
                         SaveLog();
                         Clear();
                     }
-                    _currentConfig = (ExperimentConfig)item.Value;
                 }
+                else if(item.Type == ItemTypes.Config)
+                    _currentConfig = (ExperimentConfig)item.Value;
                 else
                     _itemQueue.Enqueue(item);
             }

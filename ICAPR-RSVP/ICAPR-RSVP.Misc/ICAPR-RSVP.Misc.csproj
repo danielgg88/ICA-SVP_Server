@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config.cs" />
+    <Compile Include="Items\EndOfTrial.cs" />
     <Compile Include="Items\ExperimentConfig.cs" />
     <Compile Include="Items\Eye.cs" />
     <Compile Include="Items\Eyes.cs" />
