@@ -127,7 +127,7 @@ namespace ICAPR_RSVP.Misc.Utils
                 if (item.Type == ItemTypes.DisplayItemAndEyes)
                 {
                     DisplayItemAndEyes<String> wordAndEyes = (DisplayItemAndEyes<String>)item.Value;
-                    Queue<Eyes> listEyes = wordAndEyes.Eyes;
+                    Queue<Eyes> listEyes = wordAndEyes.EyesOriginal;
                     DisplayItem<String> word = wordAndEyes.DisplayItem;
 
                     tmp = word.Timestamp + ", ";

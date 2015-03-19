@@ -45,7 +45,7 @@ namespace ICAPR_RSVP.Test
                 if (item.Type == ItemTypes.DisplayItemAndEyes)
                 {
                     DisplayItemAndEyes<String> wordAndEyes = (DisplayItemAndEyes<String>)item.Value;
-                    Queue<Eyes> listEyes = wordAndEyes.Eyes;
+                    Queue<Eyes> listEyes = wordAndEyes.EyesOriginal;
                     DisplayItem<String> word = wordAndEyes.DisplayItem;
 
                     wordTimestamp = word.Timestamp;
