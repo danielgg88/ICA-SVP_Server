@@ -7,7 +7,6 @@ namespace ICAPR_RSVP.Broker
     //<T> content message type
     public class BrokerEyeTribeRSVP<T> : Broker
     {
-        private readonly int SAMPLING_FREQUENCY = 10;   //Reduce sampling to the given frequency (I.e. 10 samples/seg)
         private readonly int INDEX_EYE_TRIBE = 0;       //EyeTribe index in input list
         private readonly int INPUT_CLIENT = 1;          //Sprits index in input list
         private Queue<Eyes> _listCurrentEyes;           //Temporal list to store EyeData values
@@ -127,17 +126,17 @@ namespace ICAPR_RSVP.Broker
                 {
                     List<Eyes> reducedEyesList = new List<Eyes>();
                     Eyes lastEyes = null;
-                    int time_window = 1000 / SAMPLING_FREQUENCY;
+                    int time_window = 1000 / Config.SAMPLING_FREQUENCY;
                     
                     foreach (Eyes eyes in _listCurrentEyes)
                     {
                         //Set first timestamp of the trial for graph client purpose
                         if (this._getFirstTimeStamp)
                         {
-                            this._firstTrialTimestamp = eyes.Timestamp;
+                            this._firstTrialTimestamp = tmpWord.Timestamp;
                             this._getFirstTimeStamp = false;
                         }
-                        //Substract to make first point 0
+                        //Substract to set first word timestamp as baseline
                         eyes.Timestamp -= this._firstTrialTimestamp;
                         
                         //Reduce the list of stored Eyes Data to the sampling frequency defined
@@ -155,6 +154,8 @@ namespace ICAPR_RSVP.Broker
                             lastEyes = eyes;
                         }
                     }
+                    //Substract to make first point 0
+                    tmpWord.Timestamp -= this._firstTrialTimestamp;
 
                     //Sent to output pipe the created item
                     DisplayItemAndEyes<T> wordAndEyes = new DisplayItemAndEyes<T>(new Queue<Eyes>(reducedEyesList), tmpWord);
@@ -166,7 +167,7 @@ namespace ICAPR_RSVP.Broker
             //If not null (end of the word) set it to null and calculate new starting point for incoming delays
             if (word != null)
             {
-                this._delayStartTimestamp = word.Timestamp + word.Duration;
+                this._delayStartTimestamp = word.Timestamp + this._firstTrialTimestamp + word.Duration;
                 this._currentWord = null;
             }
         }

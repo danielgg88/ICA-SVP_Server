@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
 using ICAPR_RSVP.Misc.Items;
+using Newtonsoft.Json.Linq;
 
 namespace ICAPR_RSVP.Misc.Utils
 {
@@ -106,17 +107,20 @@ namespace ICAPR_RSVP.Misc.Utils
             String output = String.Empty;
             String tmp = String.Empty;
 
-            output = "Trial: " + _currentConfig.Trial + ", ";
-            output += "UserName: " + _currentConfig.UserName + ", ";
-            output += "UserAge: " + _currentConfig.UserAge + ", ";
-            output += "FileName: " + _currentConfig.FileName + ", ";
-            output += "ItemTime: " + _currentConfig.ItemTime + ", ";
-            output += "DelayTime: " + _currentConfig.DelayTime + ", ";
-            output += "FontSize: " + _currentConfig.FontSize + ", ";
-            output += "FontColor: " + _currentConfig.FontColor + ", ";
-            output += "AppBackground: " + _currentConfig.AppBackground + ", ";
-            output += "BoxBackground: " + _currentConfig.BoxBackground + "\n";
-            output += "Word time, Word, Duration, Eye time, L size, R size \n";
+            JObject json = Newtonsoft.Json.Linq.JObject.Parse(JsonConvert.SerializeObject(_currentConfig));
+            
+            int i=1;            
+            foreach (var x in json)
+            {
+                output += x.Key + " : " + x.Value;
+                if (i % 6 == 0 && i != json.Count - 1)
+                    output += "\n";
+                else
+                    output += ",";
+                i++;
+            }
+            output = output.Remove(output.Length - 1);
+            output += "\n\n Word time, Word, Duration, Eye time, L size, R size \n";
 
             foreach (Item item in items)
             {

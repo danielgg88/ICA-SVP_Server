@@ -15,7 +15,7 @@ namespace ICAPR_RSVP.Misc
         public  const String NET_SERVER_URL = "api/";
 
         //eyetribe configuration
-
+        public  const int SAMPLING_FREQUENCY = 10;   //Reduce sampling to the given frequency (I.e. 10 samples/seg)
         public  const String EYETRIBE_CALIBRATION_EXE = @"..\..\..\libs\EyeTribe\Calibration.exe";
         public  const String EYETRIBE_SERVER_EXE = @"..\..\..\libs\EyeTribe\EyeTribe.exe";
     }

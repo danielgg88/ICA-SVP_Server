@@ -4,6 +4,7 @@ using TETCSharpClient.Data;
 using System.Diagnostics;
 using System.Threading;
 using ICAPR_RSVP.Misc;
+using ICAPR_RSVP.Misc.Utils;
 
 namespace ICAPR_RSVP.Broker
 {
@@ -46,8 +47,11 @@ namespace ICAPR_RSVP.Broker
                 //Get right eye data
                 Misc.Eye rightEye = new Misc.Eye();
                 rightEye.PupilSize = Math.Round(gazeData.RightEye.PupilSize, 2);
+                
                 //Create a new item and push into the port queue
-                Eyes eyes = new Eyes(Misc.Utils.Utils.MilliTimeStamp(), leftEye, rightEye);
+                //TODO usea real timpestamp
+                //Eyes eyes = new Eyes(Utils.WinMilliTimestampToUnix(gazeData.TimeStamp), leftEye, rightEye);
+                Eyes eyes = new Eyes(Misc.Utils.Utils.MilliTimetamp(), leftEye, rightEye);
                 Bundle<Eyes> bundle = new Bundle<Eyes>(ItemTypes.Eyes, eyes);
                 PushItem(bundle);
             }

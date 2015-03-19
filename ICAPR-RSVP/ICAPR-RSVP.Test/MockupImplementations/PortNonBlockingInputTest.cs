@@ -54,15 +54,18 @@ namespace ICAPR_RSVP.Test.MockupImplementations
             {
                 ExperimentConfig trial = new ExperimentConfig();
                 trial.Trial = "trial " + j;
-                trial.UserName = "name";
-                trial.UserAge = "age";
                 trial.FileName = "file_name";
                 trial.ItemTime = "item_time";
                 trial.DelayTime = "delay_time";
+                trial.UserName = "name";
+                trial.UserAge = "age";
                 trial.FontSize = "font_size";
                 trial.FontColor = "font_color";
-                trial.AppBackground = "app_bg";
-                trial.BoxBackground = "box_bg";
+                trial.BackgroundColor = "app_bg";
+                trial.BackgroundModality = "bg_modality";
+                trial.GazeWindow = "window";
+                trial.GazePadding = "padding";
+                trial.CalibrationBgColor = "cal_bg";
                 trial.SaveLog = true;
 
                 base.PushItem(new Bundle<ExperimentConfig>(ItemTypes.Config, trial));
@@ -70,7 +73,7 @@ namespace ICAPR_RSVP.Test.MockupImplementations
                 int i = 0;
                 while( _isRunning && i++ < WORD_COUNT)
                 {
-                    timestamp = Utils.MilliTimeStamp();
+                    timestamp = Utils.MilliTimetamp();
                     word = new DisplayItem<String>(timestamp, SLEEP, "test");
                     base.PushItem(new Bundle<DisplayItem<String>>(ItemTypes.DisplayItem, word));
                     Thread.Sleep(SLEEP);

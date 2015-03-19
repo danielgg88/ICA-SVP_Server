@@ -57,7 +57,7 @@ namespace ICAPR_RSVP.Test
                     {
                         //Assert ordered timestamps
                         Assert.IsTrue(eyes.Timestamp >= oldTimestamp,
-                            "Eyes timestamp not greater or equal than previous");
+                            "Eyes timestamp not greater or equal than previous " + eyes.Timestamp + " " + oldTimestamp);
                         Assert.IsTrue(eyes.Timestamp <= (oldTimestamp + wordDuration - 1), 
                             "Eyes timestamp greater than word timing");
                         oldTimestamp = eyes.Timestamp;

@@ -52,12 +52,12 @@ namespace ICAPR_RSVP.Test.MockupImplementations
             while(this._isRunning)
             {
                 Misc.Eye eyeRight = new Eye();
-                eyeRight.PupilSize = rnd.Next(5, 10);
+                eyeRight.PupilSize = rnd.Next(5, 7);
 
                 Misc.Eye eyeLeft = new Eye();
-                eyeLeft.PupilSize = rnd.Next(5, 10);
+                eyeLeft.PupilSize = rnd.Next(5, 7);
 
-                timestamp = Utils.MilliTimeStamp();
+                timestamp = Utils.MilliTimetamp();
                 eyes = new Eyes(timestamp, eyeRight, eyeLeft);
                 base.PushItem(new Bundle<Eyes>(ItemTypes.Eyes, eyes));
                 Thread.Sleep(SLEEP);

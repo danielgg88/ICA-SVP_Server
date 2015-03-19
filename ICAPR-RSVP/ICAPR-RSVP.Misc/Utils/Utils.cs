@@ -9,9 +9,9 @@ using ICAPR_RSVP;
 
 namespace ICAPR_RSVP.Misc.Utils
 {
-    public class Utils
+    public static class Utils
     {
-        public static long MilliTimeStamp()
+        public static long MilliTimetamp()
         {
             DateTime d1 = new DateTime(1970, 1, 1);
             DateTime d2 = DateTime.UtcNow;
@@ -20,11 +20,16 @@ namespace ICAPR_RSVP.Misc.Utils
             return (long)ts.TotalMilliseconds;
         }
 
+        public static long WinMilliTimestampToUnix(long timestamp)
+        {
+            DateTime d1 = new DateTime(1970, 1, 1);
+            return timestamp - (long)d1.Millisecond;
+        }
+
         public static double DateTimeToUnixTimestamp(DateTime dateTime)
         {
             return (dateTime - new DateTime(1970, 1, 1).ToLocalTime()).TotalSeconds;
         }
-
 
         public static void launchEyeTribeCalibration()
         {
