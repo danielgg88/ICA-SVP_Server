@@ -13,6 +13,7 @@ namespace ICAPR_RSVP.Misc
             DisplayItemAndEyes,
             Config,
             Trial,
-            EndOfTrial
+            EndOfTrial,
+            Calibration
         }
 }

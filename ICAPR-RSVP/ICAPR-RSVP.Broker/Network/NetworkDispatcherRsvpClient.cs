@@ -64,6 +64,13 @@ namespace ICAPR_RSVP.Broker
                     _outputPort.PushItem(bb);
                     break;
 
+                case NetworkConstants.NET_TYPE_CALIBRATION:
+                    Console.WriteLine("Calibration request received");
+                    CalibrationItem calibrationItem = JsonConvert.DeserializeObject<CalibrationItem>(json["content"].ToString());
+                    if(calibrationItem.CalibrationType == CalibrationItem.Types.EyeTribe)
+                        Misc.Utils.Utils.launchEyeTribeCalibration();
+                    break;
+
                 default:
                     break;
             }

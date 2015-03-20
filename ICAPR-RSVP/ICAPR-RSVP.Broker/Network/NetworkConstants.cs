@@ -16,5 +16,6 @@ namespace ICAPR_RSVP.Broker
         public const String NET_TYPE_SERVICE_STOPPED = "serviceStopped";
         public const String NET_TYPE_SERVICE_PAUSED = "servicePaused";
         public const String NET_TYPE_SERVICE_RESUMED = "serviceResumed";
+        public const String NET_TYPE_CALIBRATION = "calibration";
     }
 }
