@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using ICAPR_RSVP.Misc;
 using ICAPR_RSVP.Misc.Utils;
+using ICAPR_RSVP.Broker.Calibration;
 
 namespace ICAPR_RSVP.Broker
 {
     public class NetworkDispatcherRsvpClient : NetworkDispatcher
     {
         private Port _outputPort;
+        private Calibrator _calibrator;
 
-        public void init(Port outputPort)
+        public void init(Port outputPort, Calibrator calibrator)
         {
             _outputPort = outputPort;
+            _calibrator = calibrator;
         }
 
         public String dispatchMessage(String msg)
@@ -69,6 +72,8 @@ namespace ICAPR_RSVP.Broker
                     CalibrationItem calibrationItem = JsonConvert.DeserializeObject<CalibrationItem>(json["content"].ToString());
                     if(calibrationItem.CalibrationType == CalibrationItem.Types.EyeTribe)
                         Misc.Utils.Utils.launchEyeTribeCalibration();
+                    else if(calibrationItem.CalibrationType == CalibrationItem.Types.System)
+                        _calibrator.Start();
                     break;
 
                 default:

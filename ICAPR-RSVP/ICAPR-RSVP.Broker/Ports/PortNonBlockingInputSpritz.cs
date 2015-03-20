@@ -1,15 +1,18 @@
 ﻿using System;
+using ICAPR_RSVP.Broker.Calibration;
 
 namespace ICAPR_RSVP.Broker
 {
     public class PortNonBlockingInputSpritz: PortNonBlocking 
     {
         private Network _network;//Network server for clients
+        private Calibrator _calibrator;
 
-        public PortNonBlockingInputSpritz(Network network)
+        public PortNonBlockingInputSpritz(Network network, Calibrator calibrator)
         {
             //Create a network server
             _network = network;
+            _calibrator = calibrator;
         }
 
         #region Properties
@@ -19,7 +22,7 @@ namespace ICAPR_RSVP.Broker
             {
                 //Is newtork server running?
                 //return _network.IsConnected;
-                //TODO the network connection is asynchronous this will always return false;
+                //The network connection is asynchronous this will always return false;
                 return true;
             }
         }
@@ -29,7 +32,7 @@ namespace ICAPR_RSVP.Broker
         protected override void OnStart()
         {
             //Start network server
-            _network.startNetwork(this);
+            _network.startNetwork(this, _calibrator);
         }
 
         protected override void OnStop()

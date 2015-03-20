@@ -53,6 +53,9 @@
   <ItemGroup>
     <Compile Include="Brokers\Broker.cs" />
     <Compile Include="Brokers\BrokerEyeTribeSpritz.cs" />
+    <Compile Include="Calibration\Calibrator.cs" />
+    <Compile Include="Calibration\CalibratorSystem.cs" />
+    <Compile Include="Network\NetworkCalibratorCallbacks.cs" />
     <Compile Include="Network\NetworkConstants.cs" />
     <Compile Include="Network\NetworkDispatcher.cs" />
     <Compile Include="Network\Network.cs" />

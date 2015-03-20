@@ -2,6 +2,7 @@
 using Fleck;
 using ICAPR_RSVP.Misc;
 using Newtonsoft.Json;
+using ICAPR_RSVP.Broker.Calibration;
 
 namespace ICAPR_RSVP.Broker
 {
@@ -51,10 +52,10 @@ namespace ICAPR_RSVP.Broker
             }
         }
 
-        public void startNetwork(Port dispatcherOutputPort)
+        public void startNetwork(Port dispatcherOutputPort, Calibrator calibrator )
         {
             stopNetwork();
-            _dispatcher.init(dispatcherOutputPort);
+            _dispatcher.init(dispatcherOutputPort, calibrator);
             System.Console.WriteLine("Starting network...");
             setUpNetwork();
         }

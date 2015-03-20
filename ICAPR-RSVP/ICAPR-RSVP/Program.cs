@@ -12,19 +12,29 @@ namespace ICAPR_RSVP
     {
         static void Main(string[] args)
         {
-            //Create inputs
-            Broker.Port inputPortEyeTribe = new Broker.PortBlockingInputEyeTribe();
-            Broker.NetworkDispatcherRsvpClient dispatcher = new Broker.NetworkDispatcherRsvpClient();
-            Broker.Network network = new Broker.Network(dispatcher, Config.NET_LOCAL_HOST, Config.NET_SERVER_URL, Config.NET_SERVER_PORT);
-            Broker.Port inputPortSpritz = new Broker.PortNonBlockingInputSpritz(network);
-            //Create Outputs
-            Broker.Port outputPort = new Broker.PortBlockingOutput();
-
             //************TESTING**********************
             //Broker.Port inputPortEyeTribe = new PortBlockingInputTest();
+            //Broker.Port inputPortEyeTribeCalib = new PortBlockingInputTest();
             //Broker.Port inputPortSpritz = new PortNonBlockingInputTest();
             //Broker.Port outputPort = new PortBlockingOutputTest();
             //*****************************************
+
+            //Create inputs
+            Broker.Port inputPortEyeTribe = new Broker.PortBlockingInputEyeTribe();
+            Broker.Port inputPortEyeTribeCalib = new Broker.PortBlockingInputEyeTribe();
+
+            //Network
+            Broker.NetworkDispatcherRsvpClient dispatcher = new Broker.NetworkDispatcherRsvpClient();
+            Broker.Network network = new Broker.Network(dispatcher, Config.NET_LOCAL_HOST, Config.NET_SERVER_URL, Config.NET_SERVER_PORT);
+            
+            //Calibration
+            Broker.Calibration.Calibrator.CalibrationCallbacks calibrationCallbacks = new Broker.NetworkCalibratorCallbacks(network);
+            Broker.Calibration.Calibrator calibrator = new Broker.Calibration.CalibratorSystem(inputPortEyeTribeCalib, calibrationCallbacks);
+
+            Broker.Port inputPortSpritz = new Broker.PortNonBlockingInputSpritz(network, calibrator);
+            
+            //Create Outputs
+            Broker.Port outputPort = new Broker.PortBlockingOutput();
 
             //Create Broker
             Broker.Broker broker = new Broker.BrokerEyeTribeRSVP<String>();
@@ -56,7 +66,7 @@ namespace ICAPR_RSVP
                         if (item.Type == ItemTypes.DisplayItemAndEyes)
                             i++;
                     }
-                    catch (ThreadInterruptedException e)
+                    catch (ThreadInterruptedException)
                     {
                         break;
                     }
