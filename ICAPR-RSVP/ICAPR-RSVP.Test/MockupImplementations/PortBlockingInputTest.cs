@@ -25,12 +25,13 @@ namespace ICAPR_RSVP.Test.MockupImplementations
         public PortBlockingInputTest()
             : base()
         {
-            _workerThread = new Thread(DoWork);
+            
         }
 
         #region Protected methods
         protected override void OnStart()
         {
+            _workerThread = new Thread(DoWork);
             _workerThread.Start();
             this._isRunning = true;
         }
@@ -39,6 +40,7 @@ namespace ICAPR_RSVP.Test.MockupImplementations
         {
             this._isRunning = false;
             _workerThread.Join();
+            Console.WriteLine("Test port closed");
         }
         #endregion
 
