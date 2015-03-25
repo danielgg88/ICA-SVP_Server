@@ -33,20 +33,20 @@ namespace ICAPR_SVP.Broker
             {
                 case NetworkConstants.TYPE_STREAM:
                     DisplayItem<String> displayItem = JsonConvert.DeserializeObject<DisplayItem<String>>(json["content"].ToString());
-                    Console.WriteLine("Network: receieved -> " + displayItem.Timestamp + "\t" + displayItem.Duration + "\t" + displayItem.Value);
+                    Console.WriteLine("Network: receieved -> item: " + displayItem.Timestamp + "\t" + displayItem.Duration + "\t" + displayItem.Value);
                     Bundle<DisplayItem<String>> bundle = new Bundle<DisplayItem<String>>(ItemTypes.DisplayItem,displayItem);
                     _outputPort.PushItem(bundle);
                     break;
 
                 case NetworkConstants.TYPE_TRIAL_CONFIG:
                     ExperimentConfig config = JsonConvert.DeserializeObject<ExperimentConfig>(json["content"].ToString());
-                    Console.WriteLine("Network: receieved -> trial config: " + config.Trial);
+                    Console.WriteLine("Network: receieved -> trial: " + config.Trial);
                     Bundle<ExperimentConfig> newBundle = new Bundle<ExperimentConfig>(ItemTypes.Config,config);
                     _outputPort.PushItem(newBundle);
                     break;
 
                 case NetworkConstants.TYPE_TRIALS:
-                    Console.WriteLine("Network: receieved -> request for all trials");
+                    Console.WriteLine("Network: receieved -> get: all");
                     FileManager<String> fm = new FileManager<string>();
                     String trials = fm.getJsonFileList();
                     String wrapper = "{\"type\":\"" + NetworkConstants.TYPE_TRIALS + "\" , \"trials\": " + trials + "}";
@@ -54,21 +54,22 @@ namespace ICAPR_SVP.Broker
                     break;
 
                 case NetworkConstants.TYPE_SINGLE_TRIAL:
-                    Console.WriteLine("Network: receieved -> request for a single trial");
+                    String file_name = (String)json["content"];
+                    Console.WriteLine("Network: receieved -> get: " + file_name);
                     FileManager<String> fmm = new FileManager<string>();
-                    String response = fmm.getJsonFile((String)json["content"]);
+                    String response = fmm.getJsonFile(file_name);
                     String wrapperResponse = "{\"type\":\"" + NetworkConstants.TYPE_SINGLE_TRIAL + "\" , \"trial\": " + response + "}";
                     return wrapperResponse;
 
                 case NetworkConstants.NET_TYPE_SERVICE_STOPPED:
-                    Console.WriteLine("Network: receieved -> client stopped experiment");
+                    Console.WriteLine("Network: receieved -> experiment: stopped");
                     EndOfTrial endOfTrial = JsonConvert.DeserializeObject<EndOfTrial>(json["content"].ToString());
                     Bundle<EndOfTrial> bb = new Bundle<EndOfTrial>(ItemTypes.EndOfTrial,endOfTrial);
                     _outputPort.PushItem(bb);
                     break;
 
                 case NetworkConstants.NET_TYPE_CALIBRATION:
-                    Console.WriteLine("Network: receieved -> calibration request received");
+                    Console.WriteLine("Network: receieved -> calibration: start");
                     CalibrationItem calibrationItem = JsonConvert.DeserializeObject<CalibrationItem>(json["content"].ToString());
                     if(calibrationItem.CalibrationType == CalibrationItem.Types.EyeTribe)
                         Misc.Utils.Utils.launchEyeTribeCalibration();
