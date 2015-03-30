@@ -1,4 +1,4 @@
-﻿namespace ICAPR_SVP.Broker
+﻿namespace ICAPR_SVP.Misc
 {
     public class PortBlockingOutput : PortBlocking
     {

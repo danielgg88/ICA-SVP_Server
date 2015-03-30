@@ -1,0 +1,5 @@
+E:\MegaSync\Workspaces\Git\dk.itu.eye.icapr-rsvp\ICAPR-RSVP\libs\ICAPR-RSVP.Broker.dll
+E:\MegaSync\Workspaces\Git\dk.itu.eye.icapr-rsvp\ICAPR-RSVP\libs\ICAPR-RSVP.Broker.pdb
+E:\MegaSync\Workspaces\Git\dk.itu.eye.icapr-rsvp\ICAPR-RSVP\ICAPR-RSVP.Broker\obj\Debug\ICAPR-RSVP.Broker.csprojResolveAssemblyReference.cache
+E:\MegaSync\Workspaces\Git\dk.itu.eye.icapr-rsvp\ICAPR-RSVP\ICAPR-RSVP.Broker\obj\Debug\ICAPR-RSVP.Broker.dll
+E:\MegaSync\Workspaces\Git\dk.itu.eye.icapr-rsvp\ICAPR-RSVP\ICAPR-RSVP.Broker\obj\Debug\ICAPR-RSVP.Broker.pdb

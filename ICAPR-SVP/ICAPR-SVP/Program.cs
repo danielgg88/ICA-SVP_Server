@@ -13,8 +13,8 @@ namespace ICAPR_SVP
         static void Main(string[] args)
         {
             //Create EyeTribe input ports
-            Broker.Port inputPortEyeTribe = new Broker.PortBlockingInputEyeTribe();
-            Broker.Port inputPortEyeTribeCalib = new Broker.PortBlockingInputEyeTribe();
+            Misc.Port inputPortEyeTribe = new Broker.PortBlockingInputEyeTribe();
+            Misc.Port inputPortEyeTribeCalib = new Broker.PortBlockingInputEyeTribe();
 
             //Create svp client network
             Broker.NetworkDispatcherSVPClient dispatcher = new Broker.NetworkDispatcherSVPClient();
@@ -28,10 +28,10 @@ namespace ICAPR_SVP
                 inputPortEyeTribeCalib,calibrationCallbacks);
 
             //Create svp client input port 
-            Broker.Port inputPortSVP = new Broker.PortNonBlockingInputSVP(network,calibrator);
+            Misc.Port inputPortSVP = new Broker.PortNonBlockingInputSVP(network,calibrator);
 
             //Create broker output port
-            Broker.Port brokerOutputPort = new Broker.PortBlockingOutput();
+            Misc.Port brokerOutputPort = new Misc.PortBlockingOutput();
 
             //Create Broker
             Broker.Broker broker = new Broker.BrokerEyeTribeSVP<String>();
@@ -44,7 +44,7 @@ namespace ICAPR_SVP
             Misc.Utils.FileManager<String> fm = new Misc.Utils.FileManager<string>();
 
             //Create data cleaning executor
-            Broker.Port dataCleanerOutputPort = new Broker.PortBlockingOutput();
+            Misc.Port dataCleanerOutputPort = new Misc.PortBlockingOutput();
             Executor dataCleaner = new ExecutorDataCleaning(fm,brokerOutputPort,dataCleanerOutputPort);
             dataCleaner.startInBackground();
 

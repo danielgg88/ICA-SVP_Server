@@ -60,11 +60,7 @@
     <Compile Include="Network\NetworkDispatcher.cs" />
     <Compile Include="Network\Network.cs" />
     <Compile Include="Network\NetworkDispatcherRsvpClient.cs" />
-    <Compile Include="Ports\PortBlocking.cs" />
     <Compile Include="Ports\PortBlockingInputEyeTribe.cs" />
-    <Compile Include="Ports\Port.cs" />
-    <Compile Include="Ports\PortNonBlocking.cs" />
-    <Compile Include="Ports\PortBlockingOutputCore.cs" />
     <Compile Include="Ports\PortNonBlockingInputSpritz.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

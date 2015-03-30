@@ -1,7 +1,7 @@
 ﻿using ICAPR_SVP.Misc;
 using System.Collections.Concurrent;
 
-namespace ICAPR_SVP.Broker
+namespace ICAPR_SVP.Misc
 {
     public abstract class PortBlocking : Port
     {

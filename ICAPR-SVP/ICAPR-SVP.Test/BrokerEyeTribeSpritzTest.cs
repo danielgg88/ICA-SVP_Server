@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ICAPR_SVP.Test.MockupImplementations;
 using ICAPR_SVP.Misc;
+using ICAPR_SVP.Broker;
 using System.Collections.Generic;
 
 namespace ICAPR_SVP.Test
@@ -9,9 +10,9 @@ namespace ICAPR_SVP.Test
     [TestClass]
     public class BrokerEyeTribeSVPTest
     {
-        private Broker.Port inputPortEyeTribe;
-        private Broker.Port inputPortSVP;
-        private Broker.Port outputPort;
+        private Port inputPortEyeTribe;
+        private Port inputPortSVP;
+        private Port outputPort;
         private Broker.Broker broker;
 
         [TestInitialize]

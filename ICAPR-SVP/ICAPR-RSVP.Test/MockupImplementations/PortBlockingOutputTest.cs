@@ -4,22 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using ICAPR_SVP.Misc;
+using ICAPR_RSVP.Broker;
 
-namespace ICAPR_SVP.Test.MockupImplementations
+namespace ICAPR_RSVP.Test.MockupImplementations
 {
     public class PortBlockingOutputTest : PortBlocking
     {
         private bool _isRunning;
 
         #region Properties
-        public override bool IsRunning
-        {
-            get
-            {
-                return _isRunning;
-            }
-        }
+        public override bool IsRunning { get { return _isRunning; } }
         #endregion
 
         public PortBlockingOutputTest()

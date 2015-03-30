@@ -14,7 +14,6 @@ namespace ICAPR_SVP.Core
             set;
         }
 
-
         public Filter()
         {
         }
@@ -25,6 +24,5 @@ namespace ICAPR_SVP.Core
         }
 
         public abstract Item execute(Item input);
-
     }
 }

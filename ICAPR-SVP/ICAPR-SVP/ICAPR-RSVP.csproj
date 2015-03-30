@@ -7,8 +7,8 @@
     <ProjectGuid>{E46A24ED-6B6B-45A8-8981-B937F9CD9D06}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ICAPR_SVP</RootNamespace>
-    <AssemblyName>ICAPR-SVP</AssemblyName>
+    <RootNamespace>ICAPR_RSVP</RootNamespace>
+    <AssemblyName>ICAPR-RSVP</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -30,8 +30,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -48,9 +48,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>ICAPR_SVP.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -71,28 +68,26 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Testing.cs" />
-    <Compile Include="TestingDataCleaning.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ICAPR-SVP.Broker\ICAPR-SVP.Broker.csproj">
+    <ProjectReference Include="..\ICAPR-RSVP.Broker\ICAPR-RSVP.Broker.csproj">
       <Project>{fcc2a784-508b-42f5-8205-ca97855eab07}</Project>
-      <Name>ICAPR-SVP.Broker</Name>
+      <Name>ICAPR-RSVP.Broker</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ICAPR-SVP.Core\ICAPR-SVP.DataCleaning.csproj">
+    <ProjectReference Include="..\ICAPR-RSVP.Core\ICAPR-RSVP.Core.csproj">
       <Project>{2d8a6fb2-b942-48a7-9511-1158461b7f0a}</Project>
-      <Name>ICAPR-SVP.DataCleaning</Name>
+      <Name>ICAPR-RSVP.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ICAPR-SVP.Misc\ICAPR-SVP.Misc.csproj">
+    <ProjectReference Include="..\ICAPR-RSVP.Misc\ICAPR-RSVP.Misc.csproj">
       <Project>{2bcf60dd-d05c-4f07-b372-e1e2b5477cfc}</Project>
-      <Name>ICAPR-SVP.Misc</Name>
+      <Name>ICAPR-RSVP.Misc</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ICAPR-SVP.Test\ICAPR-SVP.Test.csproj">
+    <ProjectReference Include="..\ICAPR-RSVP.Test\ICAPR-RSVP.Test.csproj">
       <Project>{052888de-d869-4149-9f93-667b317fab4b}</Project>
-      <Name>ICAPR-SVP.Test</Name>
+      <Name>ICAPR-RSVP.Test</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
