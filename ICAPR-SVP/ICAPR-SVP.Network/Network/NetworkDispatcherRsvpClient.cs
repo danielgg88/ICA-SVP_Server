@@ -8,7 +8,7 @@ using ICAPR_SVP.Misc;
 using ICAPR_SVP.Misc.Utils;
 using ICAPR_SVP.Broker.Calibration;
 
-namespace ICAPR_SVP.Broker
+namespace ICAPR_SVP.Network
 {
     public class NetworkDispatcherSVPClient : NetworkDispatcher
     {

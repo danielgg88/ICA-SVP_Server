@@ -79,7 +79,7 @@ namespace ICAPR_SVP.Test.MockupImplementations
                 int i = 0;
                 while(_isRunning && i++ < WORD_COUNT)
                 {
-                    timestamp = Utils.MilliTimetamp();
+                    timestamp = Utils.MilliTimestamp();
                     word = new DisplayItem<String>(timestamp,SLEEP,"test");
                     base.PushItem(new Bundle<DisplayItem<String>>(ItemTypes.DisplayItem,word));
                     Thread.Sleep(SLEEP);

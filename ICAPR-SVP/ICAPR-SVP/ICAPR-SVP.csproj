@@ -90,6 +90,10 @@
       <Project>{2bcf60dd-d05c-4f07-b372-e1e2b5477cfc}</Project>
       <Name>ICAPR-SVP.Misc</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ICAPR-SVP.Network\ICAPR-SVP.Network.csproj">
+      <Project>{d9b2b7b0-d080-4fa0-9ef2-e109e0dfd98a}</Project>
+      <Name>ICAPR-SVP.Network</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ICAPR-SVP.Test\ICAPR-SVP.Test.csproj">
       <Project>{052888de-d869-4149-9f93-667b317fab4b}</Project>
       <Name>ICAPR-SVP.Test</Name>

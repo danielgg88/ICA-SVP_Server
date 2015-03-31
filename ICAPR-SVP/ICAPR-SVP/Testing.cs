@@ -2,6 +2,7 @@
 
 using ICAPR_SVP.Misc;
 using ICAPR_SVP.Core;
+using ICAPR_SVP.Network;
 using ICAPR_SVP.Test.MockupImplementations;
 using System.Collections.Generic;
 using System.Threading;
@@ -21,18 +22,18 @@ namespace ICAPR_SVP
             Executor dataCleaner = new ExecutorDataCleaning(inputPortEyeTribe,dataCleanerOutputPort);
 
             //Create svp client network
-            Broker.NetworkDispatcherSVPClient dispatcher = new Broker.NetworkDispatcherSVPClient();
-            Broker.Network network = new Broker.Network(dispatcher,Config.Network.NET_LOCAL_HOST,
+            NetworkDispatcherSVPClient dispatcher = new NetworkDispatcherSVPClient();
+            Network.Network network = new Network.Network(dispatcher,Config.Network.NET_LOCAL_HOST,
                 Config.Network.NET_SERVER_URL,Config.Network.NET_SERVER_PORT);
 
             //Create svp client calibrator
             Broker.Calibration.Calibrator.CalibrationCallbacks calibrationCallbacks =
-                new Broker.NetworkCalibratorCallbacks(network);
+                new NetworkCalibratorCallbacks(network);
             Broker.Calibration.Calibrator calibrator = new Broker.Calibration.CalibratorSystem(
                 inputPortEyeTribeCalib,calibrationCallbacks);
 
             //Create svp client input port 
-            Misc.Port inputPortSVP = new Broker.PortNonBlockingInputSVP(network,calibrator);
+            Misc.Port inputPortSVP = new Network.PortNonBlockingInputSVP(network,calibrator);
             //Create broker output port
             Misc.Port brokerOutputPort = new Misc.PortBlockingOutput();
 

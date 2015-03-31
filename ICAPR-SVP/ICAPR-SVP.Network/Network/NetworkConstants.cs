@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ICAPR_SVP.Broker
+namespace ICAPR_SVP.Network
 {
     static class NetworkConstants
     {

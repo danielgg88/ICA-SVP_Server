@@ -154,6 +154,9 @@ namespace ICAPR_SVP.Misc.Utils
                     output += ",";
                 i++;
             }
+
+            output += " Sampling rate: " + Misc.Config.EyeTribe.SAMPLING_FREQUENCY + "\n";
+
             output = output.Remove(output.Length - 1);
             output += "\n\n Word time, Word, Duration, Eye time, L size, R size \n";
 

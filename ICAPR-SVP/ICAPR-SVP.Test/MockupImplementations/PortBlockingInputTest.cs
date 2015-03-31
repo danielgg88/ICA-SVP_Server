@@ -64,7 +64,7 @@ namespace ICAPR_SVP.Test.MockupImplementations
                 Misc.Eye eyeLeft = new Eye();
                 eyeLeft.PupilSize = rnd.Next(5,7);
 
-                timestamp = Utils.MilliTimetamp();
+                timestamp = Utils.MilliTimestamp();
                 eyes = new Eyes(timestamp,eyeRight,eyeLeft);
                 base.PushItem(new Bundle<Eyes>(ItemTypes.Eyes,eyes));
                 Thread.Sleep(SLEEP);

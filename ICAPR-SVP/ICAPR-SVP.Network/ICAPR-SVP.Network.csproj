@@ -4,24 +4,22 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FCC2A784-508B-42F5-8205-CA97855EAB07}</ProjectGuid>
+    <ProjectGuid>{D9B2B7B0-D080-4FA0-9EF2-E109E0DFD98A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ICAPR_SVP.Broker</RootNamespace>
-    <AssemblyName>ICAPR-SVP.Broker</AssemblyName>
+    <RootNamespace>ICAPR_SVP.Network</RootNamespace>
+    <AssemblyName>ICAPR-SVP.Network</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\libs\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,16 +28,21 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\libs\EyeTribe\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Fleck, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\Fleck.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="TETCSharpClient">
@@ -47,13 +50,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Brokers\Broker.cs" />
-    <Compile Include="Brokers\BrokerEyeTribeSVP.cs" />
-    <Compile Include="Calibration\Calibrator.cs" />
-    <Compile Include="Calibration\CalibratorSystem.cs" />
+    <Compile Include="Network\Network.cs" />
+    <Compile Include="Network\NetworkCalibratorCallbacks.cs" />
+    <Compile Include="Network\NetworkConstants.cs" />
+    <Compile Include="Network\NetworkDispatcher.cs" />
+    <Compile Include="Network\NetworkDispatcherRsvpClient.cs" />
+    <Compile Include="Ports\PortBlockingInputEyeTribe.cs" />
+    <Compile Include="Ports\PortNonBlockingInputSpritz.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ICAPR-SVP.Broker\ICAPR-SVP.Broker.csproj">
+      <Project>{fcc2a784-508b-42f5-8205-ca97855eab07}</Project>
+      <Name>ICAPR-SVP.Broker</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ICAPR-SVP.Misc\ICAPR-SVP.Misc.csproj">
       <Project>{2bcf60dd-d05c-4f07-b372-e1e2b5477cfc}</Project>
       <Name>ICAPR-SVP.Misc</Name>

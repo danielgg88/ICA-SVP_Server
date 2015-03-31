@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ICAPR_SVP.Broker.Calibration;
 
-namespace ICAPR_SVP.Broker
+namespace ICAPR_SVP.Network
 {
-    public class NetworkCalibratorCallbacks : Calibration.Calibrator.CalibrationCallbacks
+    public class NetworkCalibratorCallbacks : Calibrator.CalibrationCallbacks
     {
         public Network Network
         {

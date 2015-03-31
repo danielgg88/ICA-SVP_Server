@@ -11,7 +11,9 @@ namespace ICAPR_SVP.Misc.Utils
 {
     public static class Utils
     {
-        public static long MilliTimetamp()
+        public const double PX_MM = 377.95275593333;
+
+        public static long MilliTimestamp()
         {
             DateTime d1 = new DateTime(1970,1,1);
             DateTime d2 = DateTime.UtcNow;
@@ -29,6 +31,11 @@ namespace ICAPR_SVP.Misc.Utils
         public static double DateTimeToUnixTimestamp(DateTime dateTime)
         {
             return (dateTime - new DateTime(1970,1,1).ToLocalTime()).TotalSeconds;
+        }
+
+        public static double PixelsToMM(double pixels)
+        {
+            return pixels / PX_MM;
         }
 
         public static void launchEyeTribeCalibration()

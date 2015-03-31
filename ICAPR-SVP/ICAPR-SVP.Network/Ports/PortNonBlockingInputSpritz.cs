@@ -2,7 +2,7 @@
 using ICAPR_SVP.Broker.Calibration;
 using ICAPR_SVP.Misc;
 
-namespace ICAPR_SVP.Broker
+namespace ICAPR_SVP.Network
 {
     public class PortNonBlockingInputSVP : PortNonBlocking
     {

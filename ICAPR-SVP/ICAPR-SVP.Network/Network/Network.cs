@@ -4,7 +4,7 @@ using ICAPR_SVP.Misc;
 using Newtonsoft.Json;
 using ICAPR_SVP.Broker.Calibration;
 
-namespace ICAPR_SVP.Broker
+namespace ICAPR_SVP.Network
 {
     public class Network
     {

@@ -6,7 +6,7 @@ using System.Threading;
 using ICAPR_SVP.Misc;
 using ICAPR_SVP.Misc.Utils;
 
-namespace ICAPR_SVP.Broker
+namespace ICAPR_SVP.Network
 {
     public class PortBlockingInputEyeTribe : PortBlocking,IConnectionStateListener,IGazeListener
     {
@@ -49,16 +49,13 @@ namespace ICAPR_SVP.Broker
             {
                 //Get left eye data
                 Misc.Eye leftEye = new Misc.Eye();
-                leftEye.PupilSize = Math.Round(gazeData.LeftEye.PupilSize,2);
-                ;
+                leftEye.PupilSize = Math.Round(Misc.Utils.Utils.PixelsToMM(gazeData.LeftEye.PupilSize),2);
                 //Get right eye data
                 Misc.Eye rightEye = new Misc.Eye();
-                rightEye.PupilSize = Math.Round(gazeData.RightEye.PupilSize,2);
-
+                rightEye.PupilSize = Math.Round(Misc.Utils.Utils.PixelsToMM(gazeData.RightEye.PupilSize),2);
                 //Create a new item and push into the port queue
-                //TODO usea real timpestamp
-                //Eyes eyes = new Eyes(Utils.WinMilliTimestampToUnix(gazeData.TimeStamp), leftEye, rightEye);
-                Eyes eyes = new Eyes(Misc.Utils.Utils.MilliTimetamp(),leftEye,rightEye);
+                //Eyes eyes = new Eyes(Misc.Utils.Utils.MilliTimetamp(),leftEye,rightEye);
+                Eyes eyes = new Eyes(Utils.WinMilliTimestampToUnix(gazeData.TimeStamp),leftEye,rightEye);
                 Bundle<Eyes> bundle = new Bundle<Eyes>(ItemTypes.Eyes,eyes);
                 PushItem(bundle);
             }

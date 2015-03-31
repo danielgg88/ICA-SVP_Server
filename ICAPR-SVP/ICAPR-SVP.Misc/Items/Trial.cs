@@ -21,6 +21,14 @@ namespace ICAPR_SVP.Misc.Items
             get;
             private set;
         }
+        [JsonProperty(PropertyName = "sampling_rate")]
+        public int SamplingRate
+        {
+            get
+            {
+                return Misc.Config.EyeTribe.SAMPLING_FREQUENCY;
+            }
+        }
 
         public Trial(ExperimentConfig config,List<DisplayItemAndEyes<T>> data)
         {
