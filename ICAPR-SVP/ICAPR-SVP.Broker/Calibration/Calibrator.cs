@@ -60,7 +60,7 @@ namespace ICAPR_SVP.Broker.Calibration
         public void Calibrate()
         {
             AvgPupilSize = 0;
-            for(int i = 0;i < Config.CALIB_TOTAL_SAMPLES;i++)
+            for(int i = 0;i < Config.Calibration.CALIB_TOTAL_SAMPLES;i++)
             {
                 this.mEyeData.Add(this.InputPort.GetItem());
             }

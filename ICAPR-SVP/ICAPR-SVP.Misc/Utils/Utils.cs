@@ -33,12 +33,12 @@ namespace ICAPR_SVP.Misc.Utils
 
         public static void launchEyeTribeCalibration()
         {
-            Process.Start(Config.EYETRIBE_CALIBRATION_EXE);
+            Process.Start(Config.EyeTribe.EYETRIBE_CALIBRATION_EXE);
         }
 
         public static void launchEyeTribeServer()
         {
-            Process.Start(Config.EYETRIBE_SERVER_EXE);
+            Process.Start(Config.EyeTribe.EYETRIBE_SERVER_EXE);
             Thread.Sleep(3000);
         }
     }

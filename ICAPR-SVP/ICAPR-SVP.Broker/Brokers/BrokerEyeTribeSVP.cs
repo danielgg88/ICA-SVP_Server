@@ -127,7 +127,7 @@ namespace ICAPR_SVP.Broker
                 {
                     List<Eyes> reducedEyesList = new List<Eyes>();
                     Eyes lastEyes = null;
-                    int time_window = 1000 / Config.SAMPLING_FREQUENCY;
+                    int time_window = 1000 / Config.EyeTribe.SAMPLING_FREQUENCY;
 
                     foreach(Eyes eyes in _listCurrentEyes)
                     {

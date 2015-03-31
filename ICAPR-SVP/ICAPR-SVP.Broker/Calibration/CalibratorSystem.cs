@@ -10,7 +10,8 @@ namespace ICAPR_SVP.Broker.Calibration
     public class CalibratorSystem : Calibrator
     {
         #region Public
-        public CalibratorSystem(Port port,CalibrationCallbacks callbacks) : base(port,callbacks)
+        public CalibratorSystem(Port port,CalibrationCallbacks callbacks)
+            : base(port,callbacks)
         {
         }
         #endregion
@@ -35,7 +36,7 @@ namespace ICAPR_SVP.Broker.Calibration
         {
             //Clean sampled puil size data before calculating the baseline pupil size
             List<Eyes> eyesData = new List<Eyes>();
-            
+
             //TODO Clean
             foreach(Item item in items)
             {

@@ -25,8 +25,8 @@ namespace ICAPR_SVP
 
             //Create svp client network
             Broker.NetworkDispatcherSVPClient dispatcher = new Broker.NetworkDispatcherSVPClient();
-            Broker.Network network = new Broker.Network(dispatcher,Config.NET_LOCAL_HOST,
-                Config.NET_SERVER_URL,Config.NET_SERVER_PORT);
+            Broker.Network network = new Broker.Network(dispatcher,Config.Network.NET_LOCAL_HOST,
+                Config.Network.NET_SERVER_URL,Config.Network.NET_SERVER_PORT);
 
             //Create svp client calibrator
             Broker.Calibration.Calibrator.CalibrationCallbacks calibrationCallbacks =

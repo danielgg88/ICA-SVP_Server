@@ -35,7 +35,7 @@ namespace ICAPR_SVP
             }
 
             //Pull items
-            for(int i = 0; i<trial.ExperimentData.Count;i++)
+            for(int i = 0;i < trial.ExperimentData.Count;i++)
             {
                 DisplayItemAndEyes<String> item = (DisplayItemAndEyes<String>)outputPort.GetItem().Value;
             }

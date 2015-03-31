@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="ExecutorDataCleaning.cs" />
     <Compile Include="Executor.cs" />
+    <Compile Include="Filters\BlinkDetection.cs" />
     <Compile Include="Filters\Filter.cs" />
     <Compile Include="Filters\FilterComposite.cs" />
     <Compile Include="Filters\FilterLogger.cs" />
