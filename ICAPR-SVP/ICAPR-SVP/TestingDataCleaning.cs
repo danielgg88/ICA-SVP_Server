@@ -10,22 +10,23 @@ using ICAPR_SVP.Misc.Items;
 
 namespace ICAPR_SVP
 {
-    class TestingDataCleaning
+    public class TestingDataCleaning
     {
         static void Main(string[] args)
         {
-            //Create file manager
-            Misc.Utils.FileManager<String> fm = new Misc.Utils.FileManager<string>();
             //Load log file
-            String json = fm.getJsonFile("test_20150325093316620");
+            String json = Misc.Utils.FileManager<string>.getJsonFile("test_20150325093316620");
             Trial<String> trial = JsonConvert.DeserializeObject<Trial<String>>(json);
 
             //Add ports
             Misc.Port inputPort = new Misc.PortBlockingOutput();
             Misc.Port outputPort = new Misc.PortBlockingOutput();
+            Executor dataCleaner = new ExecutorDataCleaning(inputPort,outputPort);
+
+            //Start ports
             inputPort.Start();
             outputPort.Start();
-            Executor dataCleaner = new ExecutorDataCleaning(fm,inputPort,outputPort);
+            //Start services
             dataCleaner.startInBackground();
 
             //Push items
@@ -40,8 +41,12 @@ namespace ICAPR_SVP
                 DisplayItemAndEyes<String> item = (DisplayItemAndEyes<String>)outputPort.GetItem().Value;
             }
 
-            //Stop cleaner
+            //Stop services
             dataCleaner.stop();
+            //Stop ports
+            inputPort.Stop();
+            outputPort.Stop();
+
             Console.WriteLine("Cleaner stopped");
             Console.Read();
         }

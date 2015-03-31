@@ -33,23 +33,11 @@ namespace ICAPR_SVP.Broker
             return AddPort(port,this._listOutputPort);
         }
 
-        public bool Start()
+        public void Start()
         {
-            bool error = false;
-            //Start input ports
-            if(StartPorts(this._listInputPort))
-                error = true;
-            //Start output ports
-            if(StartPorts(this._listOutputPort))
-                error = true;
-            //Execute broker
-            if(!error)
-            {
-                _shouldStop = false;
-                _workerThread = new Thread(DoWork);
-                _workerThread.Start();
-            }
-            return !error;
+            _shouldStop = false;
+            _workerThread = new Thread(DoWork);
+            _workerThread.Start();
         }
 
         public void DoWork()
@@ -66,8 +54,6 @@ namespace ICAPR_SVP.Broker
             //Stop all ports
             _shouldStop = true;
             _workerThread.Join();
-            StopPorts(this._listInputPort);
-            StopPorts(this._listOutputPort);
         }
         #endregion Private methods
 
@@ -83,29 +69,7 @@ namespace ICAPR_SVP.Broker
             }
             else
                 return false;
-        }
-
-        private bool StartPorts(List<Port> listPort)
-        {
-            //Start each port in the list
-            bool error = false;
-            foreach(Port port in listPort)
-            {
-                port.Start();
-                if(!port.IsRunning)
-                    error = true;
-            }
-            return error;
-        }
-
-        private void StopPorts(List<Port> listPort)
-        {
-            //Stop each port in the list
-            foreach(Port port in listPort)
-            {
-                port.Stop();
-            }
-        }
+        } 
         #endregion
 
         #region Protected

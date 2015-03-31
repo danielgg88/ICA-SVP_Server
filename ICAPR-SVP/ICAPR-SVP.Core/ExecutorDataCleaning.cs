@@ -21,19 +21,11 @@ namespace ICAPR_SVP.Core
             private set;
         }
 
-        Misc.Utils.FileManager<String> FileManager
-        {
-            get;
-            set;
-        }
-
-        public ExecutorDataCleaning(Misc.Utils.FileManager<String> fm,Port input,Port output)
+        public ExecutorDataCleaning(Port input,Port output)
             : base()
         {
-            this.FileManager = fm;
             this.InputPort = input;
             this.OutputPort = output;
-            this.AddFilter(new Filters.FilterLogger(this.FileManager));
         }
 
         protected override void init()
@@ -51,12 +43,15 @@ namespace ICAPR_SVP.Core
                 result = filter.execute(item);
                 item = result;
             }
-            OutputPort.PushItem(result);
+
+            if(Filters.Count > 0)
+                OutputPort.PushItem(result);
+            else
+                OutputPort.PushItem(item);
         }
 
         protected override void onStop()
         {
-            FileManager.SaveLog();
         }
     }
 }

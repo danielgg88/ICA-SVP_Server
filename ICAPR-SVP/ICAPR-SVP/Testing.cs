@@ -8,20 +8,17 @@ using System.Threading;
 
 namespace ICAPR_SVP
 {
-    class Testing
+    public class Testing
     {
         static void Main(string[] args)
         {
-            //************TESTING**********************
+            //Create EyeTribe input ports
             Misc.Port inputPortEyeTribe = new PortBlockingInputTest();
             Misc.Port inputPortEyeTribeCalib = new PortBlockingInputTest();
-            //Misc.Port inputPortSVP = new PortNonBlockingInputTest();
-            //Misc.Port outputPort = new PortBlockingOutputTest();
-            //*****************************************
 
-            //Create EyeTribe input ports
-            //Misc.Port inputPortEyeTribe = new Broker.PortBlockingInputEyeTribe();
-            //Misc.Port inputPortEyeTribeCalib = new Broker.PortBlockingInputEyeTribe();
+            //Create data cleaning executor
+            Misc.Port dataCleanerOutputPort = new Misc.PortBlockingOutput();
+            Executor dataCleaner = new ExecutorDataCleaning(inputPortEyeTribe,dataCleanerOutputPort);
 
             //Create svp client network
             Broker.NetworkDispatcherSVPClient dispatcher = new Broker.NetworkDispatcherSVPClient();
@@ -36,57 +33,41 @@ namespace ICAPR_SVP
 
             //Create svp client input port 
             Misc.Port inputPortSVP = new Broker.PortNonBlockingInputSVP(network,calibrator);
-
             //Create broker output port
             Misc.Port brokerOutputPort = new Misc.PortBlockingOutput();
 
             //Create Broker
             Broker.Broker broker = new Broker.BrokerEyeTribeSVP<String>();
-            broker.AddInput(inputPortEyeTribe);
+            broker.AddInput(dataCleanerOutputPort);
             broker.AddInput(inputPortSVP);
             broker.AddOutput(brokerOutputPort);
-            broker.Start();
 
             //Create file manager
-            Misc.Utils.FileManager<String> fm = new Misc.Utils.FileManager<string>();
+            Misc.Utils.FileManager<String> fm = new Misc.Utils.FileManager<string>(brokerOutputPort);
 
-            //Create data cleaning executor
-            Misc.Port dataCleanerOutputPort = new Misc.PortBlockingOutput();
-            Executor dataCleaner = new ExecutorDataCleaning(fm,brokerOutputPort,dataCleanerOutputPort);
+            //Start ports
+            inputPortEyeTribe.Start();
+            inputPortEyeTribeCalib.Start();
+            dataCleanerOutputPort.Start();
+            inputPortSVP.Start();
+            brokerOutputPort.Start();
+            //Start services
             dataCleaner.startInBackground();
+            broker.Start();
+            fm.Start();
 
-            //************TESTING**********************
-            /*
-            Thread t = new Thread(() =>
-            {
-                Misc.Utils.FileManager<String> fw = new Misc.Utils.FileManager<String>("test");
-                int i = 0;
-                while (i < PortNonBlockingInputTest.WORD_COUNT * PortNonBlockingInputTest.NUMBER_TRIALS)
-                {
-                    try
-                    {
-                        Item item = outputPort.GetItem();
-                        fw.AddToFile(item);
-                        if (item.Type == ItemTypes.DisplayItemAndEyes)
-                            i++;
-                    }
-                    catch (ThreadInterruptedException)
-                    {
-                        break;
-                    }
-                }
-                //Create CSV and JSON files
-                fw.SaveLog();
-            });
-            t.Start();
-            */
-            //***************************************** 
-
-            //Stop application
+            //Stop services
             Console.WriteLine("Press any key to stop the server..");
             Console.Read();
             dataCleaner.stop();
             broker.Stop();
+            fm.Stop();
+            //Stop ports
+            inputPortEyeTribe.Stop();
+            inputPortEyeTribeCalib.Stop();
+            dataCleanerOutputPort.Stop();
+            inputPortSVP.Stop();
+            brokerOutputPort.Stop();
 
             Console.WriteLine("Server stopped");
             Console.Read();

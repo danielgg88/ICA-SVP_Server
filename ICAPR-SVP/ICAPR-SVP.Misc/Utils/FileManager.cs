@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.IO;
 using ICAPR_SVP.Misc.Items;
 using Newtonsoft.Json.Linq;
+using System.Threading;
 
 namespace ICAPR_SVP.Misc.Utils
 {
@@ -15,15 +16,27 @@ namespace ICAPR_SVP.Misc.Utils
     {
         private const String LOGS_FOLDER = @"\logs\";       //Folder to save logs
         private ConcurrentQueue<Item> _itemQueue;           //List of items to save
-        private String _basePath;                           //Base path (Desktop)
+        private static String _basePath                       //Base path (Desktop)
+            = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         private ExperimentConfig _currentConfig;            //Experiment current configuration
+        private Port _inputPort;                            //Input port to read items from
+        private Thread _workerThread;
+        private bool _isRunning;
 
         #region Public writing methods
 
-        public FileManager()
+        public FileManager(Port inputPort)
         {
             _itemQueue = new ConcurrentQueue<Item>();
+            _inputPort = inputPort;
             init();
+        }
+
+        public void Start()
+        {
+            _workerThread = new Thread(DoWork);
+            _workerThread.Start();
+            this._isRunning = true;
         }
 
         public void AddToFile(Item item)
@@ -61,11 +74,18 @@ namespace ICAPR_SVP.Misc.Utils
             }
         }
 
+        public void Stop()
+        {
+            this._isRunning = false;
+            _workerThread.Interrupt();
+            SaveLog();
+        }
+
         #endregion
 
         #region Public reading methods
 
-        public String getJsonFileList()
+        public static String getJsonFileList()
         {
             //Get the list of saved files in JSON format
             List<object> files = new List<object>();
@@ -80,7 +100,7 @@ namespace ICAPR_SVP.Misc.Utils
             return Newtonsoft.Json.JsonConvert.SerializeObject(files);
         }
 
-        public String getJsonFile(String fileName)
+        public static String getJsonFile(String fileName)
         {
             //Return JSON file content
             String path = _basePath + LOGS_FOLDER + fileName + ".json";
@@ -96,11 +116,24 @@ namespace ICAPR_SVP.Misc.Utils
 
         private void init()
         {
-            //Create logs folder if it does not exist
-            _basePath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            //Create logs folder if it does not exist 
             bool exists = Directory.Exists(_basePath + LOGS_FOLDER);
             if(!exists)
                 Directory.CreateDirectory(_basePath + LOGS_FOLDER);
+        }
+
+        private void DoWork()
+        {
+            try
+            {
+                while(this._isRunning)
+                {
+                    this.AddToFile(_inputPort.GetItem());
+                }
+            }
+            catch(ThreadInterruptedException)
+            {
+            }
         }
 
         private void WriteCsvFile(String fileName,List<Item> items)

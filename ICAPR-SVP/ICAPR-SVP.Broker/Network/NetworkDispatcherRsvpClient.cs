@@ -47,8 +47,7 @@ namespace ICAPR_SVP.Broker
 
                 case NetworkConstants.TYPE_TRIALS:
                     Console.WriteLine("Network: receieved -> get: all");
-                    FileManager<String> fm = new FileManager<string>();
-                    String trials = fm.getJsonFileList();
+                    String trials = Misc.Utils.FileManager<String>.getJsonFileList();
                     String wrapper = "{\"type\":\"" + NetworkConstants.TYPE_TRIALS + "\" , \"trials\": " + trials + "}";
                     result = wrapper;
                     break;
@@ -56,8 +55,8 @@ namespace ICAPR_SVP.Broker
                 case NetworkConstants.TYPE_SINGLE_TRIAL:
                     String file_name = (String)json["content"];
                     Console.WriteLine("Network: receieved -> get: " + file_name);
-                    FileManager<String> fmm = new FileManager<string>();
-                    String response = fmm.getJsonFile(file_name);
+
+                    String response = Misc.Utils.FileManager<String>.getJsonFile(file_name);
                     String wrapperResponse = "{\"type\":\"" + NetworkConstants.TYPE_SINGLE_TRIAL + "\" , \"trial\": " + response + "}";
                     return wrapperResponse;
 

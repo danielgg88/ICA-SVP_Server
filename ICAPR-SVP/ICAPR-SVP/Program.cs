@@ -8,13 +8,17 @@ using System.Threading;
 
 namespace ICAPR_SVP
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
             //Create EyeTribe input ports
             Misc.Port inputPortEyeTribe = new Broker.PortBlockingInputEyeTribe();
             Misc.Port inputPortEyeTribeCalib = new Broker.PortBlockingInputEyeTribe();
+
+            //Create data cleaning executor
+            Misc.Port dataCleanerOutputPort = new Misc.PortBlockingOutput();
+            Executor dataCleaner = new ExecutorDataCleaning(inputPortEyeTribe,dataCleanerOutputPort);
 
             //Create svp client network
             Broker.NetworkDispatcherSVPClient dispatcher = new Broker.NetworkDispatcherSVPClient();
@@ -29,30 +33,41 @@ namespace ICAPR_SVP
 
             //Create svp client input port 
             Misc.Port inputPortSVP = new Broker.PortNonBlockingInputSVP(network,calibrator);
-
             //Create broker output port
             Misc.Port brokerOutputPort = new Misc.PortBlockingOutput();
 
             //Create Broker
             Broker.Broker broker = new Broker.BrokerEyeTribeSVP<String>();
-            broker.AddInput(inputPortEyeTribe);
+            broker.AddInput(dataCleanerOutputPort);
             broker.AddInput(inputPortSVP);
             broker.AddOutput(brokerOutputPort);
-            broker.Start();
 
             //Create file manager
-            Misc.Utils.FileManager<String> fm = new Misc.Utils.FileManager<string>();
+            Misc.Utils.FileManager<String> fm = new Misc.Utils.FileManager<string>(brokerOutputPort);
 
-            //Create data cleaning executor
-            Misc.Port dataCleanerOutputPort = new Misc.PortBlockingOutput();
-            Executor dataCleaner = new ExecutorDataCleaning(fm,brokerOutputPort,dataCleanerOutputPort);
+            //Start ports
+            inputPortEyeTribe.Start();
+            inputPortEyeTribeCalib.Start();
+            dataCleanerOutputPort.Start();
+            inputPortSVP.Start();
+            brokerOutputPort.Start();
+            //Start services
             dataCleaner.startInBackground();
+            broker.Start();
+            fm.Start();
 
-            //Stop application
+            //Stop services
             Console.WriteLine("Press any key to stop the server..");
             Console.Read();
             dataCleaner.stop();
             broker.Stop();
+            fm.Stop();
+            //Stop ports
+            inputPortEyeTribe.Stop();
+            inputPortEyeTribeCalib.Stop();
+            dataCleanerOutputPort.Stop();
+            inputPortSVP.Stop();
+            brokerOutputPort.Stop();
 
             Console.WriteLine("Server stopped");
             Console.Read();
