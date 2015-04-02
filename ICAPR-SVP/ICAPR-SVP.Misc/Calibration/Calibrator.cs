@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using ICAPR_SVP.Misc;
 
-namespace ICAPR_SVP.Broker.Calibration
+namespace ICAPR_SVP.Misc.Calibration
 {
     public abstract class Calibrator
     {

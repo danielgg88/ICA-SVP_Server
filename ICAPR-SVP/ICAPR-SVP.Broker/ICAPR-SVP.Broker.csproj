@@ -49,8 +49,6 @@
   <ItemGroup>
     <Compile Include="Brokers\Broker.cs" />
     <Compile Include="Brokers\BrokerEyeTribeSVP.cs" />
-    <Compile Include="Calibration\Calibrator.cs" />
-    <Compile Include="Calibration\CalibratorSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -34,9 +34,9 @@ namespace ICAPR_SVP
                 Config.Network.NET_SERVER_URL,Config.Network.NET_SERVER_PORT);
 
             //Create svp client calibrator
-            Broker.Calibration.Calibrator.CalibrationCallbacks calibrationCallbacks =
+            Misc.Calibration.Calibrator.CalibrationCallbacks calibrationCallbacks =
                 new Network.NetworkCalibratorCallbacks(network);
-            Broker.Calibration.Calibrator calibrator = new Broker.Calibration.CalibratorSystem(
+            Misc.Calibration.Calibrator calibrator = new Misc.Calibration.CalibratorSystem(
                 inputPortEyeTribeCalib,calibrationCallbacks);
 
             //Create svp client input port 

@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calibration\Calibrator.cs" />
+    <Compile Include="Calibration\CalibratorSystem.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Items\CalibrationItem.cs" />
     <Compile Include="Items\EndOfTrial.cs" />
