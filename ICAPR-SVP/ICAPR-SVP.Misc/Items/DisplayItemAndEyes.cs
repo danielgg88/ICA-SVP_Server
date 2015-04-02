@@ -15,17 +15,11 @@ namespace ICAPR_SVP.Misc
             get;
             private set;
         }   //Null when idle time
-        [JsonProperty(PropertyName = "eyes_original")]
-        public Queue<Eyes> EyesOriginal
+        [JsonProperty(PropertyName = "eyes")]
+        public Queue<Eyes> Eyes
         {
             get;
             private set;
-        }
-        [JsonProperty(PropertyName = "eyes_processed")]
-        public Queue<Eyes> EyesProcessed
-        {
-            get;
-            set;
         }
         [JsonProperty(PropertyName = "summary")]
         public SummaryItem SummaryItem
@@ -37,7 +31,7 @@ namespace ICAPR_SVP.Misc
         public DisplayItemAndEyes(Queue<Eyes> eyes,DisplayItem<T> word)
         {
             DisplayItem = word;
-            EyesOriginal = eyes;
+            Eyes = eyes;
         }
     }
 }

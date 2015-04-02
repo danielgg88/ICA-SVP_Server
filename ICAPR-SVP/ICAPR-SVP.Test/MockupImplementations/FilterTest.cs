@@ -18,7 +18,13 @@ namespace ICAPR_SVP.Test.MockupImplementations
 
         protected override void OnExecute(Port input,Port output)
         {
-            output.PushItem(input.GetItem());
+            Item item = input.GetItem();
+            Eyes eyes = (Eyes)item.Value;
+            eyes.LeftEyeProcessed = new Eye();
+            eyes.RightEyeProcessed = new Eye();
+            eyes.LeftEyeProcessed.PupilSize = 5;
+            eyes.RightEyeProcessed.PupilSize = 5;
+            output.PushItem(item);
         }
         protected override void OnStop(Port output)
         {

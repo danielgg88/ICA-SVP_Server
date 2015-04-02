@@ -88,6 +88,9 @@ namespace ICAPR_SVP.DataCleaning
         private void AddPossibleBlinkFlagToEyes(Item item)
         {
             Eyes eyes = (Eyes)item.Value;
+            eyes.LeftEyeProcessed = new Eye();
+            eyes.RightEyeProcessed = new Eye();
+
             //Validate LEFT pupil size againts threshold
             if(eyes.LeftEye.PupilSize < getCurrentAvgPupilSize()[0] - Config.Cleaning.BLINK_DIAMETER_THRESHOLD_LOW_MM)
                 eyes.LeftEye.CleaningFlag = Eye.CleaningFlags.PossibleBlink;
