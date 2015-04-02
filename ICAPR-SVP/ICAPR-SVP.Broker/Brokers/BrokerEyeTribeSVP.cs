@@ -102,7 +102,6 @@ namespace ICAPR_SVP.Broker
         {
             //Create object to output
             DisplayItem<T> tmpWord = null;
-
             if(this._listCurrentEyes.Count > 0)
             {
                 //Null = delay between words
@@ -128,7 +127,6 @@ namespace ICAPR_SVP.Broker
                     List<Eyes> reducedEyesList = new List<Eyes>();
                     Eyes lastEyes = null;
                     int time_window = 1000 / Config.EyeTribe.SAMPLING_FREQUENCY;
-
                     foreach(Eyes eyes in _listCurrentEyes)
                     {
                         //Set first timestamp of the trial for graph client purpose

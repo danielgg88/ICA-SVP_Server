@@ -17,17 +17,19 @@ namespace ICAPR_SVP.Broker.Calibration
         #endregion
 
         #region Protected
-        protected override double ComputeAvgPupilSize(List<Item> items)
+        protected override double[] ComputeAvgPupilSize(List<Item> items)
         {
             //Calculate the average pupil size (both eyes)
             List<Eyes> eyesData = CleanEyeData(items);
-            double sum = 0;
+            double sum_left = 0;
+            double sum_right = 0;
             foreach(Eyes eyeData in eyesData)
             {
-                sum += eyeData.LeftEye.PupilSize;
-                sum += eyeData.RightEye.PupilSize;
+                sum_left += eyeData.LeftEye.PupilSize;
+                sum_right += eyeData.RightEye.PupilSize;
             }
-            return sum / (eyesData.Count * 2);
+            double[] result = { sum_left / eyesData.Count,sum_right / eyesData.Count };
+            return result;
         }
         #endregion
 

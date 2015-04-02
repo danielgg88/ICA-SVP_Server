@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace ICAPR_SVP.Test.MockupImplementations
 {
-    public class PortNonBlockingInputTest : PortNonBlocking
+    public class PortNonBlockingSVPTest : PortNonBlocking
     {
         public static readonly int NUMBER_TRIALS = 1;
         public static readonly int WORD_COUNT = 10;
@@ -29,7 +29,7 @@ namespace ICAPR_SVP.Test.MockupImplementations
         }
         #endregion
 
-        public PortNonBlockingInputTest()
+        public PortNonBlockingSVPTest()
             : base()
         {
             _workerThread = new Thread(DoWork);

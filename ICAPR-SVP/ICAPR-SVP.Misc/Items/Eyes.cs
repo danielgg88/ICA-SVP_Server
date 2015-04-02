@@ -23,6 +23,19 @@ namespace ICAPR_SVP.Misc
             private set;
         }
 
+        [JsonProperty(PropertyName = "left_eye_processed")]
+        public Eye LeftEyeProcessed
+        {
+            get;
+            set;
+        }
+        [JsonProperty(PropertyName = "right_eye_processed")]
+        public Eye RightEyeProcessed
+        {
+            get;
+            set;
+        }
+
         public Eyes(long timestamp,Eye left,Eye right)
         {
             Timestamp = timestamp;

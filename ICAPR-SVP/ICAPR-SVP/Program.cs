@@ -1,7 +1,7 @@
 ﻿using System;
 
 using ICAPR_SVP.Misc;
-using ICAPR_SVP.Core;
+using ICAPR_SVP.DataCleaning;
 using ICAPR_SVP.Network;
 using ICAPR_SVP.Test.MockupImplementations;
 using System.Collections.Generic;
@@ -16,10 +16,17 @@ namespace ICAPR_SVP
             //Create EyeTribe input ports
             Misc.Port inputPortEyeTribe = new Network.PortBlockingInputEyeTribe();
             Misc.Port inputPortEyeTribeCalib = new Network.PortBlockingInputEyeTribe();
+            Run(inputPortEyeTribe,inputPortEyeTribeCalib);
+        }
 
+        public static void Run(Port inputPortEyeTribe,Port inputPortEyeTribeCalib)
+        {
             //Create data cleaning executor
-            Misc.Port dataCleanerOutputPort = new Misc.PortBlockingOutput();
-            Executor dataCleaner = new ExecutorDataCleaning(inputPortEyeTribe,dataCleanerOutputPort);
+            Misc.Port dataCleanerOutputPort = new Misc.PortBlockingDefaultImpl();
+            DataCleaningExecutor dataCleaner = new DataCleaningExecutor(inputPortEyeTribe,dataCleanerOutputPort);
+
+            //TODO remove testing
+            dataCleaner.AddFilter(new FilterTest());
 
             //Create svp client network
             Network.NetworkDispatcherSVPClient dispatcher = new Network.NetworkDispatcherSVPClient();
@@ -35,7 +42,7 @@ namespace ICAPR_SVP
             //Create svp client input port 
             Misc.Port inputPortSVP = new Network.PortNonBlockingInputSVP(network,calibrator);
             //Create broker output port
-            Misc.Port brokerOutputPort = new Misc.PortBlockingOutput();
+            Misc.Port brokerOutputPort = new Misc.PortBlockingDefaultImpl();
 
             //Create Broker
             Broker.Broker broker = new Broker.BrokerEyeTribeSVP<String>();
@@ -52,6 +59,7 @@ namespace ICAPR_SVP
             dataCleanerOutputPort.Start();
             inputPortSVP.Start();
             brokerOutputPort.Start();
+
             //Start services
             dataCleaner.startInBackground();
             broker.Start();
@@ -60,18 +68,20 @@ namespace ICAPR_SVP
             //Stop services
             Console.WriteLine("Press any key to stop the server..");
             Console.Read();
+            Console.WriteLine("Stopping..");
             dataCleaner.stop();
             broker.Stop();
             fm.Stop();
+
             //Stop ports
             inputPortEyeTribe.Stop();
             inputPortEyeTribeCalib.Stop();
             dataCleanerOutputPort.Stop();
             inputPortSVP.Stop();
             brokerOutputPort.Stop();
-
+            Console.ReadLine();
             Console.WriteLine("Server stopped");
-            Console.Read();
+            Console.ReadLine();
         }
     }
 }

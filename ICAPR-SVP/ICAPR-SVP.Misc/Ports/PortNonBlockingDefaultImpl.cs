@@ -1,6 +1,12 @@
-﻿namespace ICAPR_SVP.Misc
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ICAPR_SVP.Misc
 {
-    public class PortBlockingOutput : PortBlocking
+    public class PortNonBlockingDefaultImpl : PortNonBlocking
     {
         private bool _isRunning;
 

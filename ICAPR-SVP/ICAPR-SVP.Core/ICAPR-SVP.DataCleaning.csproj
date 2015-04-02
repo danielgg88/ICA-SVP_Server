@@ -41,9 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExecutorDataCleaning.cs" />
-    <Compile Include="Executor.cs" />
-    <Compile Include="Filters\BlinkDetection.cs" />
+    <Compile Include="DataCleaningExecutor.cs" />
+    <Compile Include="Filters\FilterBlinkDetection.cs" />
     <Compile Include="Filters\Filter.cs" />
     <Compile Include="Filters\FilterComposite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

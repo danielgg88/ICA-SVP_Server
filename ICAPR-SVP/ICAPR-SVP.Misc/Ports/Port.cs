@@ -4,6 +4,12 @@ namespace ICAPR_SVP.Misc
 {
     public abstract class Port
     {
+        public string Name
+        {
+            get;
+            set;
+        }
+
         #region Abstract
         public abstract Item GetItem();             //Implemented by the port type (bloking/non-blocking)
         public abstract void PushItem(Item item);   //Implemented by the port type (bloking/non-blocking)

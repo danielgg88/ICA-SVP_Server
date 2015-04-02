@@ -12,7 +12,7 @@ using ICAPR_SVP.Misc.Utils;
 namespace ICAPR_SVP.Test.MockupImplementations
 {
     //Test simulating EyeTribe data input
-    public class PortBlockingInputTest : PortBlocking
+    public class PortBlockingEyeTribeTest : PortBlocking
     {
         public static readonly int SLEEP = 5;
         private Thread _workerThread;
@@ -28,7 +28,7 @@ namespace ICAPR_SVP.Test.MockupImplementations
         }
         #endregion
 
-        public PortBlockingInputTest()
+        public PortBlockingEyeTribeTest()
             : base()
         {
 

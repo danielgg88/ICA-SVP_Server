@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using ICAPR_SVP.Misc;
 
 namespace ICAPR_SVP.Broker.Calibration
 {
     public abstract class Calibrator
     {
+        private static Object mLock = new Object();
+        private static double[] mAvgPupilSize;
         private List<Item> mEyeData = new List<Item>();
 
         public Port InputPort
@@ -16,10 +19,22 @@ namespace ICAPR_SVP.Broker.Calibration
             get;
             private set;
         }
-        public double AvgPupilSize
+        public static double[] AvgPupilSize
         {
-            get;
-            private set;
+            get
+            {
+                lock(mLock)
+                {
+                    return mAvgPupilSize;
+                }
+            }
+            set
+            {
+                lock(mLock)
+                {
+                    mAvgPupilSize = value;
+                }
+            }
         }
         public Boolean IsCalibrated
         {
@@ -59,7 +74,7 @@ namespace ICAPR_SVP.Broker.Calibration
 
         public void Calibrate()
         {
-            AvgPupilSize = 0;
+            AvgPupilSize = null;
             for(int i = 0;i < Config.Calibration.CALIB_TOTAL_SAMPLES;i++)
             {
                 this.mEyeData.Add(this.InputPort.GetItem());
@@ -71,7 +86,7 @@ namespace ICAPR_SVP.Broker.Calibration
         #endregion
 
         #region Protected
-        protected abstract double ComputeAvgPupilSize(List<Item> eyeData);
+        protected abstract double[] ComputeAvgPupilSize(List<Item> eyeData);
         #endregion
 
         #region private

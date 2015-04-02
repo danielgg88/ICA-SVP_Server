@@ -19,10 +19,16 @@ namespace ICAPR_SVP.Test
         public void Initialize()
         {
             //Create inputs
-            inputPortEyeTribe = new PortBlockingInputTest();
-            inputPortSVP = new PortNonBlockingInputTest();
+            inputPortEyeTribe = new PortBlockingEyeTribeTest();
+            inputPortSVP = new PortNonBlockingSVPTest();
             //Create Outputs
-            outputPort = new PortBlockingOutputTest();
+            outputPort = new Misc.PortBlockingDefaultImpl();
+
+            //Start ports
+            inputPortEyeTribe.Start();
+            inputPortSVP.Start();
+            outputPort.Start();
+
             //Create Broker
             broker = new Broker.BrokerEyeTribeSVP<String>();
             broker.AddInput(inputPortEyeTribe);
@@ -40,7 +46,7 @@ namespace ICAPR_SVP.Test
             long wordDuration = 0;
             long oldTimestamp = 0;
 
-            for(int i = 0;i < PortNonBlockingInputTest.WORD_COUNT * PortNonBlockingInputTest.NUMBER_TRIALS;i++)
+            for(int i = 0;i < PortNonBlockingSVPTest.WORD_COUNT * PortNonBlockingSVPTest.NUMBER_TRIALS;i++)
             {
                 item = this.outputPort.GetItem();
                 if(item.Type == ItemTypes.DisplayItemAndEyes)

@@ -53,9 +53,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="MockupImplementations\PortBlockingInputTest.cs" />
-    <Compile Include="MockupImplementations\PortBlockingOutputTest.cs" />
-    <Compile Include="MockupImplementations\PortNonBlockingInputTest.cs" />
+    <Compile Include="CleanerExecutorTest.cs" />
+    <Compile Include="MockupImplementations\FilterTest.cs" />
+    <Compile Include="MockupImplementations\PortBlockingEyeTribeTest.cs" />
+    <Compile Include="MockupImplementations\PortNonBlockingSVPTest.cs" />
     <Compile Include="BrokerEyeTribeSpritzTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

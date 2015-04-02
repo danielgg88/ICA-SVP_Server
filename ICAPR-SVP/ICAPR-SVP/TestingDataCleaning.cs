@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
 using ICAPR_SVP.Misc;
-using ICAPR_SVP.Core;
 using ICAPR_SVP.Test.MockupImplementations;
 using System.Collections.Generic;
 using System.Threading;
 using Newtonsoft.Json;
 using ICAPR_SVP.Misc.Items;
+using ICAPR_SVP.DataCleaning;
 
 namespace ICAPR_SVP
 {
@@ -19,9 +19,9 @@ namespace ICAPR_SVP
             Trial<String> trial = JsonConvert.DeserializeObject<Trial<String>>(json);
 
             //Add ports
-            Misc.Port inputPort = new Misc.PortBlockingOutput();
-            Misc.Port outputPort = new Misc.PortBlockingOutput();
-            Executor dataCleaner = new ExecutorDataCleaning(inputPort,outputPort);
+            Misc.Port inputPort = new Misc.PortBlockingDefaultImpl();
+            Misc.Port outputPort = new Misc.PortBlockingDefaultImpl();
+            DataCleaningExecutor dataCleaner = new DataCleaningExecutor(inputPort,outputPort);
 
             //Start ports
             inputPort.Start();

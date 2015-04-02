@@ -69,7 +69,7 @@ namespace ICAPR_SVP.Broker
             }
             else
                 return false;
-        } 
+        }
         #endregion
 
         #region Protected
