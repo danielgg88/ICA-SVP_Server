@@ -11,7 +11,8 @@ namespace ICAPR_SVP.Misc.Calibration
     public abstract class Calibrator
     {
         private static Object mLock = new Object();
-        private static double[] mAvgPupilSize;
+        private static double[] mAvgPupilSize = {Config.Calibration.CALIB_DEFAULT_AVG_PUPIL_SIZE,
+                                                    Config.Calibration.CALIB_DEFAULT_AVG_PUPIL_SIZE};
         private List<Item> mEyeData = new List<Item>();
 
         public Port InputPort

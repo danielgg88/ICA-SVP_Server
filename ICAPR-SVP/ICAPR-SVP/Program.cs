@@ -24,9 +24,9 @@ namespace ICAPR_SVP
             //Create data cleaning executor
             Misc.Port dataCleanerOutputPort = new Misc.PortBlockingDefaultImpl();
             DataCleaningExecutor dataCleaner = new DataCleaningExecutor(inputPortEyeTribe,dataCleanerOutputPort);
-
-            //TODO remove testing
+            //Add filters
             dataCleaner.AddFilter(new FilterTest());
+            //dataCleaner.AddFilter(new FilterBlinkDetection("Blink detection"));
 
             //Create svp client network
             Network.NetworkDispatcherSVPClient dispatcher = new Network.NetworkDispatcherSVPClient();

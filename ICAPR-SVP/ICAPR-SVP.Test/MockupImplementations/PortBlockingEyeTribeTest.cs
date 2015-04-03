@@ -17,6 +17,8 @@ namespace ICAPR_SVP.Test.MockupImplementations
         public static readonly int SLEEP = 5;
         private Thread _workerThread;
         private bool _isRunning;
+        private int _MinPupilSize;
+        private int _MaxPupilSize = Config.Calibration.TEST_MAX_PUPIL_SIZE;
 
         #region Properties
         public override bool IsRunning
@@ -28,10 +30,13 @@ namespace ICAPR_SVP.Test.MockupImplementations
         }
         #endregion
 
-        public PortBlockingEyeTribeTest()
+        public PortBlockingEyeTribeTest(bool produce_blinks)
             : base()
         {
-
+            if(produce_blinks)
+                _MinPupilSize = 0;
+            else
+                _MinPupilSize = _MaxPupilSize - (int)Config.Cleaning.BLINK_DIAMETER_THRESHOLD_LOW_MM + 1;
         }
 
         #region Protected methods
@@ -59,10 +64,10 @@ namespace ICAPR_SVP.Test.MockupImplementations
             while(this._isRunning)
             {
                 Misc.Eye eyeRight = new Eye();
-                eyeRight.PupilSize = rnd.Next(5,7);
+                eyeRight.PupilSize = rnd.Next(_MinPupilSize,_MaxPupilSize);
 
                 Misc.Eye eyeLeft = new Eye();
-                eyeLeft.PupilSize = rnd.Next(5,7);
+                eyeLeft.PupilSize = rnd.Next(_MinPupilSize,_MaxPupilSize);
 
                 timestamp = Utils.MilliTimestamp();
                 eyes = new Eyes(timestamp,eyeRight,eyeLeft);

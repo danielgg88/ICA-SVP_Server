@@ -14,8 +14,8 @@ namespace ICAPR_SVP
         static void Main(string[] args)
         {
             //Create EyeTribe input ports
-            Misc.Port inputPortEyeTribe = new PortBlockingEyeTribeTest();
-            Misc.Port inputPortEyeTribeCalib = new PortBlockingEyeTribeTest();
+            Misc.Port inputPortEyeTribe = new PortBlockingEyeTribeTest(true);
+            Misc.Port inputPortEyeTribeCalib = new PortBlockingEyeTribeTest(false);
             Program.Run(inputPortEyeTribe,inputPortEyeTribeCalib);
         }
     }

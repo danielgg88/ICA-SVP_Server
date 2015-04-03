@@ -111,7 +111,7 @@ namespace ICAPR_SVP.DataCleaning
             {
                 Eye leftEye = _pendingEyes.Last().LeftEye;
                 Eye rigthEye = _pendingEyes.Last().RightEye;
-                int currentIndex = _pendingEyes.Count;
+                int currentIndex = _pendingEyes.Count - 1;
 
                 //Try to interpolate left eye
                 if(leftEye.CleaningFlag == Eye.CleaningFlags.Ok)
@@ -140,23 +140,25 @@ namespace ICAPR_SVP.DataCleaning
                         lowerIndex--;
 
                     //Release all items until from the beggining to lowerIndex
-                    sendItemsToOutput(output,_pendingEyes,lowerIndex);
+                    int count  = sendItemsToOutput(output,_pendingEyes,lowerIndex);
 
                     //Update OK indexes
-                    _indexLastLeftOkValue -= lowerIndex;
-                    _indexLastRightOkValue -= lowerIndex;
+                    _indexLastLeftOkValue -= count;
+                    _indexLastRightOkValue -= count;
                 }
             }
         }
 
-        private void sendItemsToOutput(Port output,List<Eyes> eyes,int index_end)
+        private int  sendItemsToOutput(Port output,List<Eyes> eyes,int index_end)
         {
             //Send to output index_end item and all preceeding ones
-            for(int i = 0;i <= index_end;i++)
+            int i = 0;
+            for(i = 0;i <= index_end;i++)
             {
                 output.PushItem(new Bundle<Eyes>(ItemTypes.Eyes,eyes.ElementAt(0)));
                 eyes.RemoveAt(0);
             }
+            return i;
         }
 
         private double[] getCurrentAvgPupilSize()

@@ -19,7 +19,7 @@ namespace ICAPR_SVP.Test
         public void Initialize()
         {
             //Create inputs
-            inputPortEyeTribe = new PortBlockingEyeTribeTest();
+            inputPortEyeTribe = new PortBlockingEyeTribeTest(false);
             inputPortSVP = new PortNonBlockingSVPTest();
             //Create Outputs
             outputPort = new Misc.PortBlockingDefaultImpl();

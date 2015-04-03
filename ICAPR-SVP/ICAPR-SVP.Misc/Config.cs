@@ -27,12 +27,14 @@ namespace ICAPR_SVP.Misc
         public class Calibration
         {
             //calibration
-            public const int CALIB_TOTAL_SAMPLES = 1000;
+            public const int CALIB_TOTAL_SAMPLES = 60;
+            public const double CALIB_DEFAULT_AVG_PUPIL_SIZE = 4.5; //mm
+            public const int TEST_MAX_PUPIL_SIZE = 7; //mm
         }
 
         public class Cleaning
         {
-            public const double BLINK_DIAMETER_THRESHOLD_LOW_MM = 3;   //Max pupil diameter variation from the 
+            public const double BLINK_DIAMETER_THRESHOLD_LOW_MM = 2;       //Max pupil diameter variation from the 
             //baseline before being considered a blink
             public const int BLINK_MIN_CONSEQUENT_SAMPLES = 4; //Min no. of samples to consider a blink appereance
             public const int BLINK_MAX_ALLOWED_SAMPLES = 20;  //Max allowed duration of one blink before the sample 
