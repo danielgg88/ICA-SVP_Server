@@ -158,7 +158,7 @@ namespace ICAPR_SVP.Misc.Utils
             output += " Sampling rate: " + Misc.Config.EyeTribe.SAMPLING_FREQUENCY + "\n";
 
             output = output.Remove(output.Length - 1);
-            output += "\n\n Word time, Word, Duration, Eye time, L size, R size \n";
+            output += "\n\n Word time, Word, Duration, Eye time, L size, LP size, R size, RP size \n";
 
             foreach(Item item in items)
             {
@@ -179,7 +179,8 @@ namespace ICAPR_SVP.Misc.Utils
 
                     foreach(Eyes eyes in listEyes)
                         output += tmp + eyes.Timestamp + ", "
-                            + eyes.LeftEye.PupilSize + ", " + eyes.RightEye.PupilSize + "\n";
+                            + eyes.LeftEye.PupilSize + ", " + eyes.LeftEyeProcessed.PupilSize + ", "
+                            + eyes.RightEye.PupilSize + ", " + eyes.RightEyeProcessed.PupilSize + "\n";
                 }
             }
             WriteFile(fileName,output,".csv");
