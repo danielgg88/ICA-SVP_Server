@@ -32,53 +32,50 @@ namespace ICAPR_SVP.DataCleaning
                 Eye.CleaningFlags flag = (index_last_point - index_first_point - 1 >= Config.Cleaning.BLINK_MIN_CONSEQUENT_SAMPLES) ?
                     Eye.CleaningFlags.Blink : Eye.CleaningFlags.PossibleBlink;
 
-                if(index_last_point - index_first_point - 1 >= Config.Cleaning.BLINK_MIN_CONSEQUENT_SAMPLES)
+                //The first and last elements of the array are used as extreme points to interpolate
+                double x0,y0,x1,y1;
+
+                //Set beggining reference coordinates
+                if(index_first_point == -1)
                 {
-                    //The first and last elements of the array are used as extreme points to interpolate
-                    double x0,y0,x1,y1;
+                    //-1 means the first item in the array is a Possible blink. 
+                    //The Average pupil size is used as first point
+                    x0 = 0 - (1000 / Config.EyeTribe.SAMPLING_FREQUENCY);
+                    y0 = avg_pupil_size;
+                }
+                else
+                {
+                    x0 = eyes.ElementAt(index_first_point).Timestamp;
+                    y0 = (is_left_eye) ?
+                        eyes.ElementAt(index_first_point).LeftEye.PupilSize :
+                        eyes.ElementAt(index_first_point).RightEye.PupilSize;
+                }
 
-                    //Set beggining reference coordinates
-                    if(index_first_point == -1)
-                    {
-                        //-1 means the first item in the array is a Possible blink. 
-                        //The Average pupil size is used as first point
-                        x0 = 0 - (1000 / Config.EyeTribe.SAMPLING_FREQUENCY);
-                        y0 = avg_pupil_size;
-                    }
-                    else
-                    {
-                        x0 = eyes.ElementAt(index_first_point).Timestamp;
-                        y0 = (is_left_eye) ?
-                            eyes.ElementAt(index_first_point).LeftEye.PupilSize :
-                            eyes.ElementAt(index_first_point).RightEye.PupilSize;
-                    }
+                //Set end reference coordinates
+                if(index_last_point == eyes.Count)
+                {
+                    //index_last_point out of array boundaries means the last item in the array is a possible blink.
+                    //The Average pupil size is used as last point
+                    x1 = eyes.ElementAt(eyes.Count - 1).Timestamp + (1000 / Config.EyeTribe.SAMPLING_FREQUENCY);
+                    y1 = avg_pupil_size;
+                }
+                else
+                {
+                    x1 = eyes.ElementAt(index_last_point).Timestamp;
+                    y1 = (is_left_eye) ?
+                        eyes.ElementAt(index_last_point).LeftEye.PupilSize :
+                        eyes.ElementAt(index_last_point).RightEye.PupilSize;
+                }
 
-                    //Set end reference coordinates
-                    if(index_last_point == eyes.Count)
-                    {
-                        //index_last_point out of array boundaries means the last item in the array is a possible blink.
-                        //The Average pupil size is used as last point
-                        x1 = eyes.ElementAt(eyes.Count - 1).Timestamp + (1000 / Config.EyeTribe.SAMPLING_FREQUENCY);
-                        y1 = avg_pupil_size;
-                    }
-                    else
-                    {
-                        x1 = eyes.ElementAt(index_last_point).Timestamp;
-                        y1 = (is_left_eye) ?
-                            eyes.ElementAt(index_last_point).LeftEye.PupilSize :
-                            eyes.ElementAt(index_last_point).RightEye.PupilSize;
-                    }
-
-                    //Interpolate points and mark as blink
-                    for(int i = index_first_point + 1;i < index_last_point;i++)
-                    {
-                        Eyes eyes_item = eyes.ElementAt(i);
-                        Eye eye = (is_left_eye) ? eyes_item.LeftEye : eyes_item.RightEye;
-                        Eye eye_processed = (is_left_eye) ? eyes_item.LeftEyeProcessed : eyes_item.RightEyeProcessed;
-                        eye_processed.PupilSize = Misc.Utils.Utils.linear(eyes_item.Timestamp,x0,x1,y0,y1);
-                        eye_processed.CleaningFlag = flag;
-                        eye.CleaningFlag = flag;
-                    }
+                //Interpolate points and mark as blink
+                for(int i = index_first_point + 1;i < index_last_point;i++)
+                {
+                    Eyes eyes_item = eyes.ElementAt(i);
+                    Eye eye = (is_left_eye) ? eyes_item.LeftEye : eyes_item.RightEye;
+                    Eye eye_processed = (is_left_eye) ? eyes_item.LeftEyeProcessed : eyes_item.RightEyeProcessed;
+                    eye_processed.PupilSize = Misc.Utils.Utils.linear(eyes_item.Timestamp,x0,x1,y0,y1);
+                    eye_processed.CleaningFlag = flag;
+                    eye.CleaningFlag = flag;
                 }
             }
         }
@@ -116,7 +113,8 @@ namespace ICAPR_SVP.DataCleaning
                 //Try to interpolate left eye
                 if(leftEye.CleaningFlag == Eye.CleaningFlags.Ok)
                 {
-                    //while()
+                    //If ok, copy it to processed
+                    _pendingEyes.Last().LeftEyeProcessed.PupilSize = leftEye.PupilSize;
                     Interpolate(_pendingEyes,_indexLastLeftOkValue,currentIndex,true,getCurrentAvgPupilSize()[0]);
                     //Update last OK index
                     _indexLastLeftOkValue = currentIndex;
@@ -124,6 +122,7 @@ namespace ICAPR_SVP.DataCleaning
                 //Try to interpolate right eye
                 if(rigthEye.CleaningFlag == Eye.CleaningFlags.Ok)
                 {
+                    _pendingEyes.Last().RightEyeProcessed.PupilSize = rigthEye.PupilSize;
                     Interpolate(_pendingEyes,_indexLastRightOkValue,currentIndex,false,getCurrentAvgPupilSize()[1]);
                     //Update last Ok index
                     _indexLastRightOkValue = currentIndex;
