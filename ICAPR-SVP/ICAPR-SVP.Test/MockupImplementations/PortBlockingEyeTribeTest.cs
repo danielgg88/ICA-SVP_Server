@@ -68,10 +68,10 @@ namespace ICAPR_SVP.Test.MockupImplementations
             while(this._isRunning)
             {
                 Misc.Eye eyeRight = new Eye();
-                eyeRight.PupilSize = rnd.Next(_MinPupilSize,_MaxPupilSize);
+                eyeRight.PupilSize = (rnd.Next(_MinPupilSize * 100,_MaxPupilSize * 100))/100;
 
                 Misc.Eye eyeLeft = new Eye();
-                eyeLeft.PupilSize = rnd.Next(_MinPupilSize,_MaxPupilSize);
+                eyeLeft.PupilSize = (rnd.Next(_MinPupilSize * 100 ,_MaxPupilSize * 100))/100;
 
                 timestamp = Utils.MilliTimestamp();
                 eyes = new Eyes(timestamp,eyeRight,eyeLeft);

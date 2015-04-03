@@ -40,7 +40,7 @@ namespace ICAPR_SVP.DataCleaning
                 {
                     //-1 means the first item in the array is a Possible blink. 
                     //The Average pupil size is used as first point
-                    x0 = 0 - (1000 / Config.EyeTribe.SAMPLING_FREQUENCY);
+                    x0 = eyes.ElementAt(0).Timestamp - (1000 / Config.EyeTribe.SAMPLING_FREQUENCY);
                     y0 = avg_pupil_size;
                 }
                 else
@@ -152,7 +152,7 @@ namespace ICAPR_SVP.DataCleaning
         {
             //Send to output index_end item and all preceeding ones
             int i = 0;
-            for(i = 0;i <= index_end;i++)
+            for(i = 0;i < index_end;i++)
             {
                 output.PushItem(new Bundle<Eyes>(ItemTypes.Eyes,eyes.ElementAt(0)));
                 eyes.RemoveAt(0);
