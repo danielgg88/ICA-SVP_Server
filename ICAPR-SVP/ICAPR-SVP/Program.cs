@@ -31,6 +31,7 @@ namespace ICAPR_SVP
             //Add filters
             //dataCleaner.AddFilter(new FilterTest());
             dataCleaner.AddFilter(new FilterBlinkDetection("Blink detection"));
+            dataCleaner.AddFilter(new FilterSlopeOutliersDetection("Outliers"));
 
             //Create svp client network
             Network.NetworkDispatcherSVPClient dispatcher = new Network.NetworkDispatcherSVPClient();
