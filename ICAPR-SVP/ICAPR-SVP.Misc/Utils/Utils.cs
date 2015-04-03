@@ -11,7 +11,7 @@ namespace ICAPR_SVP.Misc.Utils
 {
     public static class Utils
     {
-        public const double PX_MM = 377.95275593333;
+        public const double PX_MM = 3.779528;
 
         public static long MilliTimestamp()
         {

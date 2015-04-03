@@ -1,0 +1,5 @@
+C:\Users\centos\code\git\Thesis\ICAPR-SVP\libs\ICAPR-SVP.Network.dll
+C:\Users\centos\code\git\Thesis\ICAPR-SVP\libs\ICAPR-SVP.Network.pdb
+C:\Users\centos\code\git\Thesis\ICAPR-SVP\ICAPR-SVP.Network\obj\Debug\ICAPR-SVP.Network.csprojResolveAssemblyReference.cache
+C:\Users\centos\code\git\Thesis\ICAPR-SVP\ICAPR-SVP.Network\obj\Debug\ICAPR-SVP.Network.dll
+C:\Users\centos\code\git\Thesis\ICAPR-SVP\ICAPR-SVP.Network\obj\Debug\ICAPR-SVP.Network.pdb

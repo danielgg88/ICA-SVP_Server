@@ -10,10 +10,12 @@ namespace ICAPR_SVP.Network
 {
     public class PortBlockingInputEyeTribe : PortBlocking,IConnectionStateListener,IGazeListener
     {
+
+        private bool isRunning;
+
         public PortBlockingInputEyeTribe()
         {
-            Misc.Utils.Utils.launchEyeTribeServer();
-            Misc.Utils.Utils.launchEyeTribeCalibration();
+            this.IsRunning = false;
         }
 
         #region Properties
@@ -21,7 +23,11 @@ namespace ICAPR_SVP.Network
         {
             get
             {
-                return GazeManager.Instance.IsActivated;
+                return isRunning;
+            }
+            set
+            {
+                isRunning = value;
             }
         }
         public bool IsCalibrated
@@ -38,8 +44,8 @@ namespace ICAPR_SVP.Network
         public void OnConnectionStateChanged(bool IsActivated)
         {
             // The connection state listener detects when the connection to the EyeTribe server changes
-            if(!IsActivated)
-                GazeManager.Instance.Deactivate();
+            if (!IsActivated)
+                this.Stop();
         }
 
         public void OnGazeUpdate(GazeData gazeData)
@@ -49,13 +55,13 @@ namespace ICAPR_SVP.Network
             {
                 //Get left eye data
                 Misc.Eye leftEye = new Misc.Eye();
-                leftEye.PupilSize = Math.Round(Misc.Utils.Utils.PixelsToMM(gazeData.LeftEye.PupilSize),2);
+                leftEye.PupilSize = Math.Round(Misc.Utils.Utils.PixelsToMM(gazeData.LeftEye.PupilSize),4);
                 //Get right eye data
                 Misc.Eye rightEye = new Misc.Eye();
-                rightEye.PupilSize = Math.Round(Misc.Utils.Utils.PixelsToMM(gazeData.RightEye.PupilSize),2);
+                rightEye.PupilSize = Math.Round(Misc.Utils.Utils.PixelsToMM(gazeData.RightEye.PupilSize),4);
                 //Create a new item and push into the port queue
-                //Eyes eyes = new Eyes(Misc.Utils.Utils.MilliTimetamp(),leftEye,rightEye);
-                Eyes eyes = new Eyes(Utils.WinMilliTimestampToUnix(gazeData.TimeStamp),leftEye,rightEye);
+                Eyes eyes = new Eyes(Utils.MilliTimestamp(),leftEye,rightEye);
+                //Eyes eyes = new Eyes(Utils.WinMilliTimestampToUnix(gazeData.TimeStamp),leftEye,rightEye);
                 Bundle<Eyes> bundle = new Bundle<Eyes>(ItemTypes.Eyes,eyes);
                 PushItem(bundle);
             }
@@ -65,29 +71,24 @@ namespace ICAPR_SVP.Network
         #region Protected methods
         protected override void OnStart()
         {
-            //Start EyeTribe
-            if(!this.IsRunning)
-                InitEyeTribeClient();
+            if (!this.IsRunning)
+            {
+                // Activate/connect client
+                GazeManager.Instance.AddConnectionStateListener(this);
+                GazeManager.Instance.AddGazeListener(this);
+                // Fetch current status
+                OnConnectionStateChanged(GazeManager.Instance.IsActivated);
+                this.IsRunning = true;
+            }
         }
 
         protected override void OnStop()
         {
-            //Stop EyeTribe
-            if(this.IsRunning)
-                GazeManager.Instance.Deactivate();
+            GazeManager.Instance.RemoveConnectionStateListener(this);
+            GazeManager.Instance.RemoveGazeListener(this);
+            this.IsRunning = false;
         }
         #endregion
 
-        #region Private methods
-        private void InitEyeTribeClient()
-        {
-            // Activate/connect client
-            GazeManager.Instance.Activate(GazeManager.ApiVersion.VERSION_1_0,GazeManager.ClientMode.Push);
-            GazeManager.Instance.AddConnectionStateListener(this);
-            GazeManager.Instance.AddGazeListener(this);
-            // Fetch current status
-            OnConnectionStateChanged(GazeManager.Instance.IsActivated);
-        }
-        #endregion
     }
 }

@@ -27,6 +27,10 @@ namespace ICAPR_SVP.Test.MockupImplementations
             {
                 return _isRunning;
             }
+            set
+            {
+                _isRunning = value;
+            }
         }
         #endregion
 

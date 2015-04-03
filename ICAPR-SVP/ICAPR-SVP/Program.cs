@@ -6,6 +6,8 @@ using ICAPR_SVP.Network;
 using ICAPR_SVP.Test.MockupImplementations;
 using System.Collections.Generic;
 using System.Threading;
+using TETCSharpClient;
+using TETCSharpClient.Data;
 
 namespace ICAPR_SVP
 {
@@ -13,6 +15,8 @@ namespace ICAPR_SVP
     {
         static void Main(string[] args)
         {
+            Misc.Utils.Utils.launchEyeTribeServer();
+            GazeManager.Instance.Activate(GazeManager.ApiVersion.VERSION_1_0,GazeManager.ClientMode.Push);
             //Create EyeTribe input ports
             Misc.Port inputPortEyeTribe = new Network.PortBlockingInputEyeTribe();
             Misc.Port inputPortEyeTribeCalib = new Network.PortBlockingInputEyeTribe();
@@ -55,7 +59,6 @@ namespace ICAPR_SVP
 
             //Start ports
             inputPortEyeTribe.Start();
-            inputPortEyeTribeCalib.Start();
             dataCleanerOutputPort.Start();
             inputPortSVP.Start();
             brokerOutputPort.Start();
@@ -79,6 +82,7 @@ namespace ICAPR_SVP
             dataCleanerOutputPort.Stop();
             inputPortSVP.Stop();
             brokerOutputPort.Stop();
+            GazeManager.Instance.Deactivate();
             Console.ReadLine();
             Console.WriteLine("Server stopped");
             Console.ReadLine();

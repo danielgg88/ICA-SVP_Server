@@ -26,6 +26,10 @@ namespace ICAPR_SVP.Network
                 //The network connection is asynchronous this will always return false;
                 return true;
             }
+            set
+            {
+
+            }
         }
         #endregion
 

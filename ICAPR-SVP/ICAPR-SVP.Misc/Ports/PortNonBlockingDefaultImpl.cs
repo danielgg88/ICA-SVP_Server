@@ -17,6 +17,10 @@ namespace ICAPR_SVP.Misc
             {
                 return _isRunning;
             }
+            set
+            {
+                _isRunning = value;
+            }
         }
         #endregion
 
