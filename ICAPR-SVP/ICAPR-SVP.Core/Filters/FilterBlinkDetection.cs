@@ -72,9 +72,7 @@ namespace ICAPR_SVP.DataCleaning
                 {
                     Eyes eyes_item = eyes.ElementAt(i);
                     Eye eye = (is_left_eye) ? eyes_item.LeftEye : eyes_item.RightEye;
-                    Eye eye_processed = (is_left_eye) ? eyes_item.LeftEyeProcessed : eyes_item.RightEyeProcessed;
-                    eye_processed.PupilSize = Misc.Utils.Utils.linear(eyes_item.Timestamp,x0,x1,y0,y1);
-                    eye_processed.CleaningFlag = flag;
+                    eye.PupilSize = Misc.Utils.Utils.linear(eyes_item.Timestamp,x0,x1,y0,y1);
                     eye.CleaningFlag = flag;
                 }
             }
@@ -85,9 +83,6 @@ namespace ICAPR_SVP.DataCleaning
         private void AddPossibleBlinkFlagToEyes(Item item)
         {
             Eyes eyes = (Eyes)item.Value;
-            eyes.LeftEyeProcessed = new Eye();
-            eyes.RightEyeProcessed = new Eye();
-
             //Validate LEFT pupil size againts threshold
             if(eyes.LeftEye.PupilSize < getCurrentAvgPupilSize()[0] - Config.Cleaning.BLINK_DIAMETER_THRESHOLD_LOW_MM)
                 eyes.LeftEye.CleaningFlag = Eye.CleaningFlags.PossibleBlink;
@@ -113,8 +108,6 @@ namespace ICAPR_SVP.DataCleaning
                 //Try to interpolate left eye
                 if(leftEye.CleaningFlag == Eye.CleaningFlags.Ok)
                 {
-                    //If ok, copy it to processed
-                    _pendingEyes.Last().LeftEyeProcessed.PupilSize = leftEye.PupilSize;
                     Interpolate(_pendingEyes,_indexLastLeftOkValue,currentIndex,true,getCurrentAvgPupilSize()[0]);
                     //Update last OK index
                     _indexLastLeftOkValue = currentIndex;
@@ -122,7 +115,6 @@ namespace ICAPR_SVP.DataCleaning
                 //Try to interpolate right eye
                 if(rigthEye.CleaningFlag == Eye.CleaningFlags.Ok)
                 {
-                    _pendingEyes.Last().RightEyeProcessed.PupilSize = rigthEye.PupilSize;
                     Interpolate(_pendingEyes,_indexLastRightOkValue,currentIndex,false,getCurrentAvgPupilSize()[1]);
                     //Update last Ok index
                     _indexLastRightOkValue = currentIndex;

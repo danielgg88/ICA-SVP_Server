@@ -33,11 +33,11 @@ namespace ICAPR_SVP.DataCleaning
             //take the avg for the left eye only
             Eye avgNextEye = new Eye();
             avgNextEye.PupilSize = Misc.Calibration.Calibrator.AvgPupilSize[0];
-            applyRule(secondPreviousEye.LeftEyeProcessed, firstPreviousEye.LeftEyeProcessed, currentEye.LeftEyeProcessed, avgNextEye);
+            applyRule(secondPreviousEye.LeftEye, firstPreviousEye.LeftEye, currentEye.LeftEye, avgNextEye);
 
             //take the avg for the right eye only
             avgNextEye.PupilSize = Misc.Calibration.Calibrator.AvgPupilSize[1];
-            applyRule(secondPreviousEye.RightEyeProcessed, firstPreviousEye.RightEyeProcessed, currentEye.RightEyeProcessed, avgNextEye);
+            applyRule(secondPreviousEye.RightEye, firstPreviousEye.RightEye, currentEye.RightEye, avgNextEye);
 
             output.PushItem(item);
             swapEyes();
@@ -52,7 +52,7 @@ namespace ICAPR_SVP.DataCleaning
                     currentEye.PupilSize +
                     nextEye.PupilSize;
 
-                currentEye.PupilSize = Math.Round(sum / 4, 4);
+                currentEye.PupilSize = sum / 4;
            }
         }
 

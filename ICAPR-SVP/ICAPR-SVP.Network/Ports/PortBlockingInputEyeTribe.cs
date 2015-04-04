@@ -55,10 +55,10 @@ namespace ICAPR_SVP.Network
             {
                 //Get left eye data
                 Misc.Eye leftEye = new Misc.Eye();
-                leftEye.PupilSize = Math.Round(Misc.Utils.Utils.PixelsToMM(gazeData.LeftEye.PupilSize),4);
+                leftEye.PupilSize = Misc.Utils.Utils.PixelsToMM(gazeData.LeftEye.PupilSize);
                 //Get right eye data
                 Misc.Eye rightEye = new Misc.Eye();
-                rightEye.PupilSize = Math.Round(Misc.Utils.Utils.PixelsToMM(gazeData.RightEye.PupilSize),4);
+                rightEye.PupilSize = Misc.Utils.Utils.PixelsToMM(gazeData.RightEye.PupilSize);
                 //Create a new item and push into the port queue
                 Eyes eyes = new Eyes(Utils.MilliTimestamp(),leftEye,rightEye);
                 //Eyes eyes = new Eyes(Utils.WinMilliTimestampToUnix(gazeData.TimeStamp),leftEye,rightEye);
