@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ICAPR_SVP.Misc;
 
-namespace ICAPR_SVP.DataCleaning
+namespace ICAPR_SVP.Misc.Filters
 {
     public abstract class Filter
     {

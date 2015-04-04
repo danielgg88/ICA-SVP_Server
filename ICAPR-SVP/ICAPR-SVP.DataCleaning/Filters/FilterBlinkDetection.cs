@@ -1,10 +1,9 @@
-﻿using System;
+﻿using ICAPR_SVP.Misc;
+using ICAPR_SVP.Misc.Calibration;
+using ICAPR_SVP.Misc.Filters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ICAPR_SVP.Misc.Calibration;
-using ICAPR_SVP.Misc;
 
 namespace ICAPR_SVP.DataCleaning
 {
@@ -131,7 +130,7 @@ namespace ICAPR_SVP.DataCleaning
                         lowerIndex--;
 
                     //Release all items until from the beggining to lowerIndex
-                    int count  = sendItemsToOutput(output,_pendingEyes,lowerIndex);
+                    int count = sendItemsToOutput(output,_pendingEyes,lowerIndex);
 
                     //Update OK indexes
                     _indexLastLeftOkValue -= count;
@@ -140,7 +139,7 @@ namespace ICAPR_SVP.DataCleaning
             }
         }
 
-        private int  sendItemsToOutput(Port output,List<Eyes> eyes,int index_end)
+        private int sendItemsToOutput(Port output,List<Eyes> eyes,int index_end)
         {
             //Send to output index_end item and all preceeding ones
             int i = 0;

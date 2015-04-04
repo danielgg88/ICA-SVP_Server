@@ -1,8 +1,7 @@
-﻿using System;
-using Fleck;
+﻿using Fleck;
 using ICAPR_SVP.Misc;
-using Newtonsoft.Json;
 using ICAPR_SVP.Misc.Calibration;
+using System;
 
 namespace ICAPR_SVP.Network
 {

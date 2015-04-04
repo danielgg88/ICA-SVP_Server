@@ -1,12 +1,9 @@
-﻿using System;
-using System.IO;
+﻿using ICAPR_SVP.DataCleaning;
 using ICAPR_SVP.Misc;
-using ICAPR_SVP.Test.MockupImplementations;
-using System.Collections.Generic;
-using System.Threading;
-using Newtonsoft.Json;
+using ICAPR_SVP.Misc.Executors;
 using ICAPR_SVP.Misc.Items;
-using ICAPR_SVP.DataCleaning;
+using Newtonsoft.Json;
+using System;
 
 namespace ICAPR_SVP
 {
@@ -21,7 +18,7 @@ namespace ICAPR_SVP
             //Add ports
             Misc.Port inputPort = new Misc.PortBlockingDefaultImpl();
             Misc.Port outputPort = new Misc.PortBlockingDefaultImpl();
-            DataCleaningExecutor dataCleaner = new DataCleaningExecutor(inputPort,outputPort);
+            ExecutorMultiThreadFilters dataCleaner = new ExecutorMultiThreadFilters(inputPort,outputPort);
             dataCleaner.AddFilter(new FilterBlinkDetection("Blink detection"));
 
             //Start ports
@@ -35,7 +32,7 @@ namespace ICAPR_SVP
             {
                 foreach(Eyes eyes in item.Eyes)
                 {
-                    inputPort.PushItem(new Bundle<Eyes>(ItemTypes.Eyes, eyes));
+                    inputPort.PushItem(new Bundle<Eyes>(ItemTypes.Eyes,eyes));
                 }
             }
 

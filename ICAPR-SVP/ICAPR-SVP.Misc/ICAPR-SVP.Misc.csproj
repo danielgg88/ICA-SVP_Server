@@ -45,6 +45,10 @@
     <Compile Include="Calibration\Calibrator.cs" />
     <Compile Include="Calibration\CalibratorSystem.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Executors\ExecutorMultiThreadFilters.cs" />
+    <Compile Include="Executors\ExecutorSingleThread.cs" />
+    <Compile Include="Filters\Filter.cs" />
+    <Compile Include="Filters\FilterComposite.cs" />
     <Compile Include="Items\CalibrationItem.cs" />
     <Compile Include="Items\EndOfTrial.cs" />
     <Compile Include="Items\ExperimentConfig.cs" />

@@ -1,14 +1,12 @@
-﻿using System;
+﻿using ICAPR_SVP.Misc.Filters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
-using ICAPR_SVP.Misc;
 
-namespace ICAPR_SVP.DataCleaning
+namespace ICAPR_SVP.Misc.Executors
 {
-    public class DataCleaningExecutor
+    public class ExecutorMultiThreadFilters
     {
         private volatile Boolean _isRunning = false;
         private volatile Boolean _isPaused = false;
@@ -31,7 +29,7 @@ namespace ICAPR_SVP.DataCleaning
             private set;
         }
 
-        public DataCleaningExecutor(Port input,Port output)
+        public ExecutorMultiThreadFilters(Port input,Port output)
         {
             Filters = new LinkedList<Filter>();
             _threads = new List<Thread>();

@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 
-using ICAPR_SVP.Misc;
 
-namespace ICAPR_SVP.Broker
+namespace ICAPR_SVP.Misc.Executors
 {
-    public abstract class Broker
+    public abstract class ExecutorSingleThread
     {
         protected readonly List<Port> _listInputPort;   //Input ports list
         protected readonly List<Port> _listOutputPort;  //Output ports list
@@ -13,7 +12,7 @@ namespace ICAPR_SVP.Broker
         private Thread _workerThread;       //Main broker thread
         private volatile bool _shouldStop;  //Broker thread flag
 
-        protected Broker()
+        protected ExecutorSingleThread()
         {
             this._listInputPort = new List<Port>();
             this._listOutputPort = new List<Port>();

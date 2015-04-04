@@ -1,12 +1,7 @@
-﻿using ICAPR_SVP.DataCleaning;
-using ICAPR_SVP.Misc;
+﻿using ICAPR_SVP.Misc;
+using ICAPR_SVP.Misc.Executors;
 using ICAPR_SVP.Test.MockupImplementations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 
 namespace ICAPR_SVP.Test
 {
@@ -15,7 +10,7 @@ namespace ICAPR_SVP.Test
     {
         private int NO_SAMPLES = 1000000;
 
-        private DataCleaningExecutor dataCleaner;
+        private ExecutorMultiThreadFilters dataCleaner;
         private Port inputPort;
         private Port outputPort;
 
@@ -28,7 +23,7 @@ namespace ICAPR_SVP.Test
             outputPort.Start();
 
             //Create data cleaning executor
-            dataCleaner = new DataCleaningExecutor(inputPort,outputPort);
+            dataCleaner = new ExecutorMultiThreadFilters(inputPort,outputPort);
             dataCleaner.AddFilter(new FilterTest());
             dataCleaner.AddFilter(new FilterTest());
             dataCleaner.AddFilter(new FilterTest());

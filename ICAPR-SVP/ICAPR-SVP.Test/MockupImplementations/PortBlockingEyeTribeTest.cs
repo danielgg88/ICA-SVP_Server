@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-
-using ICAPR_SVP.Broker;
-using ICAPR_SVP.Misc;
+﻿using ICAPR_SVP.Misc;
 using ICAPR_SVP.Misc.Utils;
+using System;
+using System.Threading;
 
 namespace ICAPR_SVP.Test.MockupImplementations
 {
@@ -68,10 +62,10 @@ namespace ICAPR_SVP.Test.MockupImplementations
             while(this._isRunning)
             {
                 Misc.Eye eyeRight = new Eye();
-                eyeRight.PupilSize = (rnd.Next(_MinPupilSize * 100,_MaxPupilSize * 100))/100;
+                eyeRight.PupilSize = (rnd.Next(_MinPupilSize * 100,_MaxPupilSize * 100)) / 100;
 
                 Misc.Eye eyeLeft = new Eye();
-                eyeLeft.PupilSize = (rnd.Next(_MinPupilSize * 100 ,_MaxPupilSize * 100))/100;
+                eyeLeft.PupilSize = (rnd.Next(_MinPupilSize * 100,_MaxPupilSize * 100)) / 100;
 
                 timestamp = Utils.MilliTimestamp();
                 eyes = new Eyes(timestamp,eyeRight,eyeLeft);

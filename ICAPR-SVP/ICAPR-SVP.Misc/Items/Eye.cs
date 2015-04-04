@@ -17,7 +17,7 @@ namespace ICAPR_SVP.Misc
             }
             set
             {
-                _pupilSize = Math.Round(value, 4);
+                _pupilSize = Math.Round(value,4);
             }
         }
 

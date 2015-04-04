@@ -44,7 +44,7 @@ namespace ICAPR_SVP.Network
         public void OnConnectionStateChanged(bool IsActivated)
         {
             // The connection state listener detects when the connection to the EyeTribe server changes
-            if (!IsActivated)
+            if(!IsActivated)
                 this.Stop();
         }
 
@@ -71,7 +71,7 @@ namespace ICAPR_SVP.Network
         #region Protected methods
         protected override void OnStart()
         {
-            if (!this.IsRunning)
+            if(!this.IsRunning)
             {
                 // Activate/connect client
                 GazeManager.Instance.AddConnectionStateListener(this);

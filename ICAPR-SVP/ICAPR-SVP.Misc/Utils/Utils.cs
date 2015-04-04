@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Threading;
-using ICAPR_SVP;
 
 namespace ICAPR_SVP.Misc.Utils
 {
@@ -54,7 +49,7 @@ namespace ICAPR_SVP.Misc.Utils
 
         public static void launchEyeTribeServer()
         {
-            Process.Start(Config.EyeTribe.EYETRIBE_SERVER_EXE , "--framerate=" + Config.EyeTribe.SAMPLING_FREQUENCY);
+            Process.Start(Config.EyeTribe.EYETRIBE_SERVER_EXE,"--framerate=" + Config.EyeTribe.SAMPLING_FREQUENCY);
             Thread.Sleep(3000);
         }
     }

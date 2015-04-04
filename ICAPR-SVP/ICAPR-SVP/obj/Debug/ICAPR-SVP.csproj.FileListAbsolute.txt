@@ -18,8 +18,6 @@ C:\Users\centos\code\git\Thesis\ICAPR-SVP\ICAPR-SVP\bin\Debug\ICAPR-SVP.Network.
 C:\Users\centos\code\git\Thesis\ICAPR-SVP\ICAPR-SVP\bin\Debug\ICAPR-SVP.Test.pdb
 C:\Users\centos\code\git\Thesis\ICAPR-SVP\ICAPR-SVP\obj\Debug\ICAPR-SVP.csprojResolveAssemblyReference.cache
 E:\MegaSync\Workspaces\Windows\Git\dk.itu.eye.icapr-svp\ICAPR-SVP\ICAPR-SVP\bin\Debug\ICAPR-SVP.exe.config
-E:\MegaSync\Workspaces\Windows\Git\dk.itu.eye.icapr-svp\ICAPR-SVP\ICAPR-SVP\obj\Debug\ICAPR-SVP.exe
-E:\MegaSync\Workspaces\Windows\Git\dk.itu.eye.icapr-svp\ICAPR-SVP\ICAPR-SVP\obj\Debug\ICAPR-SVP.pdb
 E:\MegaSync\Workspaces\Windows\Git\dk.itu.eye.icapr-svp\ICAPR-SVP\ICAPR-SVP\bin\Debug\ICAPR-SVP.exe
 E:\MegaSync\Workspaces\Windows\Git\dk.itu.eye.icapr-svp\ICAPR-SVP\ICAPR-SVP\bin\Debug\ICAPR-SVP.pdb
 E:\MegaSync\Workspaces\Windows\Git\dk.itu.eye.icapr-svp\ICAPR-SVP\ICAPR-SVP\bin\Debug\ICAPR-SVP.Broker.dll
@@ -36,3 +34,5 @@ E:\MegaSync\Workspaces\Windows\Git\dk.itu.eye.icapr-svp\ICAPR-SVP\ICAPR-SVP\bin\
 E:\MegaSync\Workspaces\Windows\Git\dk.itu.eye.icapr-svp\ICAPR-SVP\ICAPR-SVP\bin\Debug\ICAPR-SVP.Network.pdb
 E:\MegaSync\Workspaces\Windows\Git\dk.itu.eye.icapr-svp\ICAPR-SVP\ICAPR-SVP\bin\Debug\ICAPR-SVP.Test.pdb
 E:\MegaSync\Workspaces\Windows\Git\dk.itu.eye.icapr-svp\ICAPR-SVP\ICAPR-SVP\obj\Debug\ICAPR-SVP.csprojResolveAssemblyReference.cache
+E:\MegaSync\Workspaces\Windows\Git\dk.itu.eye.icapr-svp\ICAPR-SVP\ICAPR-SVP\obj\Debug\ICAPR-SVP.exe
+E:\MegaSync\Workspaces\Windows\Git\dk.itu.eye.icapr-svp\ICAPR-SVP\ICAPR-SVP\obj\Debug\ICAPR-SVP.pdb

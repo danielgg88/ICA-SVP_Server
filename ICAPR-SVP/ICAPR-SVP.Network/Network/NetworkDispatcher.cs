@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ICAPR_SVP.Misc;
 using ICAPR_SVP.Misc.Calibration;
-using ICAPR_SVP.Misc;
+using System;
 
 namespace ICAPR_SVP.Network
 {

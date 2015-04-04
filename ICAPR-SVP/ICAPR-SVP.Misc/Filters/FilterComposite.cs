@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ICAPR_SVP.Misc;
 
 //Usuful only if we have filters that have same input as output
-namespace ICAPR_SVP.DataCleaning
+namespace ICAPR_SVP.Misc.Filters
 {
     public class FilterComposite<I> : Filter
     {

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ICAPR_SVP.Misc;
+﻿using ICAPR_SVP.Misc;
+using ICAPR_SVP.Misc.Filters;
+using System;
 
 namespace ICAPR_SVP.DataCleaning
 {
@@ -15,16 +12,17 @@ namespace ICAPR_SVP.DataCleaning
         private Eyes currentEye;
 
 
-        public FilterSlopeOutliersDetection(String name) : base(name)
+        public FilterSlopeOutliersDetection(String name)
+            : base(name)
         {
-            
+
         }
 
-        protected override void OnExecute(Misc.Port input, Misc.Port output)
+        protected override void OnExecute(Misc.Port input,Misc.Port output)
         {
             Item item = input.GetItem();
-            currentEye = (Eyes) item.Value;
-            if (firstPreviousEye == null || secondPreviousEye == null)
+            currentEye = (Eyes)item.Value;
+            if(firstPreviousEye == null || secondPreviousEye == null)
             {
                 swapEyes();
                 return;
@@ -33,31 +31,31 @@ namespace ICAPR_SVP.DataCleaning
             //take the avg for the left eye only
             Eye avgNextEye = new Eye();
             avgNextEye.PupilSize = Misc.Calibration.Calibrator.AvgPupilSize[0];
-            applyRule(secondPreviousEye.LeftEye, firstPreviousEye.LeftEye, currentEye.LeftEye, avgNextEye);
+            applyRule(secondPreviousEye.LeftEye,firstPreviousEye.LeftEye,currentEye.LeftEye,avgNextEye);
 
             //take the avg for the right eye only
             avgNextEye.PupilSize = Misc.Calibration.Calibrator.AvgPupilSize[1];
-            applyRule(secondPreviousEye.RightEye, firstPreviousEye.RightEye, currentEye.RightEye, avgNextEye);
+            applyRule(secondPreviousEye.RightEye,firstPreviousEye.RightEye,currentEye.RightEye,avgNextEye);
 
             output.PushItem(item);
             swapEyes();
         }
 
-        private void applyRule(Eye secondPreviousEye, Eye firstPreviousEye, Eye currentEye , Eye nextEye)
+        private void applyRule(Eye secondPreviousEye,Eye firstPreviousEye,Eye currentEye,Eye nextEye)
         {
-           if( isOutlier(firstPreviousEye.PupilSize , currentEye.PupilSize ) )
-           {
-                double sum = secondPreviousEye.PupilSize + 
+            if(isOutlier(firstPreviousEye.PupilSize,currentEye.PupilSize))
+            {
+                double sum = secondPreviousEye.PupilSize +
                     firstPreviousEye.PupilSize +
                     currentEye.PupilSize +
                     nextEye.PupilSize;
 
                 currentEye.PupilSize = sum / 4;
                 currentEye.CleaningFlag = Eye.CleaningFlags.Error;
-           }
+            }
         }
 
-        private bool isOutlier(double previous, double next)
+        private bool isOutlier(double previous,double next)
         {
             return Math.Abs(previous - next) > Config.Cleaning.OUTLIER_MAX_CHANGE_RATE_ALLOWED_MM;
         }

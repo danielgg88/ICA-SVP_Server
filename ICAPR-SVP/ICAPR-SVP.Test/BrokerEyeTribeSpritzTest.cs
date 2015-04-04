@@ -1,8 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using ICAPR_SVP.Misc;
 using ICAPR_SVP.Test.MockupImplementations;
-using ICAPR_SVP.Misc;
-using ICAPR_SVP.Broker;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 
 namespace ICAPR_SVP.Test
@@ -13,7 +12,7 @@ namespace ICAPR_SVP.Test
         private Port inputPortEyeTribe;
         private Port inputPortSVP;
         private Port outputPort;
-        private Broker.Broker broker;
+        private Misc.Executors.ExecutorSingleThread broker;
 
         [TestInitialize]
         public void Initialize()
@@ -30,7 +29,7 @@ namespace ICAPR_SVP.Test
             outputPort.Start();
 
             //Create Broker
-            broker = new Broker.BrokerEyeTribeSVP<String>();
+            broker = new Misc.Executors.BrokerEyeTribeSVP<String>();
             broker.AddInput(inputPortEyeTribe);
             broker.AddInput(inputPortSVP);
             broker.AddOutput(outputPort);

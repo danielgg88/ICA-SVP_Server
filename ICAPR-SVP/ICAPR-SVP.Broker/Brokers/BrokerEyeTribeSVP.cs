@@ -1,11 +1,9 @@
-using ICAPR_SVP.Misc;
-using System;
 using System.Collections.Generic;
 
-namespace ICAPR_SVP.Broker
+namespace ICAPR_SVP.Misc.Executors
 {
     //<T> content message type
-    public class BrokerEyeTribeSVP<T> : Broker
+    public class BrokerEyeTribeSVP<T> : ExecutorSingleThread
     {
         private readonly int INDEX_EYE_TRIBE = 0;       //EyeTribe index in input list
         private readonly int INPUT_CLIENT = 1;          //Sprits index in input list

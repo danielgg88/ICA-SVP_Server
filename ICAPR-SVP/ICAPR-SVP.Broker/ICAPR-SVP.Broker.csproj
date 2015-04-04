@@ -7,7 +7,7 @@
     <ProjectGuid>{FCC2A784-508B-42F5-8205-CA97855EAB07}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ICAPR_SVP.Broker</RootNamespace>
+    <RootNamespace>ICAPR_SVP.Misc.Executors</RootNamespace>
     <AssemblyName>ICAPR-SVP.Broker</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -47,7 +47,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Brokers\Broker.cs" />
     <Compile Include="Brokers\BrokerEyeTribeSVP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

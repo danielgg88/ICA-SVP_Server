@@ -1,5 +1,4 @@
-﻿using ICAPR_SVP.Misc;
-
+﻿
 namespace ICAPR_SVP.Misc
 {
     public abstract class Port
@@ -17,7 +16,8 @@ namespace ICAPR_SVP.Misc
         protected abstract void OnStopPort();       //Implemented by the port type (bloking/non-blocking)
         public abstract bool IsRunning
         {
-            get;set;
+            get;
+            set;
         }     //Implemented by the port spcific implementation
         protected abstract void OnStart();          //Implemented by the port spcific implementation
         protected abstract void OnStop();           //Implemented by the port spcific implementation

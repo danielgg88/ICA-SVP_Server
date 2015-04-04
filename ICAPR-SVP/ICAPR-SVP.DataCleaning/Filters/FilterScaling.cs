@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ICAPR_SVP.Misc;
+﻿using ICAPR_SVP.Misc;
 using ICAPR_SVP.Misc.Calibration;
+using ICAPR_SVP.Misc.Filters;
+using System;
 
 namespace ICAPR_SVP.DataCleaning
 {
     public class FilterScaling : Filter
     {
-        public FilterScaling(String name) : base(name)
-        { 
+        public FilterScaling(String name)
+            : base(name)
+        {
         }
 
         #region Protected methods
@@ -28,7 +26,8 @@ namespace ICAPR_SVP.DataCleaning
         #region Private methods
         private Item Scale(Item item)
         {
-            if(item.Type == ItemTypes.Eyes){
+            if(item.Type == ItemTypes.Eyes)
+            {
                 Eyes eyes = (Eyes)item.Value;
                 eyes.LeftEyeProcessed = new Eye();
                 eyes.RightEyeProcessed = new Eye();

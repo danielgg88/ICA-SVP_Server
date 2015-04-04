@@ -1,13 +1,8 @@
-﻿using System;
-
+﻿using ICAPR_SVP.DataCleaning;
 using ICAPR_SVP.Misc;
-using ICAPR_SVP.DataCleaning;
-using ICAPR_SVP.Network;
-using ICAPR_SVP.Test.MockupImplementations;
-using System.Collections.Generic;
-using System.Threading;
+using ICAPR_SVP.Misc.Executors;
+using System;
 using TETCSharpClient;
-using TETCSharpClient.Data;
 
 namespace ICAPR_SVP
 {
@@ -27,7 +22,7 @@ namespace ICAPR_SVP
         {
             //Create data cleaning executor
             Misc.Port dataCleanerOutputPort = new Misc.PortBlockingDefaultImpl();
-            DataCleaningExecutor dataCleaner = new DataCleaningExecutor(inputPortEyeTribe,dataCleanerOutputPort);
+            ExecutorMultiThreadFilters dataCleaner = new ExecutorMultiThreadFilters(inputPortEyeTribe,dataCleanerOutputPort);
             //Add filters
             dataCleaner.AddFilter(new FilterBlinkDetection("Blinks"));
             dataCleaner.AddFilter(new FilterSlopeOutliersDetection("Outliers"));
@@ -51,7 +46,7 @@ namespace ICAPR_SVP
             Misc.Port brokerOutputPort = new Misc.PortBlockingDefaultImpl();
 
             //Create Broker
-            Broker.Broker broker = new Broker.BrokerEyeTribeSVP<String>();
+            Misc.Executors.ExecutorSingleThread broker = new Misc.Executors.BrokerEyeTribeSVP<String>();
             broker.AddInput(dataCleanerOutputPort);
             broker.AddInput(inputPortSVP);
             broker.AddOutput(brokerOutputPort);

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using ICAPR_SVP.DataCleaning;
+﻿
 using ICAPR_SVP.Misc;
+using ICAPR_SVP.Misc.Filters;
 
 namespace ICAPR_SVP.Test.MockupImplementations
 {

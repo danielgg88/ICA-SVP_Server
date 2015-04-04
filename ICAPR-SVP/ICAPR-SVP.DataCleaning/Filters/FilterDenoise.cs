@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using ICAPR_SVP.Misc;
+﻿using ICAPR_SVP.Misc;
+using ICAPR_SVP.Misc.Filters;
+using System;
 
 namespace ICAPR_SVP.DataCleaning
 {
     public class FilterDenoise : Filter
     {
-        public FilterDenoise(String name): base(name)
-        { 
+        public FilterDenoise(String name)
+            : base(name)
+        {
         }
 
         #region Protected methods
