@@ -82,7 +82,7 @@
       <Project>{fcc2a784-508b-42f5-8205-ca97855eab07}</Project>
       <Name>ICAPR-SVP.Broker</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ICAPR-SVP.Core\ICAPR-SVP.DataCleaning.csproj">
+    <ProjectReference Include="..\ICAPR-SVP.DataCleaning\ICAPR-SVP.DataCleaning.csproj">
       <Project>{2d8a6fb2-b942-48a7-9511-1158461b7f0a}</Project>
       <Name>ICAPR-SVP.DataCleaning</Name>
     </ProjectReference>

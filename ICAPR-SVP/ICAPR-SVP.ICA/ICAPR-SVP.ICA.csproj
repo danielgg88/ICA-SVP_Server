@@ -4,24 +4,22 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2D8A6FB2-B942-48A7-9511-1158461B7F0A}</ProjectGuid>
+    <ProjectGuid>{505F4746-9E49-48AD-A6AC-E0D6EF7EC161}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ICAPR_RSVP.Core</RootNamespace>
-    <AssemblyName>ICAPR-RSVP.Core</AssemblyName>
+    <RootNamespace>ICAPR_SVP.ICA</RootNamespace>
+    <AssemblyName>ICAPR-SVP.ICA</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\libs\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,28 +28,23 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ICAPR-RSVP.Broker\ICAPR-RSVP.Broker.csproj">
-      <Project>{fcc2a784-508b-42f5-8205-ca97855eab07}</Project>
-      <Name>ICAPR-RSVP.Broker</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ICAPR-RSVP.Misc\ICAPR-RSVP.Misc.csproj">
+    <ProjectReference Include="..\ICAPR-SVP.Misc\ICAPR-SVP.Misc.csproj">
       <Project>{2bcf60dd-d05c-4f07-b372-e1e2b5477cfc}</Project>
-      <Name>ICAPR-RSVP.Misc</Name>
+      <Name>ICAPR-SVP.Misc</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

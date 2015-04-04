@@ -53,6 +53,7 @@ namespace ICAPR_SVP.DataCleaning
                     nextEye.PupilSize;
 
                 currentEye.PupilSize = sum / 4;
+                currentEye.CleaningFlag = Eye.CleaningFlags.Error;
            }
         }
 

@@ -1,0 +1,5 @@
+*.cs
+*.ICA.pdb
+*.ICA.dll
+*.ICA.csprojResolveAssemblyReference.cache
+*.ICA.csproj.FileListAbsolute.txt

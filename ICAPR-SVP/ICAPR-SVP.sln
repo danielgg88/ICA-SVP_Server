@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICAPR-SVP", "ICAPR-SVP\ICAP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICAPR-SVP.Broker", "ICAPR-SVP.Broker\ICAPR-SVP.Broker.csproj", "{FCC2A784-508B-42F5-8205-CA97855EAB07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICAPR-SVP.DataCleaning", "ICAPR-SVP.Core\ICAPR-SVP.DataCleaning.csproj", "{2D8A6FB2-B942-48A7-9511-1158461B7F0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICAPR-SVP.DataCleaning", "ICAPR-SVP.DataCleaning\ICAPR-SVP.DataCleaning.csproj", "{2D8A6FB2-B942-48A7-9511-1158461B7F0A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICAPR-SVP.Misc", "ICAPR-SVP.Misc\ICAPR-SVP.Misc.csproj", "{2BCF60DD-D05C-4F07-B372-E1E2B5477CFC}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0CDE2FE6-4505-425E-AB84-E743EFD345D2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICAPR-SVP.Network", "ICAPR-SVP.Network\ICAPR-SVP.Network.csproj", "{D9B2B7B0-D080-4FA0-9EF2-E109E0DFD98A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICAPR-SVP.ICA", "ICAPR-SVP.ICA\ICAPR-SVP.ICA.csproj", "{505F4746-9E49-48AD-A6AC-E0D6EF7EC161}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,16 @@ Global
 		{D9B2B7B0-D080-4FA0-9EF2-E109E0DFD98A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{D9B2B7B0-D080-4FA0-9EF2-E109E0DFD98A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{D9B2B7B0-D080-4FA0-9EF2-E109E0DFD98A}.Release|x86.ActiveCfg = Release|Any CPU
+		{505F4746-9E49-48AD-A6AC-E0D6EF7EC161}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{505F4746-9E49-48AD-A6AC-E0D6EF7EC161}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{505F4746-9E49-48AD-A6AC-E0D6EF7EC161}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{505F4746-9E49-48AD-A6AC-E0D6EF7EC161}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{505F4746-9E49-48AD-A6AC-E0D6EF7EC161}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{505F4746-9E49-48AD-A6AC-E0D6EF7EC161}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{505F4746-9E49-48AD-A6AC-E0D6EF7EC161}.Release|Any CPU.Build.0 = Release|Any CPU
+		{505F4746-9E49-48AD-A6AC-E0D6EF7EC161}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{505F4746-9E49-48AD-A6AC-E0D6EF7EC161}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{505F4746-9E49-48AD-A6AC-E0D6EF7EC161}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

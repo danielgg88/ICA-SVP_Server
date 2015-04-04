@@ -30,7 +30,7 @@ namespace ICAPR_SVP.DataCleaning
             {
                 //If not a blink, it is an error
                 Eye.CleaningFlags flag = (index_last_point - index_first_point - 1 >= Config.Cleaning.BLINK_MIN_CONSEQUENT_SAMPLES) ?
-                    Eye.CleaningFlags.Blink : Eye.CleaningFlags.PossibleBlink;
+                    Eye.CleaningFlags.Blink : Eye.CleaningFlags.Error;
 
                 //The first and last elements of the array are used as extreme points to interpolate
                 double x0,y0,x1,y1;
