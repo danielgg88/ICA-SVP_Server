@@ -33,7 +33,7 @@ namespace ICAPR_SVP.DataCleaning
                 eyes.LeftEyeProcessed = new Eye();
                 eyes.RightEyeProcessed = new Eye();
                 eyes.LeftEyeProcessed.PupilSize = eyes.LeftEye.PupilSize - Calibrator.AvgPupilSize[0];
-                eyes.RightEyeProcessed.PupilSize = eyes.LeftEye.PupilSize - Calibrator.AvgPupilSize[1];
+                eyes.RightEyeProcessed.PupilSize = eyes.RightEye.PupilSize - Calibrator.AvgPupilSize[1];
                 eyes.LeftEyeProcessed.CleaningFlag = eyes.LeftEye.CleaningFlag;
                 eyes.RightEyeProcessed.CleaningFlag = eyes.RightEye.CleaningFlag;
             }
