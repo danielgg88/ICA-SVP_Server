@@ -86,6 +86,10 @@
       <Project>{2d8a6fb2-b942-48a7-9511-1158461b7f0a}</Project>
       <Name>ICAPR-SVP.DataCleaning</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ICAPR-SVP.ICA\ICAPR-SVP.ICA.csproj">
+      <Project>{505f4746-9e49-48ad-a6ac-e0d6ef7ec161}</Project>
+      <Name>ICAPR-SVP.ICA</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ICAPR-SVP.Misc\ICAPR-SVP.Misc.csproj">
       <Project>{2bcf60dd-d05c-4f07-b372-e1e2b5477cfc}</Project>
       <Name>ICAPR-SVP.Misc</Name>

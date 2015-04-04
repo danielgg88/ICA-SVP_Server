@@ -1,4 +1,5 @@
 ﻿using ICAPR_SVP.DataCleaning;
+using ICAPR_SVP.ICA;
 using ICAPR_SVP.Misc;
 using ICAPR_SVP.Misc.Executors;
 using System;
@@ -51,18 +52,28 @@ namespace ICAPR_SVP
             broker.AddInput(inputPortSVP);
             broker.AddOutput(brokerOutputPort);
 
+            //Create ica output port
+            Misc.Port icaOutputPort = new Misc.PortBlockingDefaultImpl();
+
+            //Create ICA
+            ICAExecutor icaExecutor = new ICAExecutor();
+            icaExecutor.AddInput(brokerOutputPort);
+            icaExecutor.AddOutput(icaOutputPort);
+
             //Create file manager
-            Misc.Utils.FileManager<String> fm = new Misc.Utils.FileManager<string>(brokerOutputPort);
+            Misc.Utils.FileManager<String> fm = new Misc.Utils.FileManager<string>(icaOutputPort);
 
             //Start ports
             inputPortEyeTribe.Start();
             dataCleanerOutputPort.Start();
             inputPortSVP.Start();
             brokerOutputPort.Start();
+            icaOutputPort.Start();
 
             //Start services
             dataCleaner.startInBackground();
             broker.Start();
+            icaExecutor.Start();
             fm.Start();
 
             //Stop services
@@ -71,6 +82,7 @@ namespace ICAPR_SVP
             Console.WriteLine("Stopping..");
             dataCleaner.stop();
             broker.Stop();
+            icaExecutor.Stop();
             fm.Stop();
 
             //Stop ports
@@ -79,6 +91,8 @@ namespace ICAPR_SVP
             dataCleanerOutputPort.Stop();
             inputPortSVP.Stop();
             brokerOutputPort.Stop();
+            icaOutputPort.Stop();
+
             GazeManager.Instance.Deactivate();
             Console.ReadLine();
             Console.WriteLine("Server stopped");

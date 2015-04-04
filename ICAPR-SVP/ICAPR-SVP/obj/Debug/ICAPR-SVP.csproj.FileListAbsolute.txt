@@ -36,3 +36,5 @@ E:\MegaSync\Workspaces\Windows\Git\dk.itu.eye.icapr-svp\ICAPR-SVP\ICAPR-SVP\bin\
 E:\MegaSync\Workspaces\Windows\Git\dk.itu.eye.icapr-svp\ICAPR-SVP\ICAPR-SVP\obj\Debug\ICAPR-SVP.csprojResolveAssemblyReference.cache
 E:\MegaSync\Workspaces\Windows\Git\dk.itu.eye.icapr-svp\ICAPR-SVP\ICAPR-SVP\obj\Debug\ICAPR-SVP.exe
 E:\MegaSync\Workspaces\Windows\Git\dk.itu.eye.icapr-svp\ICAPR-SVP\ICAPR-SVP\obj\Debug\ICAPR-SVP.pdb
+E:\MegaSync\Workspaces\Windows\Git\dk.itu.eye.icapr-svp\ICAPR-SVP\ICAPR-SVP\bin\Debug\ICAPR-SVP.ICA.dll
+E:\MegaSync\Workspaces\Windows\Git\dk.itu.eye.icapr-svp\ICAPR-SVP\ICAPR-SVP\bin\Debug\ICAPR-SVP.ICA.pdb
