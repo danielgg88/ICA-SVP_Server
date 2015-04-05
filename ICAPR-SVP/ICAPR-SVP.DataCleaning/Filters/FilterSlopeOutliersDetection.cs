@@ -20,22 +20,27 @@ namespace ICAPR_SVP.DataCleaning
 
         protected override void OnExecute(Misc.Port input,Misc.Port output)
         {
+            //take the avg for the left eye only
+            Eye avgLeftEye = new Eye();
+            avgLeftEye.PupilSize = Misc.Calibration.Calibrator.AvgPupilSize[0];
+
+            //take the avg for the right eye only
+            Eye avgRightEye = new Eye();
+            avgRightEye.PupilSize = Misc.Calibration.Calibrator.AvgPupilSize[1];
+
             Item item = input.GetItem();
             currentEye = (Eyes)item.Value;
+
             if(firstPreviousEye == null || secondPreviousEye == null)
             {
+                checkForFirstOutliers(currentEye, avgLeftEye, avgRightEye);
                 swapEyes();
                 return;
             }
 
-            //take the avg for the left eye only
-            Eye avgNextEye = new Eye();
-            avgNextEye.PupilSize = Misc.Calibration.Calibrator.AvgPupilSize[0];
-            applyRule(secondPreviousEye.LeftEye,firstPreviousEye.LeftEye,currentEye.LeftEye,avgNextEye);
+            applyRule(secondPreviousEye.LeftEye,firstPreviousEye.LeftEye,currentEye.LeftEye,avgLeftEye);
 
-            //take the avg for the right eye only
-            avgNextEye.PupilSize = Misc.Calibration.Calibrator.AvgPupilSize[1];
-            applyRule(secondPreviousEye.RightEye,firstPreviousEye.RightEye,currentEye.RightEye,avgNextEye);
+            applyRule(secondPreviousEye.RightEye,firstPreviousEye.RightEye,currentEye.RightEye,avgRightEye);
 
             output.PushItem(item);
             swapEyes();
@@ -53,6 +58,16 @@ namespace ICAPR_SVP.DataCleaning
                 currentEye.PupilSize = sum / 4;
                 currentEye.CleaningFlag = Eye.CleaningFlags.Error;
             }
+        }
+
+        private void checkForFirstOutliers(Eyes eyes, Eye avgLeftEye, Eye avgRightEye)
+        {
+                if( isOutlier(eyes.LeftEye.PupilSize , avgLeftEye.PupilSize ) )
+                    eyes.LeftEye.PupilSize = avgLeftEye.PupilSize;
+
+                if( isOutlier(eyes.RightEye.PupilSize , avgRightEye.PupilSize ) )
+                    eyes.RightEye.PupilSize = avgRightEye.PupilSize;
+
         }
 
         private bool isOutlier(double previous,double next)
