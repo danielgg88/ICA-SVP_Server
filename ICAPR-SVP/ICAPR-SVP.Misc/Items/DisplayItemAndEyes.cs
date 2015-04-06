@@ -11,12 +11,14 @@ namespace ICAPR_SVP.Misc
             get;
             private set;
         }   //Null when idle time
+
         [JsonProperty(PropertyName = "eyes")]
         public Queue<Eyes> Eyes
         {
             get;
             private set;
         }
+
         [JsonProperty(PropertyName = "summary")]
         public SummaryItem SummaryItem
         {

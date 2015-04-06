@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Filters\FilterBlinkDetection.cs" />
-    <Compile Include="Filters\FilterDenoise.cs" />
     <Compile Include="Filters\FilterScaling.cs" />
     <Compile Include="Filters\FilterSlopeOutliersDetection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

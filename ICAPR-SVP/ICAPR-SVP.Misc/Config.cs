@@ -39,5 +39,18 @@ namespace ICAPR_SVP.Misc
             public const double OUTLIER_MAX_CHANGE_RATE_ALLOWED_MM = 0.1; //Maximum change rate allowed from the two preceding
             //samples.
         }
+
+        public class Matlab
+        {
+            
+            public const String DENOISE_ALGORITHM = "db4";  //daubechies 4
+            public const int DENOISE_LEVEL = 5;
+        }
+
+        public class ICA
+        {
+            public const int AVG_MOVING_WINDOW_SIZE = 10;
+            public const double SIGNAL_THRESHOLD_LARGE = 0.05;
+        }
     }
 }

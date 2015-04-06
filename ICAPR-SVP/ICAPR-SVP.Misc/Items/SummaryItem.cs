@@ -5,13 +5,13 @@ namespace ICAPR_SVP.Misc
     public class SummaryItem
     {
         [JsonProperty(PropertyName = "ica")]
-        public string Ica
+        public int[] Ica
         {
             get;
-            private set;
+            set;
         }
 
-        public SummaryItem(string ica)
+        public SummaryItem(int[] ica)
         {
             Ica = ica;
         }

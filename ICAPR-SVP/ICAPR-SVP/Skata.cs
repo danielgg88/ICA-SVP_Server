@@ -27,7 +27,12 @@ namespace ICAPR_SVP
             matlab.GetWorkspaceData("xd", "base", out result);
 
             Console.WriteLine(((double[,])result).Length);
-            Console.ReadLine();
+
+            for (int i = 0; i < 10; i++)
+            {
+                Console.WriteLine(((double[,])result)[1,i]);
+            }
+                Console.ReadLine();
         }
     }
 }

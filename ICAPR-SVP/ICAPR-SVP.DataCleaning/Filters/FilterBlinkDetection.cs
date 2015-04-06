@@ -71,7 +71,7 @@ namespace ICAPR_SVP.DataCleaning
                 {
                     Eyes eyes_item = eyes.ElementAt(i);
                     Eye eye = (is_left_eye) ? eyes_item.LeftEye : eyes_item.RightEye;
-                    eye.PupilSize = Misc.Utils.Utils.linear(eyes_item.Timestamp,x0,x1,y0,y1);
+                    eye.PupilSize = Misc.Utils.UtilsMath.linear(eyes_item.Timestamp,x0,x1,y0,y1);
                     eye.CleaningFlag = flag;
                 }
             }
