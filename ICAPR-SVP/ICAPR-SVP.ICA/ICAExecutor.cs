@@ -1,4 +1,5 @@
-﻿using ICAPR_SVP.Misc;
+﻿using System;
+using ICAPR_SVP.Misc;
 using ICAPR_SVP.Misc.Executors;
 using System.Collections.Generic;
 
@@ -27,6 +28,7 @@ namespace ICAPR_SVP.ICA
             {
                 populatevgCalibrationArray();
                 DisplayItemAndEyes<string> displayItem = (DisplayItemAndEyes<string>)item.Value;
+                Console.WriteLine(displayItem.Eyes.Count);
                 //Create arrays from eyes
                 double[][] eyes_original = createEyeArrays(displayItem,false);
                 double[][] eyes_processed = createEyeArrays(displayItem,true);
@@ -35,7 +37,7 @@ namespace ICAPR_SVP.ICA
                 //Compute wavelet transformation (denoise eye data)
                 double[][] denoisedEyes = denoiser.denoiseEyes(displayItem.Eyes,eyes_processed);
                 //Compute ICA
-                computeICAforItem(((DisplayItemAndEyes<string>)item.Value),binaryEyes,denoisedEyes);
+                computeICAforItem(((DisplayItemAndEyes<string>)item.Value), binaryEyes, denoisedEyes, Misc.Config.EyeTribe.SAMPLING_FREQUENCY);
             }
             this._listOutputPort[0].PushItem(item);
         }
@@ -54,11 +56,11 @@ namespace ICAPR_SVP.ICA
             }
         }
 
-        protected void computeICAforItem(DisplayItemAndEyes<string> items,int[][] binaryEyes,double[][] denoisedEyes)
+        protected void computeICAforItem(DisplayItemAndEyes<string> items,int[][] binaryEyes,double[][] denoisedEyes, int SAMPLE_FREQ)
         {
             List<Eyes> eyes = new List<Eyes>(items.Eyes);
-            int iterations = eyes.Count / Misc.Config.EyeTribe.SAMPLING_FREQUENCY;
-            int modulus = eyes.Count % Misc.Config.EyeTribe.SAMPLING_FREQUENCY;
+            int iterations = eyes.Count / SAMPLE_FREQ;
+            int modulus = eyes.Count % SAMPLE_FREQ;
 
             int size = (modulus > 0) ? iterations + 1 : iterations;
             int[] ICA = new int[size];
@@ -66,21 +68,23 @@ namespace ICAPR_SVP.ICA
             //Compute ICA per iteration (1 second at the time)
             for(int i = 0;i < iterations;i++)
             {
-                int index_start = i * Misc.Config.EyeTribe.SAMPLING_FREQUENCY;
-                int window = Misc.Config.EyeTribe.SAMPLING_FREQUENCY;
+                int index_start = i * SAMPLE_FREQ;
+                int window = SAMPLE_FREQ;
 
                 ICA[i] = computeICA(binaryEyes[0],denoisedEyes[0],index_start,window);
                 ICA[i] += computeICA(binaryEyes[1],denoisedEyes[1],index_start,window);
                 ICA[i] /= 2;
+                Console.WriteLine("ICA -> Word: " + items.DisplayItem.Value + " Second: " + (i+1) + " ICA average: " + ICA[i]);
             }
 
             //Compute ICA for remaining samples (not a complete second)
             if(modulus > 0)
             {
-                int index_start = iterations * Misc.Config.EyeTribe.SAMPLING_FREQUENCY;
+                int index_start = iterations * SAMPLE_FREQ;
                 ICA[size - 1] = computeICA(binaryEyes[0],denoisedEyes[0],index_start,modulus);
                 ICA[size - 1] += computeICA(binaryEyes[1],denoisedEyes[1],index_start,modulus);
                 ICA[size - 1] /= 2;
+                Console.WriteLine("ICA -> Word: " + items.DisplayItem.Value + " Second: " + size + " ICA average: " + ICA[size-1]);
             }
 
             items.SummaryItem = new SummaryItem(ICA);
@@ -101,12 +105,13 @@ namespace ICAPR_SVP.ICA
         protected void setupArraysForAvgMovingWindow
             (double[][] eyes_array,int[][] binaryEyes,double[][] avg_and_data,double[][] avg_array,double[][] avg_and_data_sum)
         {
+            int eyesSize = eyes_array[0].Length;
             //Initialize binary arrays
-            binaryEyes[0] = new int[eyes_array.Length];
-            binaryEyes[1] = new int[eyes_array.Length];
+            binaryEyes[0] = new int[eyesSize];
+            binaryEyes[1] = new int[eyesSize];
             //Concat avg array and eyes data
-            avg_and_data[0] = new double[eyes_array.Length + Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE - 1];
-            avg_and_data[1] = new double[eyes_array.Length + Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE - 1];
+            avg_and_data[0] = new double[eyesSize + Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE];
+            avg_and_data[1] = new double[eyesSize + Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE];
             //Left eye
             avg_array[0].CopyTo(avg_and_data[0],0);
             eyes_array[0].CopyTo(avg_and_data[0],avg_array[0].Length);
@@ -118,18 +123,11 @@ namespace ICAPR_SVP.ICA
             avg_and_data_sum[1] = Misc.Utils.UtilsMath.GetCSum(avg_and_data[1]);
         }
 
-        protected void computeMeanBothEyes(double[][] avg_and_data_sum,double[] mean,int index)
-        {
-            //Compute mean
-            mean[0] = Misc.Utils.UtilsMath.getMean(avg_and_data_sum[0],Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE,index);
-            mean[1] = Misc.Utils.UtilsMath.getMean(avg_and_data_sum[1],Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE,index);
-        }
-
-        protected void computeStdDevBothEyes(double[][] avg_and_data,double[] mean,double[] std,int index_start)
+        protected void computeStdDevBothEyes(double[][] avg_and_data,double[][] avg_and_data_sum,double[] std,int index_end)
         {
             //Compute standard deviation
-            std[0] = Misc.Utils.UtilsMath.getStdDev(avg_and_data[0],mean[0],index_start,Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE);
-            std[1] = Misc.Utils.UtilsMath.getStdDev(avg_and_data[1],mean[1],index_start,Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE);
+            std[0] = Misc.Utils.UtilsMath.getStdDev(avg_and_data[0],avg_and_data_sum[0],index_end,Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE);
+            std[1] = Misc.Utils.UtilsMath.getStdDev(avg_and_data[1],avg_and_data_sum[1],index_end,Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE);
         }
 
         protected int[][] createStatBinaryArray(DisplayItemAndEyes<string> item,double[][] eyes_array,double[][] avg_array)
@@ -143,30 +141,26 @@ namespace ICAPR_SVP.ICA
             setupArraysForAvgMovingWindow(eyes_array,binaryEyes,avg_and_data,avg_array,avg_and_data_sum);
 
             //calculate mean , std, and binary value only for the first item
-            double[] mean = new double[2];
             double[] std = new double[2];
 
             //Compute mean and stdDev for both eyes first time
-            computeMeanBothEyes(avg_and_data_sum,mean,Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE + 1);
-            computeStdDevBothEyes(avg_and_data,mean,std,0);
+            computeStdDevBothEyes(avg_and_data,avg_and_data_sum,std,Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE);
 
             //Set 0 to first item
             binaryEyes[0][0] = 0;
             binaryEyes[1][0] = 0;
 
             //iterate though all of them and compute the binary value for each
-            for(int i = Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE + 1;i < avg_and_data.Length - 1;i++)
+            for(int i = Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE + 1;i < avg_and_data[0].Length ;i++)
             {
-                computeMeanBothEyes(avg_and_data_sum,mean,i + 1);
-
                 //Get binary value for LEFT pupil size
-                int binary_tmp = getBinaryValue(avg_and_data[0][i],avg_and_data[0][i - 1],std[0]);
+                int binary_tmp = getBinaryValue(avg_and_data[0][i-1],avg_and_data[0][i],std[0]);
                 binaryEyes[0][i - Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE] = binary_tmp;
                 //Get binary value for RIGHT pupil size
-                binary_tmp = getBinaryValue(avg_and_data[1][i],avg_and_data[1][i - 1],std[1]);
+                binary_tmp = getBinaryValue(avg_and_data[1][i-1],avg_and_data[1][i],std[1]);
                 binaryEyes[1][i - Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE] = binary_tmp;
 
-                computeStdDevBothEyes(avg_and_data,mean,std,i - Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE);
+                computeStdDevBothEyes(avg_and_data, avg_and_data_sum, std, i);
             }
             return binaryEyes;
         }

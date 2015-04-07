@@ -56,15 +56,6 @@ namespace ICAPR_SVP.Test
             Assert.AreEqual(27,var);
         }
 
-        [TestMethod]
-        public void testGetStdDev()
-        {
-            double[] sum = ICAPR_SVP.Misc.Utils.UtilsMath.GetCSum(data);
-            double result = ICAPR_SVP.Misc.Utils.UtilsMath.getMean(sum,3,5);
-            double std = ICAPR_SVP.Misc.Utils.UtilsMath.getStdDev(data,result,3,3);
-
-            Assert.AreEqual(Math.Sqrt(27),std);
-        }
 
     }
 }

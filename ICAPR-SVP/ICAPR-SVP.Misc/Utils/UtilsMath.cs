@@ -25,17 +25,17 @@ namespace ICAPR_SVP.Misc.Utils
             return csum;
         }
 
-        public static double getMean(double[] csum,int period,int ii)
+        public static double getMean(double[] csum,int window,int index_end)
         {
-            if(period == 0 || ii <= period)
+            if(window == 0 || index_end < window)
                 return -1;
-            return (csum[ii] - csum[ii - period]) / period;
+            return (csum[index_end] - csum[index_end - window]) / window;
         }
 
         public static double getVariance(double[] data,double mean,int startingPointer,int window)
         {
             double temp = 0;
-            for(int i = startingPointer;i <= startingPointer + window;i++)
+            for(int i = startingPointer;i < startingPointer + window;i++)
             {
                 double a = data[i];
                 temp += (mean - a) * (mean - a);
@@ -43,9 +43,10 @@ namespace ICAPR_SVP.Misc.Utils
             return temp / (window - 1);
         }
 
-        public static double getStdDev(double[] data,double mean,int startingPointer,int window)
+        public static double getStdDev(double[] data, double[] sum,int index_end,int window)
         {
-            return Math.Sqrt(getVariance(data,mean,startingPointer,window));
+            double mean = UtilsMath.getMean(sum, window, index_end);
+            return Math.Sqrt(getVariance(data,mean,index_end - window + 1,window));
         }
     }
 
