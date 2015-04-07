@@ -36,20 +36,20 @@ namespace ICAPR_SVP.Misc.Utils
             return (csum[ii] - csum[ii - period])/period;
         }
 
-        public static double getVariance(double[] data, double mean, int startingPointer)
+        public static double getVariance(double[] data, double mean, int startingPointer, int window)
         {
             double temp = 0;
-            for (int i = startingPointer; i < Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE; i++)
+            for (int i = startingPointer; i < startingPointer + window; i++)
             {
                 double a = data[i];
                 temp += (mean - a) * (mean - a);
             }
-            return temp / data.Length;
+            return temp / (window - 1);
         }
 
-        public static double getStdDev(double[] data, double mean, int startingPointer)
+        public static double getStdDev(double[] data, double mean, int startingPointer, int window)
         {
-            return Math.Sqrt(getVariance(data, mean, startingPointer));
+            return Math.Sqrt(getVariance(data, mean, startingPointer, window));
         }
     }
 

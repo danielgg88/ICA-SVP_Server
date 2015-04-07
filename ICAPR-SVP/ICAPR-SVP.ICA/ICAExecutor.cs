@@ -6,13 +6,13 @@ namespace ICAPR_SVP.ICA
 {
     public class ICAExecutor : ExecutorSingleThread
     {
-        private Denoiser denoiser;
-        private double[] avg_left_array;
-        private double[] avg_right_array;
-        private double[] denoisedLeftEye;
-        private double[] denoisedRightEye;
-        private int[] binaryLeftEye;
-        private int[] binaryRightEye;
+        protected Denoiser denoiser;
+        protected double[] avg_left_array;
+        protected double[] avg_right_array;
+        protected double[] denoisedLeftEye;
+        protected double[] denoisedRightEye;
+        protected int[] binaryLeftEye;
+        protected int[] binaryRightEye;
 
         public ICAExecutor()
             : base()
@@ -40,7 +40,7 @@ namespace ICAPR_SVP.ICA
             this._listOutputPort[0].PushItem(item);
         }
 
-        private void computeICA(DisplayItemAndEyes<string> items)
+        protected void computeICA(DisplayItemAndEyes<string> items)
         {
             List<Eyes> eyes = new List<Eyes>(items.Eyes);
             int iterations = eyes.Count / Misc.Config.EyeTribe.SAMPLING_FREQUENCY;
@@ -67,7 +67,7 @@ namespace ICAPR_SVP.ICA
             items.SummaryItem = new SummaryItem(ICA);
         }
 
-        private int computeICA(int startIndex, int endIndex, bool left)
+        protected int computeICA(int startIndex, int endIndex, bool left)
         {
             double[] denoisedArray = (left) ? denoisedLeftEye : denoisedRightEye;
             int[] binaryArray = (left) ? binaryLeftEye : binaryRightEye;
@@ -81,7 +81,7 @@ namespace ICAPR_SVP.ICA
         }
 
 
-        private void computeMovingAvgWindow(DisplayItemAndEyes<string> items)
+        protected void computeMovingAvgWindow(DisplayItemAndEyes<string> items)
         {
             double[] leftArray_tmp = new double[items.Eyes.Count];
             double[] rightArray_tmp = new double[items.Eyes.Count];
@@ -94,7 +94,7 @@ namespace ICAPR_SVP.ICA
             computeAvgWindowForSingleEye(items, rightArray_tmp, avg_right_array, false);
         }
 
-        private void computeAvgWindowForSingleEye(DisplayItemAndEyes<string> item, double[] inputData, double[] avg_array, bool left)
+        protected void computeAvgWindowForSingleEye(DisplayItemAndEyes<string> item, double[] inputData, double[] avg_array, bool left)
         {
             double[] avg_and_data = new double[item.Eyes.Count + Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE - 1];
             avg_array.CopyTo(avg_and_data, 0);
@@ -107,7 +107,7 @@ namespace ICAPR_SVP.ICA
             double mean = Misc.Utils.UtilsMath.CSumMovingAverage(array_avg_data_sum,
                 Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE, Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE);
 
-            double std = Misc.Utils.UtilsMath.getStdDev(avg_and_data, mean, 0);
+            double std = Misc.Utils.UtilsMath.getStdDev(avg_and_data, mean, 0, Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE);
 
             List<Eyes> eyes = new List<Eyes>(item.Eyes);
             if (left)
@@ -135,12 +135,12 @@ namespace ICAPR_SVP.ICA
                     binaryRightEye[i - Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE] = binary;
 
 
-                std = Misc.Utils.UtilsMath.getStdDev(avg_and_data, mean, i - Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE);
+                std = Misc.Utils.UtilsMath.getStdDev(avg_and_data, mean, i - Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE, Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE);
             }
         }
 
 
-        private void denoise(DisplayItemAndEyes<string> items)
+        protected void denoise(DisplayItemAndEyes<string> items)
         {
             double[] leftArray = new double[items.Eyes.Count];
             double[] rightArray = new double[items.Eyes.Count];
@@ -159,7 +159,7 @@ namespace ICAPR_SVP.ICA
         }
 
 
-        private void createEyeArrays(DisplayItemAndEyes<string> items, double[] leftArray, double[] rightArray, bool processed)
+        protected void createEyeArrays(DisplayItemAndEyes<string> items, double[] leftArray, double[] rightArray, bool processed)
         {
             int i = 0;
             foreach (Eyes eyes in items.Eyes)

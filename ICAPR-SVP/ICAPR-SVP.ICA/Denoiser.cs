@@ -8,7 +8,7 @@ using ICAPR_SVP.Misc;
 namespace ICAPR_SVP.ICA
 {
 
-    class Denoiser
+    public class Denoiser
     {
 
         private MLApp.MLApp matlab;
