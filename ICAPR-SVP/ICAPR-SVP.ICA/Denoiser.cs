@@ -1,16 +1,10 @@
-﻿using System;
+﻿using ICAPR_SVP.Misc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ICAPR_SVP.Misc;
 
 namespace ICAPR_SVP.ICA
 {
-
     public class Denoiser
     {
-
         private MLApp.MLApp matlab;
 
         public Denoiser()
@@ -19,26 +13,39 @@ namespace ICAPR_SVP.ICA
             matlab.Visible = 0;
         }
 
-        public double[] denoise(double[] data)
+        public double[][] denoiseEyes(Queue<Eyes> eyes_queue,double[][] eyes_array)
         {
-            matlab.PutWorkspaceData("data", "base", data);
+            double[][] denoisedEye = new double[2][];
+            denoisedEye[0] = denoise(eyes_array[0]);
+            denoisedEye[1] = denoise(eyes_array[1]);
+
+            int i = 0;
+            foreach(Eyes eyes in eyes_queue)
+            {
+                eyes.LeftEyeProcessed.PupilSize = denoisedEye[0][i];
+                eyes.RightEyeProcessed.PupilSize = denoisedEye[1][i++];
+            }
+            return denoisedEye;
+        }
+
+        private double[] denoise(double[] data)
+        {
+            matlab.PutWorkspaceData("data","base",data);
             matlab.Execute(@"dwtmode('asym');");
             matlab.Execute(@"[c,l] = wavedec(data," + Config.Matlab.DENOISE_LEVEL + @",'" + Config.Matlab.DENOISE_ALGORITHM + @"');");
             matlab.Execute(@"xd = wden(c, 'minimaxi', 'h', 'sln'," + Config.Matlab.DENOISE_LEVEL + @",'" + Config.Matlab.DENOISE_ALGORITHM + @"');");
             //matlab.Execute(@"plot(xd);");
-            object result = null;
 
-            matlab.GetWorkspaceData("xd", "base", out result);
+            object result = null;
+            matlab.GetWorkspaceData("xd","base",out result);
 
             double[,] resultArray = ((double[,])result);
             double[] returnArray = new double[resultArray.Length];
 
-            for (int i = 0; i < resultArray.Length; i++)
-                returnArray[i] = resultArray[0, i];
+            for(int i = 0;i < resultArray.Length;i++)
+                returnArray[i] = resultArray[0,i];
 
             return returnArray;
         }
-
-
     }
 }

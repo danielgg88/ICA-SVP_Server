@@ -42,3 +42,5 @@ C:\Users\centos\code\git\Thesis\ICAPR-SVP\ICAPR-SVP\bin\Debug\ICAPR-SVP.ICA.dll
 C:\Users\centos\code\git\Thesis\ICAPR-SVP\ICAPR-SVP\bin\Debug\ICAPR-SVP.ICA.pdb
 C:\Users\centos\code\git\Thesis\ICAPR-SVP\ICAPR-SVP\obj\Debug\Interop.MLApp.dll
 C:\Users\centos\code\git\Thesis\ICAPR-SVP\ICAPR-SVP\obj\Debug\ICAPR-SVP.csproj.ResolveComReference.cache
+E:\MegaSync\Workspaces\Windows\Git\dk.itu.eye.icapr-svp\ICAPR-SVP\ICAPR-SVP\obj\Debug\Interop.MLApp.dll
+E:\MegaSync\Workspaces\Windows\Git\dk.itu.eye.icapr-svp\ICAPR-SVP\ICAPR-SVP\obj\Debug\ICAPR-SVP.csproj.ResolveComReference.cache

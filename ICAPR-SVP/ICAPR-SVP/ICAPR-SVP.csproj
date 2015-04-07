@@ -71,7 +71,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Skata.cs" />
     <Compile Include="Testing.cs" />
     <Compile Include="TestingDataCleaning.cs" />
   </ItemGroup>
