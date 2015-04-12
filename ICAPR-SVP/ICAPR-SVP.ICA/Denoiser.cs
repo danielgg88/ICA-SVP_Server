@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ICAPR_SVP.ICA
 {
-    public class Denoiser
+    public class Denoiser : IDenoiser
     {
         private MLApp.MLApp matlab;
 
