@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace ICAPR_SVP.ICA
 {
-    public class Denoiser : IDenoiser
+    public class MatlabDenoiser : IDenoiser
     {
         private MLApp.MLApp matlab;
 
-        public Denoiser()
+        public MatlabDenoiser()
         {
             matlab = new MLApp.MLApp();
             matlab.Visible = 0;
@@ -47,5 +47,6 @@ namespace ICAPR_SVP.ICA
 
             return returnArray;
         }
+
     }
 }

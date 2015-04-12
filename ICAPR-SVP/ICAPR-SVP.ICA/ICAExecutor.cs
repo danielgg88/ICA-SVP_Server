@@ -9,13 +9,13 @@ namespace ICAPR_SVP.ICA
     {
         // 0 = LEFT
         // 1 = RIGT
-        protected Denoiser denoiser;
+        protected IDenoiser denoiser;
         protected double[][] avgCalibrationArray;
 
         public ICAExecutor()
             : base()
         {
-            denoiser = new Denoiser();
+            denoiser = new MatlabDenoiser();
             avgCalibrationArray = new double[2][];
             avgCalibrationArray[0] = new double[Config.ICA.AVG_MOVING_WINDOW_SIZE];
             avgCalibrationArray[1] = new double[Config.ICA.AVG_MOVING_WINDOW_SIZE];
@@ -28,7 +28,6 @@ namespace ICAPR_SVP.ICA
             {
                 populatevgCalibrationArray();
                 DisplayItemAndEyes<string> displayItem = (DisplayItemAndEyes<string>)item.Value;
-                Console.WriteLine(displayItem.Eyes.Count);
                 //Create arrays from eyes
                 double[][] eyes_original = createEyeArrays(displayItem,false);
                 double[][] eyes_processed = createEyeArrays(displayItem,true);
@@ -74,7 +73,6 @@ namespace ICAPR_SVP.ICA
                 ICA[i] = computeICA(binaryEyes[0],denoisedEyes[0],index_start,window);
                 ICA[i] += computeICA(binaryEyes[1],denoisedEyes[1],index_start,window);
                 ICA[i] /= 2;
-                Console.WriteLine("ICA -> Word: " + items.DisplayItem.Value + " Second: " + (i+1) + " ICA average: " + ICA[i]);
             }
 
             //Compute ICA for remaining samples (not a complete second)
@@ -84,7 +82,6 @@ namespace ICAPR_SVP.ICA
                 ICA[size - 1] = computeICA(binaryEyes[0],denoisedEyes[0],index_start,modulus);
                 ICA[size - 1] += computeICA(binaryEyes[1],denoisedEyes[1],index_start,modulus);
                 ICA[size - 1] /= 2;
-                Console.WriteLine("ICA -> Word: " + items.DisplayItem.Value + " Second: " + size + " ICA average: " + ICA[size-1]);
             }
 
             items.SummaryItem = new SummaryItem(ICA);
