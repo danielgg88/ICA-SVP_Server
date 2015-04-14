@@ -8,7 +8,7 @@ namespace ICAPR_SVP.Test.MockupImplementations
     //Test simulating EyeTribe data input
     public class PortBlockingEyeTribeTest : PortBlocking
     {
-        public static readonly int SLEEP = 5;
+        public static readonly int SLEEP = 1000 / Config.EyeTribe.SAMPLING_FREQUENCY;
         private Thread _workerThread;
         private bool _isRunning;
         private int _MinPupilSize;
