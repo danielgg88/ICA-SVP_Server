@@ -193,4 +193,5 @@ FakesAssemblies/
 *.opt
 
 #thesis bin folder
-./**/Debug
+bin/
+obj/
