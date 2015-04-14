@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICAPR-SVP.Network", "ICAPR-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICAPR-SVP.ICA", "ICAPR-SVP.ICA\ICAPR-SVP.ICA.csproj", "{505F4746-9E49-48AD-A6AC-E0D6EF7EC161}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICAPR-SVP.MachineLearning", "ICAPR-SVP.MachineLearning\ICAPR-SVP.MachineLearning.csproj", "{F15C34B6-4BF4-4DDD-B684-BB50E4D0A64E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,16 @@ Global
 		{505F4746-9E49-48AD-A6AC-E0D6EF7EC161}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{505F4746-9E49-48AD-A6AC-E0D6EF7EC161}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{505F4746-9E49-48AD-A6AC-E0D6EF7EC161}.Release|x86.ActiveCfg = Release|Any CPU
+		{F15C34B6-4BF4-4DDD-B684-BB50E4D0A64E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F15C34B6-4BF4-4DDD-B684-BB50E4D0A64E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F15C34B6-4BF4-4DDD-B684-BB50E4D0A64E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F15C34B6-4BF4-4DDD-B684-BB50E4D0A64E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F15C34B6-4BF4-4DDD-B684-BB50E4D0A64E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F15C34B6-4BF4-4DDD-B684-BB50E4D0A64E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F15C34B6-4BF4-4DDD-B684-BB50E4D0A64E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F15C34B6-4BF4-4DDD-B684-BB50E4D0A64E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F15C34B6-4BF4-4DDD-B684-BB50E4D0A64E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F15C34B6-4BF4-4DDD-B684-BB50E4D0A64E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
