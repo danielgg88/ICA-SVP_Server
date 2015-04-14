@@ -137,19 +137,10 @@ namespace ICAPR_SVP.Misc.Executors
                         eyes.Timestamp -= this._firstTrialTimestamp;
 
                         //Reduce the list of stored Eyes Data to the sampling frequency defined
-                        if(lastEyes != null)
-                        {
-                            if(eyes.Timestamp - lastEyes.Timestamp >= time_window)
-                            {
-                                reducedEyesList.Add(eyes);
-                                lastEyes = eyes;
-                            }
-                        }
-                        else
-                        {
-                            reducedEyesList.Add(eyes);
-                            lastEyes = eyes;
-                        }
+                       
+
+                        reducedEyesList.Add(eyes);
+                        lastEyes = eyes;
                     }
                     //Substract to make first point 0
                     tmpWord.Timestamp -= this._firstTrialTimestamp;
