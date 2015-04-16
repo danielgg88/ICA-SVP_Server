@@ -3,55 +3,53 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using weka.classifiers;
 
 namespace ICAPR_SVP.MachineLearning
 {
+
+    
+
     class Program
     {
+        public const String WEKA_MODEL = @"\output.model";       //Folder to save logs
+        public readonly static  String DESKTOP                       //Base path (Desktop)
+                = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+
+        public readonly static String[] attributes = {
+                                               "timestamp",
+                                               "x",
+                                               "y",
+                                               "z"
+                                               
+
+                                           };
+
+        public readonly static String[] labels = {
+                                           "sit",
+                                           "stairs",
+                                           "walking",
+                                       };
+
+
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello Java, from C#!");
             classifyTest();
         }
 
-        const int percentSplit = 66;
         public static void classifyTest()
         {
-            try
-            {
-                weka.core.Instances insts = new weka.core.Instances(new java.io.FileReader("iris.arff"));
-                insts.setClassIndex(insts.numAttributes() - 1);
+            Classifier classifier = (Classifier)weka.core.SerializationHelper.read(DESKTOP + WEKA_MODEL);
 
-                weka.classifiers.Classifier cl = new weka.classifiers.trees.J48();
-                Console.WriteLine("Performing " + percentSplit + "% split evaluation.");
+            ClassifierWrapper wrapper = new ClassifierWrapper(classifier);
 
-                //randomize the order of the instances in the dataset.
-                weka.filters.Filter myRandom = new weka.filters.unsupervised.instance.Randomize();
-                myRandom.setInputFormat(insts);
-                insts = weka.filters.Filter.useFilter(insts, myRandom);
+            wrapper.init(labels, attributes);
 
-                int trainSize = insts.numInstances() * percentSplit / 100;
-                int testSize = insts.numInstances() - trainSize;
-                weka.core.Instances train = new weka.core.Instances(insts, 0, trainSize);
+            String result = wrapper.classify(
+                "2014-05-04T18:24:39",
+                new double[] { -0.010668111, 0.01545645, -0.015901947 });
 
-                cl.buildClassifier(train);
-                int numCorrect = 0;
-                for (int i = trainSize; i < insts.numInstances(); i++)
-                {
-                    weka.core.Instance currentInst = insts.instance(i);
-                    double predictedClass = cl.classifyInstance(currentInst);
-                    if (predictedClass == insts.instance(i).classValue())
-                        numCorrect++;
-                }
-                Console.WriteLine(numCorrect + " out of " + testSize + " correct (" +
-                           (double)((double)numCorrect / (double)testSize * 100.0) + "%)");
-
-               
-            }
-            catch (java.lang.Exception ex)
-            {
-                ex.printStackTrace();
-            }
+            Console.WriteLine(result);
 
             Console.ReadLine();
         }
