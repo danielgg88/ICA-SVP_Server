@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ICAPR_SVP.ICA;
+﻿using ICAPR_SVP.ICA;
 using ICAPR_SVP.Misc;
-
-
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
 
 /*
  *  **IMPORTANT** 
@@ -23,19 +18,13 @@ using ICAPR_SVP.Misc;
  * 
  */
 
-
-
-
-
-
-
 namespace ICAPR_SVP.Test
 {
     [TestClass]
     public class ICAExecutorTest : ICAExecutor
     {
 
-        public const int  SIZE = 5;
+        public const int SIZE = 5;
         public const int WINDOW = Misc.Config.ICA.AVG_MOVING_WINDOW_SIZE;
         public const int AVG_PUPIL_SIZE = 3;
 
@@ -46,22 +35,21 @@ namespace ICAPR_SVP.Test
         public ICAExecutorTest()
             : base()
         {
-
+            Assert.AreEqual(2,Config.ICA.AVG_MOVING_WINDOW_SIZE,"Window size is not 2. Test will fail");
         }
 
         [TestInitialize]
         public void Initialize()
         {
             executor = new ICAExecutorTest();
-            Misc.DisplayItem<String> word = new DisplayItem<String>(0, 0, "test");
+            Misc.DisplayItem<String> word = new DisplayItem<String>(0,0,"test");
 
             Queue<Eyes> eyes = new Queue<Eyes>();
 
-            			
             Eye leftOriginal_1 = new Eye();
-            leftOriginal_1.PupilSize =  3.9618;
+            leftOriginal_1.PupilSize = 3.9618;
             Eye rightOriginal_1 = new Eye();
-            rightOriginal_1.PupilSize = 4.1744; 
+            rightOriginal_1.PupilSize = 4.1744;
             Eye leftOriginal_2 = new Eye();
             leftOriginal_2.PupilSize = 3.9817;
             Eye rightOriginal_2 = new Eye();
@@ -78,7 +66,6 @@ namespace ICAPR_SVP.Test
             leftOriginal_5.PupilSize = 4.027;
             Eye rightOriginal_5 = new Eye();
             rightOriginal_5.PupilSize = 4.2966;
-
 
             Eye leftProcessed_1 = new Eye();
             leftProcessed_1.PupilSize = 0.0079;
@@ -101,23 +88,23 @@ namespace ICAPR_SVP.Test
             Eye rightProcessed_5 = new Eye();
             rightProcessed_5.PupilSize = 0.0268;
 
-            Eyes eyes1 = new Eyes(0, leftOriginal_1, rightOriginal_1);
+            Eyes eyes1 = new Eyes(0,leftOriginal_1,rightOriginal_1);
             eyes1.LeftEyeProcessed = leftProcessed_1;
             eyes1.RightEyeProcessed = rightProcessed_1;
 
-            Eyes eyes2 = new Eyes(0, leftOriginal_2, rightOriginal_2);
+            Eyes eyes2 = new Eyes(0,leftOriginal_2,rightOriginal_2);
             eyes2.LeftEyeProcessed = leftProcessed_2;
             eyes2.RightEyeProcessed = rightProcessed_2;
 
-            Eyes eyes3 = new Eyes(0, leftOriginal_3, rightOriginal_3);
+            Eyes eyes3 = new Eyes(0,leftOriginal_3,rightOriginal_3);
             eyes3.LeftEyeProcessed = leftProcessed_3;
             eyes3.RightEyeProcessed = rightProcessed_3;
 
-            Eyes eyes4 = new Eyes(0, leftOriginal_4, rightOriginal_4);
+            Eyes eyes4 = new Eyes(0,leftOriginal_4,rightOriginal_4);
             eyes4.LeftEyeProcessed = leftProcessed_4;
             eyes4.RightEyeProcessed = rightProcessed_4;
 
-            Eyes eyes5 = new Eyes(0, leftOriginal_5, rightOriginal_5);
+            Eyes eyes5 = new Eyes(0,leftOriginal_5,rightOriginal_5);
             eyes5.LeftEyeProcessed = leftProcessed_5;
             eyes5.RightEyeProcessed = rightProcessed_5;
 
@@ -127,17 +114,15 @@ namespace ICAPR_SVP.Test
             eyes.Enqueue(eyes4);
             eyes.Enqueue(eyes5);
 
-
-            displayItem = new DisplayItemAndEyes<string>(eyes, word);
+            displayItem = new DisplayItemAndEyes<string>(eyes,word);
             avg[0] = new double[WINDOW];
             avg[1] = new double[WINDOW];
 
-            for (int i = 0; i < WINDOW; i++)
+            for(int i = 0;i < WINDOW;i++)
             {
                 avg[0][i] = AVG_PUPIL_SIZE;
                 avg[1][i] = AVG_PUPIL_SIZE;
             }
-
         }
 
         [TestCleanup]
@@ -146,40 +131,42 @@ namespace ICAPR_SVP.Test
 
         }
 
-
         [TestMethod]
         public void testGetBinaryValue()
         {
-            int result = executor.getBinaryValue(5, 7, 1);
-            Assert.AreEqual(1, result);
+            int result = executor.getBinaryValue(5,7,1);
+            Assert.AreEqual(1,result);
 
             result = executor.getBinaryValue(5,5,5);
-            Assert.AreEqual(0, result);
+            Assert.AreEqual(0,result);
 
             result = executor.getBinaryValue(5,3,1);
-            Assert.AreEqual(-1, result);
+            Assert.AreEqual(-1,result);
         }
 
         [TestMethod]
         public void testCreateEyeArrays()
         {
-            double[][] result = executor.createEyeArrays(displayItem, true);
-            Assert.AreEqual(SIZE, result[0].Length);
+            double[][] eyes_original = new double[2][];
+            double[][] eyes_processed = new double[2][];
+            initializeDoubleArray(eyes_original,displayItem.Eyes.Count);
+            initializeDoubleArray(eyes_processed,displayItem.Eyes.Count);
+            executor.createEyeArraysAndSummary(displayItem,eyes_original,eyes_processed);
 
+            Assert.AreEqual(SIZE,eyes_processed[0].Length);
             int i = 0;
-            foreach( Eyes eye in displayItem.Eyes){
-                Assert.AreEqual( eye.LeftEyeProcessed.PupilSize, result[0][i]);
-                Assert.AreEqual(eye.RightEyeProcessed.PupilSize, result[1][i++]);
+            foreach(Eyes eye in displayItem.Eyes)
+            {
+                Assert.AreEqual(eye.LeftEyeProcessed.PupilSize,eyes_processed[0][i]);
+                Assert.AreEqual(eye.RightEyeProcessed.PupilSize,eyes_processed[1][i++]);
             }
 
-
-            result = executor.createEyeArrays(displayItem, false);
-            Assert.AreEqual(SIZE, result[0].Length);
-
+            Assert.AreEqual(SIZE,eyes_original[0].Length);
             i = 0;
-            foreach( Eyes eye in displayItem.Eyes){
-                Assert.AreEqual( eye.LeftEye.PupilSize, result[0][i]);
-                Assert.AreEqual(eye.RightEye.PupilSize, result[1][i++]);
+            foreach(Eyes eye in displayItem.Eyes)
+            {
+                Assert.AreEqual(eye.LeftEye.PupilSize,eyes_original[0][i]);
+                Assert.AreEqual(eye.RightEye.PupilSize,eyes_original[1][i++]);
             }
         }
 
@@ -190,17 +177,17 @@ namespace ICAPR_SVP.Test
             double[][] avg_and_data = new double[2][];
             double[][] avg_and_data_sum = new double[2][];
 
-            double[][] eyes_array = createEyeArrays(displayItem, false);
+            double[][] eyes_original = new double[2][];
+            double[][] eyes_processed = new double[2][];
+            initializeDoubleArray(eyes_original,displayItem.Eyes.Count);
+            initializeDoubleArray(eyes_processed,displayItem.Eyes.Count);
+            executor.createEyeArraysAndSummary(displayItem,eyes_original,eyes_processed);
 
-            executor.setupArraysForAvgMovingWindow(eyes_array, binaryEyes, avg_and_data, avg, avg_and_data_sum);
+            executor.setupArraysForAvgMovingWindow(eyes_original,binaryEyes,avg_and_data,avg,avg_and_data_sum);
 
-            Assert.AreEqual(eyes_array[0].Length, binaryEyes[0].Length, "Binary");
-            Assert.AreEqual(eyes_array[0].Length + avg[0].Length, avg_and_data[0].Length, "Avg and data");
-            Assert.AreEqual(eyes_array[0].Length + avg[0].Length, avg_and_data_sum[0].Length, "Avg and data sum");
-
-
-
-
+            Assert.AreEqual(eyes_original[0].Length,binaryEyes[0].Length,"Binary");
+            Assert.AreEqual(eyes_original[0].Length + avg[0].Length,avg_and_data[0].Length,"Avg and data");
+            Assert.AreEqual(eyes_original[0].Length + avg[0].Length,avg_and_data_sum[0].Length,"Avg and data sum");
         }
 
 
@@ -211,71 +198,88 @@ namespace ICAPR_SVP.Test
             double[][] avg_and_data = new double[2][];
             double[][] avg_and_data_sum = new double[2][];
 
-            double[][] eyes_array = createEyeArrays(displayItem, false);
+            double[][] eyes_original = new double[2][];
+            double[][] eyes_processed = new double[2][];
+            initializeDoubleArray(eyes_original,displayItem.Eyes.Count);
+            initializeDoubleArray(eyes_processed,displayItem.Eyes.Count);
 
-            executor.setupArraysForAvgMovingWindow(eyes_array, binaryEyes, avg_and_data, avg, avg_and_data_sum);
+            executor.createEyeArraysAndSummary(displayItem,eyes_original,eyes_processed);
+
+            executor.setupArraysForAvgMovingWindow(eyes_original,binaryEyes,avg_and_data,avg,avg_and_data_sum);
 
             //get for first item after avg padding. index + WINDOW + 1
             double[] std = new double[2];
-            executor.computeStdDevBothEyes(avg_and_data, avg_and_data_sum, std, WINDOW);
+            executor.computeStdDevBothEyes(avg_and_data,avg_and_data_sum,std,WINDOW);
 
-            Assert.AreEqual(0.6800, std[0], 0.001);
-            Assert.AreEqual(0.8304, std[1], 0.001);
+            Assert.AreEqual(0.6800,std[0],0.001);
+            Assert.AreEqual(0.8304,std[1],0.001);
 
-            executor.computeStdDevBothEyes(avg_and_data, avg_and_data_sum, std, WINDOW + 1);
+            executor.computeStdDevBothEyes(avg_and_data,avg_and_data_sum,std,WINDOW + 1);
 
-            Assert.AreEqual(0.0140, std[0], 0.001);
-            Assert.AreEqual(0.0787, std[1], 0.001);
+            Assert.AreEqual(0.0140,std[0],0.001);
+            Assert.AreEqual(0.0787,std[1],0.001);
         }
 
         [TestMethod]
         public void testCreateStatBinaryArray()
         {
-            double[][] eyes_array = createEyeArrays(displayItem, false);
-            int[][] binary = executor.createStatBinaryArray(displayItem, eyes_array, avg);
+            double[][] eyes_original = new double[2][];
+            double[][] eyes_processed = new double[2][];
+            initializeDoubleArray(eyes_original,displayItem.Eyes.Count);
+            initializeDoubleArray(eyes_processed,displayItem.Eyes.Count);
+            executor.createEyeArraysAndSummary(displayItem,eyes_original,eyes_processed);
 
-            Assert.AreEqual(0, binary[0][0]);
-            Assert.AreEqual(0, binary[0][1]);
-            Assert.AreEqual(1, binary[0][2]);
-            Assert.AreEqual(-1, binary[0][3]);
-            Assert.AreEqual(1, binary[0][4]);
+            int[][] binary = executor.createStatBinaryArray(eyes_original,avg);
+
+            Assert.AreEqual(0,binary[0][0]);
+            Assert.AreEqual(0,binary[0][1]);
+            Assert.AreEqual(1,binary[0][2]);
+            Assert.AreEqual(-1,binary[0][3]);
+            Assert.AreEqual(1,binary[0][4]);
         }
 
         [TestMethod]
         public void testComputeICA()
         {
-            double[][] eyes_array = createEyeArrays(displayItem, false);
-            int[][] binary = executor.createStatBinaryArray(displayItem, eyes_array, avg);
+            double[][] eyes_original = new double[2][];
+            double[][] eyes_processed = new double[2][];
+            initializeDoubleArray(eyes_original,displayItem.Eyes.Count);
+            initializeDoubleArray(eyes_processed,displayItem.Eyes.Count);
+            executor.createEyeArraysAndSummary(displayItem,eyes_original,eyes_processed);
 
-            double[] denoised = { 32456, 434, 1.2, 333, 0 };
+            int[][] binary = executor.createStatBinaryArray(eyes_original,avg);
 
-            int ICA = executor.computeICA(binary[0], denoised, 0, displayItem.Eyes.Count);
+            double[] denoised = { 32456,434,1.2,333,0 };
 
-            Assert.AreEqual(1, ICA);
+            int ICA = executor.computeICA(binary[0],denoised,0,displayItem.Eyes.Count);
+
+            Assert.AreEqual(1,ICA);
         }
 
 
         [TestMethod]
         public void testComputeICAForItem()
         {
-            double[][] eyes_array = createEyeArrays(displayItem, false);
-            int[][] binary = executor.createStatBinaryArray(displayItem, eyes_array, avg);
+            double[][] eyes_original = new double[2][];
+            double[][] eyes_processed = new double[2][];
+            initializeDoubleArray(eyes_original,displayItem.Eyes.Count);
+            initializeDoubleArray(eyes_processed,displayItem.Eyes.Count);
+            executor.createEyeArraysAndSummary(displayItem,eyes_original,eyes_processed);
+
+            int[][] binary = executor.createStatBinaryArray(eyes_original,avg);
 
             double[][] denoised = new double[2][]{ 
                 new double[]{ 32456, 434, 1.2, 333, 0 },
                 new double[]{ 0,0,0,1,0} };
 
-            executor.computeICAforItem(displayItem, binary, denoised, 2);
+            executor.computeICAforItem(displayItem,binary,denoised,2);
 
             SummaryItem summary = displayItem.SummaryItem;
 
-            Assert.AreEqual(3, summary.Ica.Length);
-            Assert.AreEqual(0, summary.Ica[0]);
-            Assert.AreEqual(1, summary.Ica[1]);
-            Assert.AreEqual(0, summary.Ica[2]);
-
-
+            Assert.AreEqual(3,summary.Ica[0].Length);
+            Assert.AreEqual(0,summary.Ica[0][0]);
+            Assert.AreEqual(1,summary.Ica[0][1]);
+            Assert.AreEqual(0,summary.Ica[0][2]);
         }
     }
-
 }

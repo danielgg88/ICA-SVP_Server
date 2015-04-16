@@ -5,15 +5,30 @@ namespace ICAPR_SVP.Misc
     public class SummaryItem
     {
         [JsonProperty(PropertyName = "ica")]
-        public int[] Ica
+        public int[][] Ica
         {
             get;
             set;
         }
 
-        public SummaryItem(int[] ica)
+        [JsonProperty(PropertyName = "error_samples")]
+        public int[] ErrorSamples
         {
-            Ica = ica;
+            get;
+            set;
+        }
+
+        [JsonProperty(PropertyName = "blink_samples")]
+        public int[] BlinkSamples
+        {
+            get;
+            set;
+        }
+
+        public SummaryItem()
+        {
+            BlinkSamples = new int[2];
+            ErrorSamples = new int[2];
         }
     }
 }

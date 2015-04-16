@@ -122,9 +122,9 @@ namespace ICAPR_SVP.Misc.Executors
                 //In this case, do not send to the output, just clean.
                 if(tmpWord != null)
                 {
-                    List<Eyes> reducedEyesList = new List<Eyes>();
+                    List<Eyes> ItemEyesList = new List<Eyes>();
                     Eyes lastEyes = null;
-                    int time_window = 1000 / Config.EyeTribe.SAMPLING_FREQUENCY;
+
                     foreach(Eyes eyes in _listCurrentEyes)
                     {
                         //Set first timestamp of the trial for graph client purpose
@@ -134,19 +134,18 @@ namespace ICAPR_SVP.Misc.Executors
                             this._getFirstTimeStamp = false;
                         }
                         //Substract to set first word timestamp as baseline
-                        eyes.Timestamp -= this._firstTrialTimestamp;
-
-                        //Reduce the list of stored Eyes Data to the sampling frequency defined
-                       
-
-                        reducedEyesList.Add(eyes);
-                        lastEyes = eyes;
+                        if(eyes.Timestamp >= this._firstTrialTimestamp)
+                        {
+                            eyes.Timestamp -= this._firstTrialTimestamp;
+                            ItemEyesList.Add(eyes);
+                            lastEyes = eyes;
+                        }
                     }
                     //Substract to make first point 0
                     tmpWord.Timestamp -= this._firstTrialTimestamp;
 
                     //Sent to output pipe the created item
-                    DisplayItemAndEyes<T> wordAndEyes = new DisplayItemAndEyes<T>(new Queue<Eyes>(reducedEyesList),tmpWord);
+                    DisplayItemAndEyes<T> wordAndEyes = new DisplayItemAndEyes<T>(new Queue<Eyes>(ItemEyesList),tmpWord);
                     base.sendToOutput(new Bundle<DisplayItemAndEyes<T>>(ItemTypes.DisplayItemAndEyes,wordAndEyes));
                 }
                 this._listCurrentEyes.Clear();

@@ -30,6 +30,7 @@ namespace ICAPR_SVP.Misc
         {
             DisplayItem = word;
             Eyes = eyes;
+            SummaryItem = new SummaryItem();
         }
     }
 }

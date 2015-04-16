@@ -28,7 +28,9 @@ namespace ICAPR_SVP.DataCleaning
             if(index_last_point - index_first_point - 1 >= 1)
             {
                 //If not a blink, it is an error
-                Eye.CleaningFlags flag = (index_last_point - index_first_point - 1 >= Config.Cleaning.BLINK_MIN_CONSEQUENT_SAMPLES) ?
+                int blink_size = index_last_point - index_first_point - 1;
+                Eye.CleaningFlags flag = (blink_size >= Config.Cleaning.BLINK_MIN_CONSEQUENT_SAMPLES
+                    && blink_size < Config.Cleaning.BLINK_MAX_ALLOWED_SAMPLES) ?
                     Eye.CleaningFlags.Blink : Eye.CleaningFlags.Error;
 
                 //The first and last elements of the array are used as extreme points to interpolate
