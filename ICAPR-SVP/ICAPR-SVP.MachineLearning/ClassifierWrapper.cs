@@ -10,68 +10,98 @@ namespace ICAPR_SVP.MachineLearning
 {
     class ClassifierWrapper
     {
-
         private Classifier _classifier;
-        private String[] _labels;
-        private String[] _attributes;
+
         Instances dataset;
+
+        public ClassifierWrapper()
+        {
+        }
 
         public ClassifierWrapper(Classifier classifier)
         {
             this._classifier = classifier;
         }
 
-        public void init(String[] _labels, String[] _attributes)
+        public void loadExternalModel(String pathToModel)
         {
+            try
+            {
+                this._classifier = (Classifier)weka.core.SerializationHelper.read(pathToModel);
+                Console.WriteLine("External model was loaded successfuly...");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Could not load external model...");
+                Console.WriteLine(e);
+            }
+        }
 
-            try{
-
-
-                dataset = new Instances(new java.io.FileReader(Program.DESKTOP + @"\data.arff"));
+        public void trainClassifierCrossValidation(String pathToArffFile, int numberOfIterations)
+        {
+            try
+            {
+                dataset = new Instances(new java.io.FileReader(pathToArffFile));
                 // Assign the prediction attribute to the dataset. This attribute will
                 // be used to make a prediction.
-                dataset.setClassIndex(dataset.numAttributes() - 2);
-                Console.WriteLine(dataset.numAttributes() + " attributes");
-                Console.WriteLine("Classifier initialized successfuly.");
+                dataset.setClassIndex(dataset.numAttributes() - 1);
 
-                           }
+                _classifier.buildClassifier(dataset);
+
+                Evaluation eval = new Evaluation(dataset);
+
+                eval.crossValidateModel(_classifier, dataset, numberOfIterations, new java.util.Random(1));
+
+                Console.WriteLine("Classifier was trained successfully...");
+            }
             catch (Exception ea)
             {
-                Console.WriteLine("Could not create classifier...exiting");
+                Console.WriteLine("Could not train classifier...");
                 Console.WriteLine(ea);
             }
         }
 
-        public String classify(String timestamp , double[] values)
+        public void setUpDatasetManually(String[] _labels, String[] _attributes)
         {
+                try{
+                    FastVector attributes = new FastVector();
+                    for (int i = 0; i < _attributes.Length; i++)
+                    {
+                        attributes.addElement(new weka.core.Attribute(_attributes[i]));
+                    }
 
-            String returnString = "yoyo";
-            Instance inst = new Instance(1.0, values);
-            
-            
+                    FastVector labels = new FastVector();
+                    for (int i = 0; i < _labels.Length; i++)
+                    {
+                        labels.addElement(_labels[i]);
+                    }
+                    
+                    weka.core.Attribute cls = new weka.core.Attribute("label", labels);
+                    attributes.addElement(cls);
+
+                    dataset = new Instances("TestInstances", attributes, 0);
+                    dataset.setClassIndex(dataset.numAttributes() - 1);
+                    Console.WriteLine("Dataset was set up successfuly...");
+                }
+                catch (Exception ea)
+                {
+                    Console.WriteLine("Could not set up dataset...");
+                    Console.WriteLine(ea);
+                }
+        }
+
+        public Instance classify(double[] values, int startIndex)
+        {
+            Instance inst = new Instance(dataset.numAttributes());
             inst.setDataset(dataset);
-            dataset.add(inst);
 
-            //int index = 0;
+            for (int i = startIndex; i < dataset.numAttributes() - 1; i++)
+                inst.setValue(i, values[i-startIndex]);
 
-            for (int i = 0; i < dataset.numInstances() -1; i++)
-            {
-                weka.core.Instance currentInst = dataset.instance(i);
-                double predictedClass = _classifier.classifyInstance(currentInst);
-                //System.Console.WriteLine("Class number: " + index + " predicted as: " + predictedClass);
-                //System.Console.WriteLine("Class number: " + index + " predicted as: " + dataset.classAttribute().value((int)predictedClass));
-                /*System.Console.WriteLine("ID: " + dataset.instance(i).value(0));
-                System.Console.WriteLine(", actual: " + dataset.classAttribute().value((int)dataset.instance(i).classValue()));
-                System.Console.WriteLine(", predicted: " + dataset.classAttribute().value((int)dataset.instance(i).classValue()));
-                System.Console.WriteLine("ReaL: "+dataset.classAttribute().value((int)predictedClass));
-                */
+            double clsLabel = _classifier.classifyInstance(inst);
+            inst.setClassValue(clsLabel);
 
-                double[] preds = _classifier.distributionForInstance(dataset.instance(i));
-                returnString = dataset.classAttribute().value((int)predictedClass);
-
-            }
-            dataset.delete(0);
-            return returnString;   
+            return inst;
         }
     }
 }
