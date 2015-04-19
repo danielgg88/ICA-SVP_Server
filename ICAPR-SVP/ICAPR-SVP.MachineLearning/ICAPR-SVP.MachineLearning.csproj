@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>ICAPR_SVP.MachineLearning.Program</StartupObject>
+    <StartupObject>ICAPR_SVP.MachineLearning.TestProgram</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="IKVM.OpenJDK.Beans">
@@ -123,11 +123,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassifierWrapper.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="IClassificationListener.cs" />
+    <Compile Include="MLComponent.cs" />
+    <Compile Include="TestProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ICAPR-SVP.Misc\ICAPR-SVP.Misc.csproj">
+      <Project>{2bcf60dd-d05c-4f07-b372-e1e2b5477cfc}</Project>
+      <Name>ICAPR-SVP.Misc</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

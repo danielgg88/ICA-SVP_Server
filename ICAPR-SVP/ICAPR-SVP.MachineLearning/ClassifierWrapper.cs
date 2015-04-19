@@ -14,29 +14,25 @@ namespace ICAPR_SVP.MachineLearning
 
         Instances dataset;
 
+        /*
+         * Used with methods that work with external model.
+         * The classifier is created based on the provided model.
+         */
         public ClassifierWrapper()
         {
         }
 
+        /*
+         * Used with methods that create and train the
+         * classifier on the fly. The specific classifier
+         * is injected in the constructor.
+         */ 
         public ClassifierWrapper(Classifier classifier)
         {
             this._classifier = classifier;
         }
 
-        public void loadExternalModel(String pathToModel)
-        {
-            try
-            {
-                this._classifier = (Classifier)weka.core.SerializationHelper.read(pathToModel);
-                Console.WriteLine("External model was loaded successfuly...");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Could not load external model...");
-                Console.WriteLine(e);
-            }
-        }
-
+        #region Train classifier in c#
         public void trainClassifierCrossValidation(String pathToArffFile, int numberOfIterations)
         {
             try
@@ -60,6 +56,24 @@ namespace ICAPR_SVP.MachineLearning
                 Console.WriteLine(ea);
             }
         }
+
+        #endregion
+
+        #region Work with external model
+        public void loadExternalModel(String pathToModel)
+        {
+            try
+            {
+                this._classifier = (Classifier)weka.core.SerializationHelper.read(pathToModel);
+                Console.WriteLine("External model was loaded successfuly...");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Could not load external model...");
+                Console.WriteLine(e);
+            }
+        }
+
 
         public void setUpDatasetManually(String[] _labels, String[] _attributes)
         {
@@ -90,6 +104,15 @@ namespace ICAPR_SVP.MachineLearning
                 }
         }
 
+        #endregion 
+
+        /*
+         * After the classifier has been set up use this method
+         * with all values needed for classification.
+         * 
+         * Use startIndex to set which specific attributes to use.
+         * word,ica.s1,s2..s59 requires a startIndex of 2.
+         */ 
         public Instance classify(double[] values, int startIndex)
         {
             Instance inst = new Instance(dataset.numAttributes());
@@ -102,6 +125,13 @@ namespace ICAPR_SVP.MachineLearning
             inst.setClassValue(clsLabel);
 
             return inst;
+        }
+        public String getClassificationLabel(double[] values, int startIndex)
+        {
+            throw new NotImplementedException("Check how to get string label from the fucking instance");
+            Instance instance = classify(values, startIndex);
+
+            return "label";
         }
     }
 }

@@ -10,7 +10,7 @@ namespace ICAPR_SVP.MachineLearning
 
     
 
-    class Program
+    class TestProgram
     {
         public const String WEKA_MODEL = @"\output.model";       //Folder to save logs
         public readonly static  String DESKTOP                       //Base path (Desktop)
@@ -92,7 +92,7 @@ namespace ICAPR_SVP.MachineLearning
 
             ClassifierWrapper wrapper = new ClassifierWrapper(classifier);
 
-            wrapper.trainClassifierCrossValidation(Program.DESKTOP + @"\data.arff", 10);
+            wrapper.trainClassifierCrossValidation(TestProgram.DESKTOP + @"\data.arff", 10);
 
             for (int i = 0; i < data.Length; i++)
                 Console.WriteLine(wrapper.classify(data[i], 1));
