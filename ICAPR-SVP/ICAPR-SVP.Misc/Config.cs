@@ -42,7 +42,6 @@ namespace ICAPR_SVP.Misc
 
         public class Matlab
         {
-            
             public const String DENOISE_ALGORITHM = "db4";  //daubechies 4
             public const int DENOISE_LEVEL = 5;
         }
@@ -51,6 +50,14 @@ namespace ICAPR_SVP.Misc
         {
             public const int AVG_MOVING_WINDOW_SIZE = 10;
             public const double SIGNAL_THRESHOLD_LARGE = 0.05;
+        }
+
+        public class FileManager
+        {
+            public const String BASE_PATH = @"..\..\..\";
+            public const bool CREATE_JSON = true;
+            public const bool CREATE_CSV_ORIGINAL_PROCESSED = true;
+            public const bool CREATE_CSV_PER_SECOND = true;
         }
     }
 }

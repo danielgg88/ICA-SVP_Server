@@ -13,8 +13,6 @@ namespace ICAPR_SVP.Misc.Utils
     {
         private const String LOGS_FOLDER = @"\logs\";       //Folder to save logs
         private ConcurrentQueue<Item> _itemQueue;           //List of items to save
-        private static String _basePath                       //Base path (Desktop)
-            = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         private ExperimentConfig _currentConfig;            //Experiment current configuration
         private Port _inputPort;                            //Input port to read items from
         private Thread _workerThread;
@@ -65,8 +63,15 @@ namespace ICAPR_SVP.Misc.Utils
                 Console.WriteLine("FM: Saving logs..");
                 String fileName = DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + _currentConfig.Trial;
                 List<Item> items = new List<Item>(_itemQueue);
-                WriteCsvFile(fileName,items);
-                WriteJsonFile(fileName,items);
+
+                //Save items in files
+                if(Config.FileManager.CREATE_CSV_ORIGINAL_PROCESSED)
+                    WriteCsvFile(fileName,items);
+                if(Config.FileManager.CREATE_JSON)
+                    WriteJsonFile(fileName,items);
+                if(Config.FileManager.CREATE_CSV_PER_SECOND)
+                    WriteCsvForTraining(fileName,items);
+
                 Clear();
             }
         }
@@ -86,7 +91,7 @@ namespace ICAPR_SVP.Misc.Utils
         {
             //Get the list of saved files in JSON format
             List<object> files = new List<object>();
-            IEnumerable<String> file_paths = Directory.EnumerateFiles(_basePath + LOGS_FOLDER,"*.json");
+            IEnumerable<String> file_paths = Directory.EnumerateFiles(Config.FileManager.BASE_PATH + LOGS_FOLDER,"*.json");
 
             foreach(String file in file_paths)
                 files.Add(new
@@ -100,7 +105,7 @@ namespace ICAPR_SVP.Misc.Utils
         public static String getJsonFile(String fileName)
         {
             //Return JSON file content
-            String path = _basePath + LOGS_FOLDER + fileName + ".json";
+            String path = Config.FileManager.BASE_PATH + LOGS_FOLDER + fileName + ".json";
             if(File.Exists(path))
                 return File.ReadAllText(path);
             else
@@ -114,9 +119,9 @@ namespace ICAPR_SVP.Misc.Utils
         private void init()
         {
             //Create logs folder if it does not exist 
-            bool exists = Directory.Exists(_basePath + LOGS_FOLDER);
+            bool exists = Directory.Exists(Config.FileManager.BASE_PATH + LOGS_FOLDER);
             if(!exists)
-                Directory.CreateDirectory(_basePath + LOGS_FOLDER);
+                Directory.CreateDirectory(Config.FileManager.BASE_PATH + LOGS_FOLDER);
         }
 
         private void DoWork()
@@ -201,9 +206,75 @@ namespace ICAPR_SVP.Misc.Utils
             }
         }
 
+        private void WriteCsvForTraining(String fileName,List<Item> items)
+        {
+            //Write 1 second eye data per row into a .CSV file
+            String output = "Word, Blinks, Errors, ICA, Left/Right, \n";
+
+            foreach(Item item in items)
+            {
+                if(item.Type == ItemTypes.DisplayItemAndEyes)
+                {
+                    DisplayItemAndEyes<String> wordAndEyes = (DisplayItemAndEyes<String>)item.Value;
+                    DisplayItem<String> word = wordAndEyes.DisplayItem;
+                    Eyes[] eyesArray = wordAndEyes.Eyes.ToArray();
+
+                    int iterations = eyesArray.Length / Config.EyeTribe.SAMPLING_FREQUENCY;
+                    int modulus = eyesArray.Length % Config.EyeTribe.SAMPLING_FREQUENCY;
+
+                    for(int i = 0;i < iterations;i++)
+                        output += WriteCsvForTrainingRow
+                            (word,wordAndEyes.SummaryItem,eyesArray,i,Config.EyeTribe.SAMPLING_FREQUENCY);
+
+                    if(modulus > 0)
+                        output += WriteCsvForTrainingRow(word,wordAndEyes.SummaryItem,eyesArray,iterations,modulus);
+                }
+            }
+            WriteFile(fileName + "_trainning",output,".csv");
+        }
+
+        private String WriteCsvForTrainingRow(DisplayItem<String> word,SummaryItem summaryItem,Eyes[] eyes,
+            int second,int samples)
+        {
+            String output = "",outputLeft = "",outputRight = "",metadata = "";
+
+            metadata += (word.Value != null) ? word.Value + "," : " ,";
+            metadata += summaryItem.BlinkSamples[0] + ",";
+            metadata += summaryItem.ErrorSamples[1] + ",";
+
+            int index_start = second * Config.EyeTribe.SAMPLING_FREQUENCY;
+            int index_end = index_start + samples;
+
+            for(int j = index_start;j < index_end - 1;j++)
+            {
+                outputLeft += eyes[j].LeftEyeProcessed.PupilSize + ",";
+                outputRight += eyes[j].RightEyeProcessed.PupilSize + ",";
+            }
+
+            if(Config.EyeTribe.SAMPLING_FREQUENCY > samples)
+            {
+                for(int j = 0;j < Config.EyeTribe.SAMPLING_FREQUENCY - samples;j++)
+                {
+                    outputLeft += Calibration.Calibrator.AvgPupilSize[0] + ",";
+                    outputRight += Calibration.Calibrator.AvgPupilSize[1] + ",";
+                }
+                outputLeft += Calibration.Calibrator.AvgPupilSize[0] + "\n";
+                outputRight += Calibration.Calibrator.AvgPupilSize[1] + "\n";
+            }
+            else
+            {
+                outputLeft += eyes[index_end].LeftEyeProcessed.PupilSize + "\n";
+                outputRight += eyes[index_end].RightEyeProcessed.PupilSize + "\n";
+            }
+            output += metadata + summaryItem.Ica[0][second] + ", L," + outputLeft;
+            output += metadata + summaryItem.Ica[1][second] + ", R," + outputRight;
+
+            return output;
+        }
+
         private void WriteFile(String fileName,String content,String fileExtension)
         {
-            File.WriteAllText(_basePath + LOGS_FOLDER + fileName + fileExtension,content);
+            File.WriteAllText(Config.FileManager.BASE_PATH + LOGS_FOLDER + fileName + fileExtension,content);
         }
 
         private void Clear()
