@@ -90,6 +90,10 @@
       <Project>{505f4746-9e49-48ad-a6ac-e0d6ef7ec161}</Project>
       <Name>ICAPR-SVP.ICA</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ICAPR-SVP.MachineLearning\ICAPR-SVP.MachineLearning.csproj">
+      <Project>{f15c34b6-4bf4-4ddd-b684-bb50e4d0a64e}</Project>
+      <Name>ICAPR-SVP.MachineLearning</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ICAPR-SVP.Misc\ICAPR-SVP.Misc.csproj">
       <Project>{2bcf60dd-d05c-4f07-b372-e1e2b5477cfc}</Project>
       <Name>ICAPR-SVP.Misc</Name>

@@ -87,7 +87,7 @@ namespace ICAPR_SVP.MachineLearning
                     labels.addElement(_labels[i]);
                 }
 
-                weka.core.Attribute cls = new weka.core.Attribute("label",labels);
+                weka.core.Attribute cls = new weka.core.Attribute("class",labels);
                 attributes.addElement(cls);
 
                 dataset = new Instances("TestInstances",attributes,0);
@@ -115,7 +115,7 @@ namespace ICAPR_SVP.MachineLearning
             Instance inst = new Instance(dataset.numAttributes());
             inst.setDataset(dataset);
 
-            for(int i = startIndex;i < dataset.numAttributes() - 1;i++)
+            for(int i = startIndex;i < dataset.numAttributes() - 2;i++)
                 inst.setValue(i,values[i - startIndex]);
 
             double clsLabel = _classifier.classifyInstance(inst);

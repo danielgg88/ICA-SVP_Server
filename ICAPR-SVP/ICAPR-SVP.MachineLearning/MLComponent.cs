@@ -52,39 +52,56 @@ namespace ICAPR_SVP.MachineLearning
         protected String[][] classifySample(DisplayItemAndEyes<string> items,int SAMPLE_FREQ,int attributesStartIndex)
         {
             List<Eyes> eyes = new List<Eyes>(items.Eyes);
+
             int iterations = eyes.Count / SAMPLE_FREQ;
             int modulus = eyes.Count % SAMPLE_FREQ;
-
             int size = (modulus > 0) ? iterations + 1 : iterations;
+
             String[][] classification = new String[2][];
             classification[LEFT] = new String[size];
             classification[RIGHT] = new String[size];
 
-            for(int i = 0;i < iterations;i++)
+            for (int i = 0; i < size; i++)
             {
-                int index_start = i * SAMPLE_FREQ;
-                int window = SAMPLE_FREQ;
-
-                double[][] splitItem = getSplitBothEyes(eyes,index_start,SAMPLE_FREQ,window);
-                classifySingleItem(classification,items,splitItem,attributesStartIndex,i);
-            }
-
-            if(modulus > 0)
-            {
-                int index_start = iterations * SAMPLE_FREQ;
-                int window = eyes.Count - index_start;
-                double[][] splitItem = getSplitBothEyes(eyes,index_start,SAMPLE_FREQ,window);
-                //fill the rest of the array
-                for(int i = 0;i < SAMPLE_FREQ - window;i++)
-                {
-                    int index = index_start + window + i;
-                    splitItem[LEFT][i] = Misc.Calibration.Calibrator.AvgPupilSize[LEFT];
-                    splitItem[RIGHT][i] = Misc.Calibration.Calibrator.AvgPupilSize[RIGHT];
-                }
-                classifySingleItem(classification,items,splitItem,attributesStartIndex,size - 1);
+                double[][] arraysForClassification = getArraysForClassification(eyes, SAMPLE_FREQ, i);
+                classifySingleItem(classification, items, arraysForClassification, attributesStartIndex, i);
             }
 
             return classification;
+        }
+
+        protected double[][] getArraysForClassification(List<Eyes> eyes, int SAMPLE_FREQ, int iteration)
+        {
+            int iterations = eyes.Count / SAMPLE_FREQ;
+            int modulus = eyes.Count % SAMPLE_FREQ;
+
+            int size = (modulus > 0) ? iterations + 1 : iterations;
+
+            int index_start = iteration * SAMPLE_FREQ;
+            double[][] splitItem;
+
+            if (modulus != 0 && iteration == size - 1){
+                splitItem = getSplitBothEyes(eyes, index_start, SAMPLE_FREQ, modulus);
+                addMissingPadding(splitItem, modulus);
+            }
+            else
+                splitItem = getSplitBothEyes(eyes, index_start, SAMPLE_FREQ, SAMPLE_FREQ);
+
+            return splitItem;
+        } 
+
+        /*
+         * The array with the eyes to add the padding
+         * and the start index. Start padding from start index
+         * until array.Length
+         */
+        protected void addMissingPadding(double[][] array, int startIndex)
+        {
+            for (int i = startIndex; i < array[LEFT].Length; i++)
+            {
+                array[LEFT][i] = Misc.Calibration.Calibrator.AvgPupilSize[LEFT];
+                array[RIGHT][i] = Misc.Calibration.Calibrator.AvgPupilSize[RIGHT];
+            }
         }
 
         protected void classifySingleItem(String[][] classification,DisplayItemAndEyes<String> displayItem,double[][] splitItems,int attributeStartIndex,int round)
@@ -92,8 +109,8 @@ namespace ICAPR_SVP.MachineLearning
             classification[LEFT][round] = _classiferWrapper.getClassificationLabel(splitItems[LEFT],attributeStartIndex);
             classification[RIGHT][round] = _classiferWrapper.getClassificationLabel(splitItems[RIGHT],attributeStartIndex);
 
-            if(this._classificationListener != null)
-                _classificationListener.onClassification(displayItem.DisplayItem.Value,classification[LEFT][round],classification[RIGHT][round],round);
+            if (this._classificationListener != null)
+                _classificationListener.onClassification(displayItem.DisplayItem.Value, classification[LEFT][round], classification[RIGHT][round], round);
         }
 
         /*

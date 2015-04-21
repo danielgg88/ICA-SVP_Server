@@ -4,6 +4,7 @@ using ICAPR_SVP.Misc;
 using ICAPR_SVP.Misc.Executors;
 using System;
 using TETCSharpClient;
+using ICAPR_SVP.MachineLearning;
 
 namespace ICAPR_SVP
 {
@@ -60,8 +61,15 @@ namespace ICAPR_SVP
             icaExecutor.AddInput(brokerOutputPort);
             icaExecutor.AddOutput(icaOutputPort);
 
+            //Create weka component
+            MLComponent weka = new MLComponent(Config.WEKA.WEKA_EXTERNAL_MODEL);
+            Misc.Port wekaOutputPort = new Misc.PortBlockingDefaultImpl();
+            weka.setClassificationListener(new Printer());
+            weka.AddInput(icaOutputPort);
+            weka.AddOutput(wekaOutputPort);
+
             //Create file manager
-            Misc.Utils.FileManager<String> fm = new Misc.Utils.FileManager<string>(icaOutputPort);
+            Misc.Utils.FileManager<String> fm = new Misc.Utils.FileManager<string>(wekaOutputPort);
 
             //Start ports
             inputPortEyeTribe.Start();
@@ -69,11 +77,13 @@ namespace ICAPR_SVP
             inputPortSVP.Start();
             brokerOutputPort.Start();
             icaOutputPort.Start();
+            wekaOutputPort.Start();
 
             //Start services
             dataCleaner.startInBackground();
             broker.Start();
             icaExecutor.Start();
+            weka.Start();
             fm.Start();
 
             //Stop services
@@ -84,6 +94,7 @@ namespace ICAPR_SVP
             broker.Stop();
             icaExecutor.Stop();
             fm.Stop();
+            weka.Stop();
 
             //Stop ports
             inputPortEyeTribe.Stop();
@@ -92,6 +103,7 @@ namespace ICAPR_SVP
             inputPortSVP.Stop();
             brokerOutputPort.Stop();
             icaOutputPort.Stop();
+            wekaOutputPort.Stop();
 
             GazeManager.Instance.Deactivate();
             Console.ReadLine();
