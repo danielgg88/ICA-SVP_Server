@@ -65,6 +65,10 @@ namespace ICAPR_SVP.Misc
 
             public readonly static String WEKA_EXTERNAL_MODEL = @"..\..\..\output.model";
 
+            /*
+             * Currently is not needed. It is used in the code 
+             * but it will always be 0.
+             */
             public readonly static int ATTRIBUTE_START_INDEX = 0;
 
             public readonly static String[] LABELS = {
@@ -73,6 +77,12 @@ namespace ICAPR_SVP.Misc
                                        };
 
 
+            /*
+             * Include all the attributes that have been used for training
+             * except the attribute of the classification label.
+             * 
+             * This attribute is added in the ClassifierWrapper
+             */
             public readonly static String[] ATTRIBUTES = {
                                                                 "s0",
                                                                 "s1",
@@ -133,8 +143,7 @@ namespace ICAPR_SVP.Misc
                                                                 "s56",
                                                                 "s57",
                                                                 "s58",
-                                                                "s59",
-                                                                "label"
+                                                                "s59"
                                                                };
 
 
