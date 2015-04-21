@@ -80,7 +80,7 @@ namespace ICAPR_SVP.MachineLearning
             wrapper.setUpDatasetManually(labels, attributes);
 
             for (int i = 0; i < data.Length; i++)
-                Console.WriteLine(wrapper.classify(data[i], 1));
+                Console.WriteLine(wrapper.getClassificationLabel(data[i], 1));
 
                 Console.ReadLine();
 

@@ -126,12 +126,17 @@ namespace ICAPR_SVP.MachineLearning
 
             return inst;
         }
+
+        /*
+         * Classify and get the label of the classification.
+         * It is assumed that the attribute with the label is at index
+         * numAttributes - 1
+         */
         public String getClassificationLabel(double[] values, int startIndex)
         {
-            throw new NotImplementedException("Check how to get string label from the fucking instance");
             Instance instance = classify(values, startIndex);
 
-            return "label";
+            return instance.stringValue(dataset.numAttributes() - 1);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ICAPR_SVP.MachineLearning
 {
-    interface IClassificationListener
+    public interface IClassificationListener
     {
         void onClassification(String stimulus, String leftEyeLabel, String rightEyeLabel, int portion);
     }

@@ -9,14 +9,19 @@ using ICAPR_SVP.Misc.Utils;
 
 namespace ICAPR_SVP.MachineLearning
 {
-    class MLComponent: ExecutorSingleThread
+    public class MLComponent: ExecutorSingleThread
     {
         private ClassifierWrapper _classiferWrapper;
 
         private IClassificationListener _classificationListener;
 
         private const int LEFT = 0;
-        private const int RIGHT = 0;
+        private const int RIGHT = 1;
+
+        public MLComponent()
+        {
+
+        }
 
         public MLComponent(String pathToExternalModel)
         {
@@ -66,11 +71,7 @@ namespace ICAPR_SVP.MachineLearning
                 int window = SAMPLE_FREQ;
 
                 double[][] splitItem = getSplitBothEyes(eyes, index_start, SAMPLE_FREQ, window);
-                classification[LEFT][i] = _classiferWrapper.getClassificationLabel(splitItem[LEFT], attributesStartIndex);
-                classification[RIGHT][i] = _classiferWrapper.getClassificationLabel(splitItem[RIGHT], attributesStartIndex);
-
-                if (this._classificationListener != null)
-                    _classificationListener.onClassification(items.DisplayItem.Value, classification[LEFT][i], classification[RIGHT][i], i);
+                classifySingleItem(classification, items, splitItem, attributesStartIndex, i);
             }
 
             if(modulus > 0)
@@ -85,15 +86,19 @@ namespace ICAPR_SVP.MachineLearning
                     splitItem[LEFT][i] = Misc.Calibration.Calibrator.AvgPupilSize[LEFT];
                     splitItem[RIGHT][i] = Misc.Calibration.Calibrator.AvgPupilSize[RIGHT]; 
                 }
-
-                classification[LEFT][size -1] = _classiferWrapper.getClassificationLabel(splitItem[LEFT], attributesStartIndex);
-                classification[RIGHT][size -1] = _classiferWrapper.getClassificationLabel(splitItem[RIGHT], attributesStartIndex);
-
-                if (this._classificationListener != null)
-                    _classificationListener.onClassification(items.DisplayItem.Value, classification[LEFT][size-1], classification[RIGHT][size-1], size-1);
+                classifySingleItem(classification, items, splitItem, attributesStartIndex, size - 1);
             }
 
             return classification;
+        }
+
+        protected void classifySingleItem(String[][] classification, DisplayItemAndEyes<String> displayItem, double[][] splitItems, int attributeStartIndex, int round)
+        {
+            classification[LEFT][round] = _classiferWrapper.getClassificationLabel(splitItems[LEFT], attributeStartIndex);
+            classification[RIGHT][round] = _classiferWrapper.getClassificationLabel(splitItems[RIGHT], attributeStartIndex);
+
+            if (this._classificationListener != null)
+                _classificationListener.onClassification(displayItem.DisplayItem.Value, classification[LEFT][round], classification[RIGHT][round], round);
         }
 
         /*
@@ -101,10 +106,8 @@ namespace ICAPR_SVP.MachineLearning
          * double array. Both eyes are copied in the same for loop.
          * 
          * Provide the startindex to specify which portion of the array to copy.
-         *
-         * 
          */ 
-        private double[][] getSplitBothEyes(List<Eyes> eyes, int startIndex, int SAMPLE_FREQ, int window)
+        protected double[][] getSplitBothEyes(List<Eyes> eyes, int startIndex, int SAMPLE_FREQ, int window)
         {
             double[][] splitItems = new double[2][];
             splitItems[LEFT] = new double[SAMPLE_FREQ];
