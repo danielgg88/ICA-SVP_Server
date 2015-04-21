@@ -196,3 +196,6 @@ FakesAssemblies/
 bin/
 obj/
 Debug/
+
+#logs
+logs/

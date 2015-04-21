@@ -24,6 +24,7 @@ namespace ICAPR_SVP.Misc.Utils
         {
             _itemQueue = new ConcurrentQueue<Item>();
             _inputPort = inputPort;
+
             init();
         }
 
@@ -126,6 +127,11 @@ namespace ICAPR_SVP.Misc.Utils
 
         private void DoWork()
         {
+            
+            System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+            customCulture.NumberFormat.NumberDecimalSeparator = ".";
+
+            System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
             try
             {
                 while(this._isRunning)
@@ -209,11 +215,14 @@ namespace ICAPR_SVP.Misc.Utils
         private void WriteCsvForTraining(String fileName,List<Item> items)
         {
             //Write 1 second eye data per row into a .CSV file
-            String output = "Word, Blinks, Errors, ICA, Left/Right, \n";
+            String output = "word, blinks, error, ica, left/right," ;
+            for (int i = 0; i < Config.EyeTribe.SAMPLING_FREQUENCY; i++)
+                output += "s" + i + ",";
 
-            foreach(Item item in items)
+            output += "label\n";
+            foreach (Item item in items)
             {
-                if(item.Type == ItemTypes.DisplayItemAndEyes)
+                if (item.Type == ItemTypes.DisplayItemAndEyes)
                 {
                     DisplayItemAndEyes<String> wordAndEyes = (DisplayItemAndEyes<String>)item.Value;
                     DisplayItem<String> word = wordAndEyes.DisplayItem;
@@ -222,15 +231,15 @@ namespace ICAPR_SVP.Misc.Utils
                     int iterations = eyesArray.Length / Config.EyeTribe.SAMPLING_FREQUENCY;
                     int modulus = eyesArray.Length % Config.EyeTribe.SAMPLING_FREQUENCY;
 
-                    for(int i = 0;i < iterations;i++)
+                    for (int i = 0; i < iterations; i++)
                         output += WriteCsvForTrainingRow
-                            (word,wordAndEyes.SummaryItem,eyesArray,i,Config.EyeTribe.SAMPLING_FREQUENCY);
+                            (word, wordAndEyes.SummaryItem, eyesArray, i, Config.EyeTribe.SAMPLING_FREQUENCY);
 
-                    if(modulus > 0)
-                        output += WriteCsvForTrainingRow(word,wordAndEyes.SummaryItem,eyesArray,iterations,modulus);
+                    if (modulus > 0)
+                        output += WriteCsvForTrainingRow(word, wordAndEyes.SummaryItem, eyesArray, iterations, modulus);
                 }
             }
-            WriteFile(fileName + "_trainning",output,".csv");
+            WriteFile(fileName + "_training",output,".csv");
         }
 
         private String WriteCsvForTrainingRow(DisplayItem<String> word,SummaryItem summaryItem,Eyes[] eyes,
@@ -238,7 +247,7 @@ namespace ICAPR_SVP.Misc.Utils
         {
             String output = "",outputLeft = "",outputRight = "",metadata = "";
 
-            metadata += (word.Value != null) ? word.Value + "," : " ,";
+            metadata += (word.Value != null) ? word.Value + "," : "delay,";
             metadata += summaryItem.BlinkSamples[0] + ",";
             metadata += summaryItem.ErrorSamples[1] + ",";
 

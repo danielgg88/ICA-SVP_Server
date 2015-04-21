@@ -8,7 +8,7 @@ namespace ICAPR_SVP.Misc
         {
             //network configuration
             public const String NET_LOCAL_HOST = "0.0.0.0";
-            public const int NET_SERVER_PORT = 8181;
+            public const int NET_SERVER_PORT = 8182;
             public const String NET_SERVER_URL = "api/";
         }
 
@@ -74,7 +74,10 @@ namespace ICAPR_SVP.Misc
 
             public readonly static String[] ATTRIBUTES = {
                                                                 "word",
+                                                                "blinks",
+                                                                "error",
                                                                 "ica",
+                                                                "left/right",
                                                                 "s0",
                                                                 "s1",
                                                                 "s2",

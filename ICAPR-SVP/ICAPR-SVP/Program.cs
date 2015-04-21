@@ -11,6 +11,7 @@ namespace ICAPR_SVP
     {
         static void Main(string[] args)
         {
+
             Misc.Utils.Utils.launchEyeTribeServer();
             GazeManager.Instance.Activate(GazeManager.ApiVersion.VERSION_1_0,GazeManager.ClientMode.Push);
             //Create EyeTribe input ports
