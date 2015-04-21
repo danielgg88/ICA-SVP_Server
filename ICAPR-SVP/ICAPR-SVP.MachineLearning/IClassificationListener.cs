@@ -8,6 +8,6 @@ namespace ICAPR_SVP.MachineLearning
 {
     public interface IClassificationListener
     {
-        void onClassification(String stimulus, String leftEyeLabel, String rightEyeLabel, int portion);
+        void onClassification(String stimulus,String leftEyeLabel,String rightEyeLabel,int portion);
     }
 }

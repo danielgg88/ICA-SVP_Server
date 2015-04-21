@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace ICAPR_SVP.Test
 {
     [TestClass]
-    public class MLComponentTests: MachineLearning.MLComponent
+    public class MLComponentTests : MachineLearning.MLComponent
     {
         private List<Misc.Eyes> eyes;
         private MLComponentTests component;
@@ -22,9 +22,9 @@ namespace ICAPR_SVP.Test
         [TestMethod]
         public void testGetSplitBothEyes()
         {
-            double[][] result = component.getSplitBothEyes(eyes, 0, 60, 60);
+            double[][] result = component.getSplitBothEyes(eyes,0,60,60);
 
-            for (int i = 0; i < 60; i++)
+            for(int i = 0;i < 60;i++)
             {
                 Assert.AreEqual(
                     eyes[i].LeftEye.PupilSize,
@@ -38,9 +38,9 @@ namespace ICAPR_SVP.Test
                     );
             }
 
-            result = component.getSplitBothEyes(eyes, 60, 60, 15);
+            result = component.getSplitBothEyes(eyes,60,60,15);
 
-            for (int i = 60; i < 15; i++)
+            for(int i = 60;i < 15;i++)
             {
                 Assert.AreEqual(
                     eyes[i].LeftEye.PupilSize,
@@ -58,7 +58,7 @@ namespace ICAPR_SVP.Test
         private void setUpEyesArray()
         {
             eyes = new List<Misc.Eyes>(75);
-            for (int i = 0; i < 75; i++)
+            for(int i = 0;i < 75;i++)
             {
                 Misc.Eye left = new Misc.Eye();
                 Misc.Eye right = new Misc.Eye();
@@ -67,7 +67,7 @@ namespace ICAPR_SVP.Test
                 left.PupilSize = random.NextDouble();
                 right.PupilSize = random.NextDouble();
 
-                Misc.Eyes item = new Misc.Eyes(0, left, right);
+                Misc.Eyes item = new Misc.Eyes(0,left,right);
 
                 eyes.Add(item);
             }

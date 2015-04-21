@@ -43,9 +43,9 @@ namespace ICAPR_SVP.Misc.Utils
             return temp / (window - 1);
         }
 
-        public static double getStdDev(double[] data, double[] sum,int index_end,int window)
+        public static double getStdDev(double[] data,double[] sum,int index_end,int window)
         {
-            double mean = UtilsMath.getMean(sum, window, index_end);
+            double mean = UtilsMath.getMean(sum,window,index_end);
             return Math.Sqrt(getVariance(data,mean,index_end - window + 1,window));
         }
     }

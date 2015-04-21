@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 
 namespace ICAPR_SVP.Misc
 {
@@ -20,6 +21,13 @@ namespace ICAPR_SVP.Misc
 
         [JsonProperty(PropertyName = "blink_samples")]
         public int[] BlinkSamples
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty(PropertyName = "classification")]
+        public String[][] Classification
         {
             get;
             set;

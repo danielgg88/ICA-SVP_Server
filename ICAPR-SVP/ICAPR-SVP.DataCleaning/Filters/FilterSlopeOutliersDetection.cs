@@ -33,7 +33,7 @@ namespace ICAPR_SVP.DataCleaning
 
             if(firstPreviousEye == null || secondPreviousEye == null)
             {
-                checkForFirstOutliers(currentEye, avgLeftEye, avgRightEye);
+                checkForFirstOutliers(currentEye,avgLeftEye,avgRightEye);
                 swapEyes();
                 return;
             }
@@ -60,13 +60,13 @@ namespace ICAPR_SVP.DataCleaning
             }
         }
 
-        private void checkForFirstOutliers(Eyes eyes, Eye avgLeftEye, Eye avgRightEye)
+        private void checkForFirstOutliers(Eyes eyes,Eye avgLeftEye,Eye avgRightEye)
         {
-                if( isOutlier(eyes.LeftEye.PupilSize , avgLeftEye.PupilSize ) )
-                    eyes.LeftEye.PupilSize = avgLeftEye.PupilSize;
+            if(isOutlier(eyes.LeftEye.PupilSize,avgLeftEye.PupilSize))
+                eyes.LeftEye.PupilSize = avgLeftEye.PupilSize;
 
-                if( isOutlier(eyes.RightEye.PupilSize , avgRightEye.PupilSize ) )
-                    eyes.RightEye.PupilSize = avgRightEye.PupilSize;
+            if(isOutlier(eyes.RightEye.PupilSize,avgRightEye.PupilSize))
+                eyes.RightEye.PupilSize = avgRightEye.PupilSize;
 
         }
 

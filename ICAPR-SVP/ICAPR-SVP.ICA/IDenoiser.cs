@@ -7,7 +7,8 @@ using ICAPR_SVP.Misc;
 
 namespace ICAPR_SVP.ICA
 {
-    public interface IDenoiser{
+    public interface IDenoiser
+    {
         double[][] denoiseEyes(Queue<Eyes> eyes_queue,double[][] eyes_array);
     }
 }
