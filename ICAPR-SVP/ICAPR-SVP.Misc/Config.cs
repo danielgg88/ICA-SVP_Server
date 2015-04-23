@@ -2,9 +2,9 @@
 
 namespace ICAPR_SVP.Misc
 {
-    public class Config
+    public static class Config
     {
-        public class Network
+        public static class Network
         {
             //network configuration
             public const String NET_LOCAL_HOST = "0.0.0.0";
@@ -12,15 +12,16 @@ namespace ICAPR_SVP.Misc
             public const String NET_SERVER_URL = "api/";
         }
 
-        public class EyeTribe
+        public static class EyeTribe
         {
             //eyetribe configuration
             public const int SAMPLING_FREQUENCY = 60;   //Reduce sampling to the given frequency (I.e. 30 samples/seg)
             public const String EYETRIBE_CALIBRATION_EXE = @"..\..\..\libs\EyeTribe\Calibration.exe";
             public const String EYETRIBE_SERVER_EXE = @"..\..\..\libs\EyeTribe\EyeTribe.exe";
+            public static bool ALLOW_CURSOR_CONTROL = true;
         }
 
-        public class Calibration
+        public static class Calibration
         {
             //calibration
             public const int CALIB_TOTAL_SAMPLES = 60;
@@ -28,7 +29,7 @@ namespace ICAPR_SVP.Misc
             public const int TEST_MAX_PUPIL_SIZE = 7; //mm
         }
 
-        public class Cleaning
+        public static class Cleaning
         {
             public const double BLINK_DIAMETER_THRESHOLD_LOW_MM = 2;       //Max pupil diameter variation from the 
             //baseline before being considered a blink
@@ -40,19 +41,19 @@ namespace ICAPR_SVP.Misc
             //samples.
         }
 
-        public class Matlab
+        public static class Matlab
         {
             public const String DENOISE_ALGORITHM = "db4";  //daubechies 4
-            public const int DENOISE_LEVEL = 5;
+            public const int DENOISE_LEVEL = 4;
         }
 
-        public class ICA
+        public static class ICA
         {
             public const int AVG_MOVING_WINDOW_SIZE = 10;
-            public const double SIGNAL_THRESHOLD_LARGE = 0.05;
+            public const double SIGNAL_THRESHOLD_LARGE = 3;
         }
 
-        public class FileManager
+        public static class FileManager
         {
             public const String BASE_PATH = @"..\..\..\";
             public const bool CREATE_JSON = true;
@@ -60,7 +61,7 @@ namespace ICAPR_SVP.Misc
             public const bool CREATE_CSV_PER_SECOND = true;
         }
 
-        public class WEKA
+        public static class WEKA
         {
 
             public readonly static String WEKA_EXTERNAL_MODEL = @"..\..\..\output.model";

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Threading;
 
 namespace ICAPR_SVP.Misc.Utils
 {
@@ -31,19 +29,6 @@ namespace ICAPR_SVP.Misc.Utils
         public static double PixelsToMM(double pixels)
         {
             return pixels / PX_MM;
-        }
-
-        public static void launchEyeTribeCalibration()
-        {
-            Process.Start(Config.EyeTribe.EYETRIBE_CALIBRATION_EXE);
-        }
-
-
-
-        public static void launchEyeTribeServer()
-        {
-            Process.Start(Config.EyeTribe.EYETRIBE_SERVER_EXE,"--framerate=" + Config.EyeTribe.SAMPLING_FREQUENCY);
-            Thread.Sleep(3000);
         }
     }
 }

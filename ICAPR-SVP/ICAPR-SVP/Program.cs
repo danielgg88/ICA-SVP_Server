@@ -12,10 +12,11 @@ namespace ICAPR_SVP
     {
         static void Main(string[] args)
         {
-
-            Misc.Utils.Utils.launchEyeTribeServer();
+            Misc.Utils.EyeTribeManager.launchEyeTribeServer();
             GazeManager.Instance.Activate(GazeManager.ApiVersion.VERSION_1_0,GazeManager.ClientMode.Push);
+
             //Create EyeTribe input ports
+            Misc.Config.EyeTribe.ALLOW_CURSOR_CONTROL = true;
             Misc.Port inputPortEyeTribe = new Network.PortBlockingInputEyeTribe();
             Misc.Port inputPortEyeTribeCalib = new Network.PortBlockingInputEyeTribe();
             Run(inputPortEyeTribe,inputPortEyeTribeCalib);

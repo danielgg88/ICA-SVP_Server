@@ -38,6 +38,10 @@ namespace ICAPR_SVP.Network
                     Console.WriteLine("Network: receieved -> trial: " + config.Trial);
                     Bundle<ExperimentConfig> newBundle = new Bundle<ExperimentConfig>(ItemTypes.Config,config);
                     _outputPort.PushItem(newBundle);
+
+                    //Enable cursor pointer control
+                    if(Config.EyeTribe.ALLOW_CURSOR_CONTROL)
+                        Misc.Utils.EyeTribeManager.enableCursorControl(true);
                     break;
 
                 case NetworkConstants.TYPE_TRIALS:
@@ -60,13 +64,17 @@ namespace ICAPR_SVP.Network
                     EndOfTrial endOfTrial = JsonConvert.DeserializeObject<EndOfTrial>(json["content"].ToString());
                     Bundle<EndOfTrial> bb = new Bundle<EndOfTrial>(ItemTypes.EndOfTrial,endOfTrial);
                     _outputPort.PushItem(bb);
+
+                    //Disable cursor pointer control
+                    if(Config.EyeTribe.ALLOW_CURSOR_CONTROL)
+                        Misc.Utils.EyeTribeManager.enableCursorControl(false);
                     break;
 
                 case NetworkConstants.NET_TYPE_CALIBRATION:
                     Console.WriteLine("Network: receieved -> calibration: start");
                     CalibrationItem calibrationItem = JsonConvert.DeserializeObject<CalibrationItem>(json["content"].ToString());
                     if(calibrationItem.CalibrationType == CalibrationItem.Types.EyeTribe)
-                        Misc.Utils.Utils.launchEyeTribeCalibration();
+                        Misc.Utils.EyeTribeManager.launchEyeTribeCalibration();
                     else if(calibrationItem.CalibrationType == CalibrationItem.Types.System)
                         _calibrator.Start();
                     break;
