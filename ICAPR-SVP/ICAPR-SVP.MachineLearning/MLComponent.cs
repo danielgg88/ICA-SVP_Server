@@ -127,8 +127,8 @@ namespace ICAPR_SVP.MachineLearning
 
             for(int i = 0;i < window;i++)
             {
-                splitItems[LEFT][i] = eyes[startIndex + i].LeftEye.PupilSize;
-                splitItems[RIGHT][i] = eyes[startIndex + i].RightEye.PupilSize;
+                splitItems[LEFT][i] = eyes[startIndex + i].LeftEyeProcessed.PupilSize;
+                splitItems[RIGHT][i] = eyes[startIndex + i].RightEyeProcessed.PupilSize;
 
             }
             return splitItems;

@@ -27,12 +27,12 @@ namespace ICAPR_SVP.Test
             for(int i = 0;i < 60;i++)
             {
                 Assert.AreEqual(
-                    eyes[i].LeftEye.PupilSize,
+                    eyes[i].LeftEyeProcessed.PupilSize,
                     result[0][i],
                     "Left eye copy does not match"
                     );
                 Assert.AreEqual(
-                    eyes[i].RightEye.PupilSize,
+                    eyes[i].RightEyeProcessed.PupilSize,
                     result[1][i],
                     "Left eye copy does not match"
                     );
@@ -43,12 +43,12 @@ namespace ICAPR_SVP.Test
             for(int i = 0;i < 15;i++)
             {
                 Assert.AreEqual(
-                    eyes[i+60].LeftEye.PupilSize,
+                    eyes[i+60].LeftEyeProcessed.PupilSize,
                     result[0][i],
                     "Left eye copy does not match"
                     );
                 Assert.AreEqual(
-                    eyes[i+60].RightEye.PupilSize,
+                    eyes[i+60].RightEyeProcessed.PupilSize,
                     result[1][i],
                     "Left eye copy does not match"
                     );
@@ -75,13 +75,13 @@ namespace ICAPR_SVP.Test
                 for( int j = 0 ; j < itemsToCompare ; j++ ){
                     int start_index = i * Misc.Config.EyeTribe.SAMPLING_FREQUENCY + j;
                     Assert.AreEqual(
-                        eyes[start_index].LeftEye.PupilSize,
+                        eyes[start_index].LeftEyeProcessed.PupilSize,
                         classificationArray[0][j],
                         "Left array was not created succussfuly"
                         );
 
                     Assert.AreEqual(
-                        eyes[start_index].RightEye.PupilSize,
+                        eyes[start_index].RightEyeProcessed.PupilSize,
                         classificationArray[1][j],
                         "Right array was not created succussfuly"
                         );
@@ -153,7 +153,10 @@ namespace ICAPR_SVP.Test
                 left.PupilSize = random.NextDouble();
                 right.PupilSize = random.NextDouble();
 
-                Misc.Eyes item = new Misc.Eyes(0,left,right);
+                Misc.Eyes item = new Misc.Eyes(0,null,null);
+
+                item.LeftEyeProcessed = left;
+                item.RightEyeProcessed = right;
 
                 eyes.Add(item);
             }
