@@ -8,7 +8,7 @@ namespace ICAPR_SVP.Misc
         {
             //network configuration
             public const String NET_LOCAL_HOST = "0.0.0.0";
-            public const int NET_SERVER_PORT = 8181;
+            public const int NET_SERVER_PORT = 8184;
             public const String NET_SERVER_URL = "api/";
         }
 
@@ -85,6 +85,9 @@ namespace ICAPR_SVP.Misc
              * This attribute is added in the ClassifierWrapper
              */
             public readonly static String[] ATTRIBUTES = {
+                                                                "ica",
+                                                                "avg",          //average fo the whole sample (60 frames)
+                                                                "split_avg",    //difference of average of the first 30 samples and the average of the other 30
                                                                 "s0",
                                                                 "s1",
                                                                 "s2",

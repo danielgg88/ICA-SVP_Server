@@ -48,6 +48,16 @@ namespace ICAPR_SVP.Misc.Utils
             double mean = UtilsMath.getMean(sum,window,index_end);
             return Math.Sqrt(getVariance(data,mean,index_end - window + 1,window));
         }
+
+        public static double computeAverage(double[] inputArray, int startIndex, int endIndex)
+        {
+            double sum = 0;
+            for( int i = startIndex ; i < endIndex ; i++ )
+            {
+                sum += inputArray[i];
+            }
+            return sum / (endIndex - startIndex);
+        }
     }
 
 }

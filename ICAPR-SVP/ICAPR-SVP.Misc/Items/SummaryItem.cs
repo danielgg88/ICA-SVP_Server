@@ -33,10 +33,26 @@ namespace ICAPR_SVP.Misc
             set;
         }
 
+        [JsonIgnore]
+        public double[][] SampleAverage
+        {
+            get;
+            set;
+        }
+
+        [JsonIgnore]
+        public double[][] SampleAverageDifference
+        {
+            get;
+            set;
+        }
+        
         public SummaryItem()
         {
             BlinkSamples = new int[2];
             ErrorSamples = new int[2];
+            SampleAverage = new double[2][];
+            SampleAverageDifference = new double[2][];
         }
     }
 }

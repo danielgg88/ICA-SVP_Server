@@ -56,6 +56,91 @@ namespace ICAPR_SVP.Test
         }
 
         [TestMethod]
+        public void testComputeExtraClassificationAttributes()
+        {
+            Misc.SummaryItem summary = new Misc.SummaryItem();
+            summary.SampleAverage[0] = new double[2];
+            summary.SampleAverage[1] = new double[2];
+
+            summary.SampleAverageDifference[0] = new double[2];
+            summary.SampleAverageDifference[1] = new double[2];
+
+            int[][] ica = new int[2][];
+            ica[0] = new int[2];
+            ica[1] = new int[2];
+            ica[0][0] = 0;
+            ica[0][1] = 1;
+            ica[1][0] = 0;
+            ica[1][1] = 1;
+
+            summary.Ica = ica;
+
+            double[][] samples = new double[2][];
+
+            samples[0] = new double[60];
+            samples[1] = new double[60];
+
+            for (int i = 0; i < 60; i++)
+            {
+                samples[0][i] = i;
+                samples[1][i] = i;
+            }
+
+            double[][] result = component.computeExtraClassificationAttributes(summary, samples, 0);
+
+            Assert.AreEqual(ica[0][0], result[0][0], "Ica is not equal");
+            Assert.AreEqual(ica[1][0], result[1][0], "Ica is not equal");
+
+            Assert.AreEqual(summary.SampleAverage[0][0], result[0][1], "Avg is not equal");
+            Assert.AreEqual(summary.SampleAverage[1][0], result[1][1], "Avg is not equal");
+
+            Assert.AreEqual(summary.SampleAverageDifference[0][0], result[0][2], "Avg diff is not equal");
+            Assert.AreEqual(summary.SampleAverageDifference[1][0], result[1][2], "Avg diff is not equal");
+
+            Assert.AreEqual(29.5, result[0][1]);
+            Assert.AreEqual(29.5, result[1][1]);
+
+            Assert.AreEqual(-30, result[0][2]);
+            Assert.AreEqual(-30, result[1][2]);
+
+            for (int i = 0; i < 15; i++)
+            {
+                samples[0][i] = i + 60;
+                samples[1][i] = i + 60;
+            }
+
+            for (int i = 0; i < 45; i++)
+            {
+                samples[0][i + 15] = Misc.Config.Calibration.CALIB_DEFAULT_AVG_PUPIL_SIZE;
+                samples[1][i + 15] = Misc.Config.Calibration.CALIB_DEFAULT_AVG_PUPIL_SIZE;
+            }
+
+            result = component.computeExtraClassificationAttributes(summary, samples, 1);
+
+            Assert.AreEqual(ica[0][1], result[0][0], "Ica is not equal");
+            Assert.AreEqual(ica[1][1], result[1][0], "Ica is not equal");
+
+            Assert.AreEqual(summary.SampleAverage[0][1], result[0][1], "Avg is not equal");
+            Assert.AreEqual(summary.SampleAverage[1][1], result[1][1], "Avg is not equal");
+
+            Assert.AreEqual(summary.SampleAverageDifference[0][1], result[0][2], "Avg diff is not equal");
+            Assert.AreEqual(summary.SampleAverageDifference[1][1], result[1][2], "Avg diff is not equal");
+
+            Assert.AreEqual(20.125, result[0][1]);
+            Assert.AreEqual(20.125, result[1][1]);
+
+            Assert.AreEqual(31.25, result[0][2]);
+            Assert.AreEqual(31.25, result[1][2]);
+                
+
+        }
+
+        private void verifyArrays(int i)
+        {
+
+        }
+
+        [TestMethod]
         public void testGetArraysForClassification()
         {
 

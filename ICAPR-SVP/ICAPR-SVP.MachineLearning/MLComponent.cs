@@ -61,13 +61,66 @@ namespace ICAPR_SVP.MachineLearning
             classification[LEFT] = new String[size];
             classification[RIGHT] = new String[size];
 
+            items.SummaryItem.SampleAverage[LEFT] = new double[size];
+            items.SummaryItem.SampleAverage[RIGHT] = new double[size];
+
+            items.SummaryItem.SampleAverageDifference[LEFT] = new double[size];
+            items.SummaryItem.SampleAverageDifference[RIGHT] = new double[size];
+
             for (int i = 0; i < size; i++)
             {
-                double[][] arraysForClassification = getArraysForClassification(eyes, SAMPLE_FREQ, i);
-                classifySingleItem(classification, items, arraysForClassification, attributesStartIndex, i);
+                double[][] sampleArrayForClassification = getArraysForClassification(eyes, SAMPLE_FREQ, i);
+                double[][] finalArrayForClassification = computeExtraClassificationAttributes(items.SummaryItem, sampleArrayForClassification, i);
+                classifySingleItem(classification, items, finalArrayForClassification, attributesStartIndex, i);
             }
 
             return classification;
+        }
+
+
+        protected double[][] computeExtraClassificationAttributes(SummaryItem item, double [][] inputArray, int iteration)
+        {
+            //1st attribute
+            int leftIca = item.Ica[LEFT][iteration];
+            int rightIca = item.Ica[RIGHT][iteration];
+
+            int splitIndex = Config.EyeTribe.SAMPLING_FREQUENCY / 2;
+
+            double left_eye_left_half_avg = Misc.Utils.UtilsMath.computeAverage(inputArray[LEFT], 0, splitIndex);
+            double left_eye_right_half_avg = Misc.Utils.UtilsMath.computeAverage(inputArray[LEFT], splitIndex, Config.EyeTribe.SAMPLING_FREQUENCY);
+
+            double right_eye_left_half_avg = Misc.Utils.UtilsMath.computeAverage(inputArray[RIGHT], 0, splitIndex);
+            double right_eye_right_half_avg = Misc.Utils.UtilsMath.computeAverage(inputArray[RIGHT], splitIndex, Config.EyeTribe.SAMPLING_FREQUENCY);
+
+            //2nd attribute
+            double leftSampleAverage = (left_eye_left_half_avg + left_eye_right_half_avg) / 2;
+            double rightSampleAverage = (right_eye_left_half_avg + right_eye_right_half_avg) / 2;
+            item.SampleAverage[LEFT][iteration] = leftSampleAverage;
+            item.SampleAverage[RIGHT][iteration] = rightSampleAverage;
+
+            //3rd attribute
+            double leftAvgDifference = left_eye_left_half_avg - left_eye_right_half_avg;
+            double rightAvgDifference = right_eye_left_half_avg - right_eye_right_half_avg;
+            item.SampleAverageDifference[LEFT][iteration] = leftAvgDifference;
+            item.SampleAverageDifference[RIGHT][iteration] = rightAvgDifference;
+
+            double[][] classificationArray = new double[2][];
+            classificationArray[LEFT] = new double[Config.WEKA.ATTRIBUTES.Length];
+            classificationArray[RIGHT] = new double[Config.WEKA.ATTRIBUTES.Length];
+
+            classificationArray[LEFT][0] = leftIca;
+            classificationArray[RIGHT][0] = rightIca;
+
+            classificationArray[LEFT][1] = leftSampleAverage;
+            classificationArray[RIGHT][1] = rightSampleAverage;
+
+            classificationArray[LEFT][2] = leftAvgDifference;
+            classificationArray[RIGHT][2] = rightAvgDifference;
+
+            inputArray[LEFT].CopyTo(classificationArray[LEFT], 3);
+            inputArray[RIGHT].CopyTo(classificationArray[RIGHT], 3);
+
+            return classificationArray;
         }
 
         protected double[][] getArraysForClassification(List<Eyes> eyes, int SAMPLE_FREQ, int iteration)

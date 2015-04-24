@@ -212,7 +212,7 @@ namespace ICAPR_SVP.Misc.Utils
         private void WriteCsvForTraining(String fileName,List<Item> items)
         {
             //Write 1 second eye data per row into a .CSV file
-            String output = "word, blinks, error, ica, left/right,";
+            String output = "word, blinks, error, left/right, ica, avg, split_avg,";
             for(int i = 0;i < Config.EyeTribe.SAMPLING_FREQUENCY;i++)
                 output += "s" + i + ",";
 
@@ -269,11 +269,15 @@ namespace ICAPR_SVP.Misc.Utils
             }
             else
             {
-                outputLeft += eyes[index_end].LeftEyeProcessed.PupilSize + "\n";
-                outputRight += eyes[index_end].RightEyeProcessed.PupilSize + "\n";
+                outputLeft += eyes[index_end-1].LeftEyeProcessed.PupilSize + "\n";
+                outputRight += eyes[index_end-1].RightEyeProcessed.PupilSize + "\n";
             }
-            output += metadata + summaryItem.Ica[0][second] + ", L," + outputLeft;
-            output += metadata + summaryItem.Ica[1][second] + ", R," + outputRight;
+
+            output += metadata + " L," + summaryItem.Ica[0][second] + "," + summaryItem.SampleAverage[0][second] + ","
+                + summaryItem.SampleAverageDifference[0][second] + "," + outputLeft;
+
+            output += metadata + " R," + summaryItem.Ica[1][second] + "," + summaryItem.SampleAverage[1][second] + ","
+                + summaryItem.SampleAverageDifference[1][second] + "," + outputRight;
 
             return output;
         }
