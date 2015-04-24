@@ -274,10 +274,10 @@ namespace ICAPR_SVP.Misc.Utils
             }
 
             output += metadata + " L," + summaryItem.Ica[0][second] + "," + summaryItem.SampleAverage[0][second] + ","
-                + summaryItem.SampleAverageDifference[0][second] + "," + outputLeft;
+                + summaryItem.SampleAverageDifference[0][second] + "," + outputLeft + "," + summaryItem.Classification[0][second];
 
             output += metadata + " R," + summaryItem.Ica[1][second] + "," + summaryItem.SampleAverage[1][second] + ","
-                + summaryItem.SampleAverageDifference[1][second] + "," + outputRight;
+                + summaryItem.SampleAverageDifference[1][second] + "," + outputRight + "," + summaryItem.Classification[1][second];
 
             return output;
         }
