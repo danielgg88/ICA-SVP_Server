@@ -49,8 +49,8 @@ namespace ICAPR_SVP.Misc
 
         public static class ICA
         {
-            public const int AVG_MOVING_WINDOW_SIZE = 10;
-            public const double SIGNAL_THRESHOLD_LARGE = 0.1;
+            public const int AVG_MOVING_WINDOW_SIZE = 2;
+            public const double SIGNAL_THRESHOLD_LARGE = 0.5;
         }
 
         public static class FileManager
