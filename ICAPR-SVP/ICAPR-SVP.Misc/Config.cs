@@ -24,7 +24,7 @@ namespace ICAPR_SVP.Misc
         public static class Calibration
         {
             //calibration
-            public const int CALIB_TOTAL_SAMPLES = 60;
+            public const int CALIB_TOTAL_SAMPLES = 120;
             public const double CALIB_DEFAULT_AVG_PUPIL_SIZE = 4.5; //mm
             public const int TEST_MAX_PUPIL_SIZE = 7; //mm
         }
@@ -34,10 +34,10 @@ namespace ICAPR_SVP.Misc
             public const double BLINK_DIAMETER_THRESHOLD_LOW_MM = 2;       //Max pupil diameter variation from the 
             //baseline before being considered a blink
             public const int BLINK_MIN_CONSEQUENT_SAMPLES = 4; //Min no. of samples to consider a blink appereance
-            public const int BLINK_MAX_ALLOWED_SAMPLES = 20;  //Max allowed duration of one blink before the sample 
+            public const int BLINK_MAX_ALLOWED_SAMPLES = 16;  //Max allowed duration of one blink before the sample 
             //is discarded
             public const int BLINK_MAX_ALLOWED_PERC = 20;     //Percentage (%) of max allowed blink detections in 1 sample
-            public const double OUTLIER_MAX_CHANGE_RATE_ALLOWED_MM = 0.1; //Maximum change rate allowed from the two preceding
+            public const double OUTLIER_MAX_CHANGE_RATE_ALLOWED_MM = 0.2; //Maximum change rate allowed from the two preceding
             //samples.
         }
 
@@ -50,7 +50,7 @@ namespace ICAPR_SVP.Misc
         public static class ICA
         {
             public const int AVG_MOVING_WINDOW_SIZE = 10;
-            public const double SIGNAL_THRESHOLD_LARGE = 3;
+            public const double SIGNAL_THRESHOLD_LARGE = 0.1;
         }
 
         public static class FileManager
@@ -58,7 +58,7 @@ namespace ICAPR_SVP.Misc
             public const String BASE_PATH = @"..\..\..\";
             public const bool CREATE_JSON = true;
             public const bool CREATE_CSV_ORIGINAL_PROCESSED = true;
-            public const bool CREATE_CSV_PER_SECOND = true;
+            public const bool CREATE_CSV_PER_SECOND = false;
         }
 
         public static class WEKA
@@ -73,8 +73,12 @@ namespace ICAPR_SVP.Misc
             public readonly static int ATTRIBUTE_START_INDEX = 0;
 
             public readonly static String[] LABELS = {
-                                           "cognitive",
-                                           "idle"
+                                           "C_bright",
+                                           "C_obscure",
+                                           "C_steady",
+                                           "I_bright",
+                                           "I_obscure",
+                                           "I_steady",
                                        };
 
 

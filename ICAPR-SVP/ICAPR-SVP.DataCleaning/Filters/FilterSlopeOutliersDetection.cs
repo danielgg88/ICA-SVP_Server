@@ -48,7 +48,7 @@ namespace ICAPR_SVP.DataCleaning
 
         private void applyRule(Eye secondPreviousEye,Eye firstPreviousEye,Eye currentEye,Eye nextEye)
         {
-            if(isOutlier(firstPreviousEye.PupilSize,currentEye.PupilSize))
+            if(isOutlier(secondPreviousEye.PupilSize,currentEye.PupilSize))
             {
                 double sum = secondPreviousEye.PupilSize +
                     firstPreviousEye.PupilSize +
