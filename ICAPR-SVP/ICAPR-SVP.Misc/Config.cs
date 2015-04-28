@@ -58,7 +58,7 @@ namespace ICAPR_SVP.Misc
             public const String BASE_PATH = @"..\..\..\";
             public const bool CREATE_JSON = true;
             public const bool CREATE_CSV_ORIGINAL_PROCESSED = true;
-            public const bool CREATE_CSV_PER_SECOND = false;
+            public const bool CREATE_CSV_PER_SECOND = true;
         }
 
         public static class WEKA

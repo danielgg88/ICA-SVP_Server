@@ -62,7 +62,7 @@ namespace ICAPR_SVP.Misc.Utils
             {
                 //Creates JSON and CSV files
                 Console.WriteLine("FM: Saving logs..");
-                String fileName = DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + _currentConfig.Trial;
+                String fileName = DateTime.Now.ToString("yyyy_MM_ddH_H_mm_ss") + "_" + _currentConfig.Trial;
                 List<Item> items = new List<Item>(_itemQueue);
 
                 //Save items in files
