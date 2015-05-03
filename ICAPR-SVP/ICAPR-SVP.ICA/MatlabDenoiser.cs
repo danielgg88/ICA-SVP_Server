@@ -34,7 +34,9 @@ namespace ICAPR_SVP.ICA
             matlab.Execute(@"dwtmode('asym');");
             matlab.Execute(@"[c,l] = wavedec(data," + Config.Matlab.DENOISE_LEVEL + @",'" + Config.Matlab.DENOISE_ALGORITHM + @"');");
             matlab.Execute(@"xd = wden(c, 'minimaxi', 'h', 'sln'," + Config.Matlab.DENOISE_LEVEL + @",'" + Config.Matlab.DENOISE_ALGORITHM + @"');");
-            //matlab.Execute(@"plot(xd);");
+
+            if( Misc.Config.Matlab.SHOW_MATLAB_PLOT)
+                matlab.Execute(@"plot(xd);");
 
             object result = null;
             matlab.GetWorkspaceData("xd","base",out result);

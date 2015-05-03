@@ -24,7 +24,7 @@ namespace ICAPR_SVP.Misc
         public static class Calibration
         {
             //calibration
-            public const int CALIB_TOTAL_SAMPLES = 120;
+            public const int CALIB_TOTAL_SAMPLES = 240;
             public const double CALIB_DEFAULT_AVG_PUPIL_SIZE = 4.5; //mm
             public const int TEST_MAX_PUPIL_SIZE = 7; //mm
         }
@@ -45,12 +45,13 @@ namespace ICAPR_SVP.Misc
         {
             public const String DENOISE_ALGORITHM = "db4";  //daubechies 4
             public const int DENOISE_LEVEL = 4;
+            public const bool SHOW_MATLAB_PLOT = false;
         }
 
         public static class ICA
         {
             public const int AVG_MOVING_WINDOW_SIZE = 2;
-            public const double SIGNAL_THRESHOLD_LARGE = 0.5;
+            public const double SIGNAL_THRESHOLD_LARGE = 0.05;
         }
 
         public static class FileManager
