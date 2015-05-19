@@ -18,7 +18,7 @@ namespace ICAPR_SVP.Misc
             public const int SAMPLING_FREQUENCY = 60;   //Reduce sampling to the given frequency (I.e. 30 samples/seg)
             public const String EYETRIBE_CALIBRATION_EXE = @"..\..\..\libs\EyeTribe\Calibration.exe";
             public const String EYETRIBE_SERVER_EXE = @"..\..\..\libs\EyeTribe\EyeTribe.exe";
-            public static bool ALLOW_CURSOR_CONTROL = true;
+            public static bool ALLOW_CURSOR_CONTROL = false;
         }
 
         public static class Calibration

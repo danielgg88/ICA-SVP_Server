@@ -264,20 +264,20 @@ namespace ICAPR_SVP.Misc.Utils
                     outputLeft += Calibration.Calibrator.AvgPupilSize[0] + ",";
                     outputRight += Calibration.Calibrator.AvgPupilSize[1] + ",";
                 }
-                outputLeft += Calibration.Calibrator.AvgPupilSize[0] + "\n";
-                outputRight += Calibration.Calibrator.AvgPupilSize[1] + "\n";
+                outputLeft += Calibration.Calibrator.AvgPupilSize[0];
+                outputRight += Calibration.Calibrator.AvgPupilSize[1];
             }
             else
             {
-                outputLeft += eyes[index_end-1].LeftEyeProcessed.PupilSize + "\n";
-                outputRight += eyes[index_end-1].RightEyeProcessed.PupilSize + "\n";
+                outputLeft += eyes[index_end-1].LeftEyeProcessed.PupilSize;
+                outputRight += eyes[index_end-1].RightEyeProcessed.PupilSize;
             }
 
             output += metadata + " L," + summaryItem.Ica[0][second] + "," + summaryItem.SampleAverage[0][second] + ","
-                + summaryItem.SampleAverageDifference[0][second] + "," + outputLeft + "," + summaryItem.Classification[0][second];
+                + summaryItem.SampleAverageDifference[0][second] + "," + outputLeft + "," + summaryItem.Classification[0][second]+ "\n";
 
             output += metadata + " R," + summaryItem.Ica[1][second] + "," + summaryItem.SampleAverage[1][second] + ","
-                + summaryItem.SampleAverageDifference[1][second] + "," + outputRight + "," + summaryItem.Classification[1][second];
+                + summaryItem.SampleAverageDifference[1][second] + "," + outputRight + "," + summaryItem.Classification[1][second] + "\n";
 
             return output;
         }
