@@ -261,11 +261,11 @@ namespace ICA_SVP.Misc.Utils
             {
                 for(int j = 0;j < Config.EyeTribe.SAMPLING_FREQUENCY - samples;j++)
                 {
-                    outputLeft += Calibration.Calibrator.AvgPupilSize[0] + ",";
-                    outputRight += Calibration.Calibrator.AvgPupilSize[1] + ",";
+                    outputLeft += "0,";
+                    outputRight += "0,";
                 }
-                outputLeft += Calibration.Calibrator.AvgPupilSize[0];
-                outputRight += Calibration.Calibrator.AvgPupilSize[1];
+                outputLeft += "0";
+                outputRight += "0";
             }
             else
             {
