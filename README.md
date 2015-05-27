@@ -1,4 +1,4 @@
-ICA-SVP Server: Classifying task-evoked pupillary response and indexing cognitive load provoked by visual stimuli
+ICA-SVP Server
 ========
 
 <img src="Images/ICA_SVP_logo.png?raw=true" height="150" width="150"/>
