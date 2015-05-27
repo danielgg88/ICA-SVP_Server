@@ -45,6 +45,11 @@ HOW TO CONNECT AN SVP CLIENT
 
 The ICA-SVP web client will automatically connect to the server when started.
 
+LOGS
+---------
+
+Although the cognitive effort is estimated and categorized in real-time, raw and processed data is stored in log files to allow future analysis and visualization. Default location /logs.
+
 Collaborators:
 --------------
 Daniel Garcia <dgac@itu.dk>, Ioannis Sintos <isin@itu.dk>, John Paulin Hansen <paulin@itu.dk>
