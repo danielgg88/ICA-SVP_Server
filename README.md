@@ -1,7 +1,7 @@
 ICA-SVP Server
 ========
 
-<img src="Images/ICA_SVP_logo.png?raw=true" height="150" width="150"/>
+<img src="Images/ICA_SVP_logo.png?raw=true" height="150"/>
 
 WHAT IS ICA-SVP?
 --------------
