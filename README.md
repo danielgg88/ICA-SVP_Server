@@ -1,4 +1,4 @@
-ICA-SVP Server
+ICA-SVP Server: Classifying task-evoked pupillary response and indexing cognitive load provoked by visual stimuli
 ========
 
 <img src="Images/ICA_SVP_logo.png?raw=true" height="150" width="150"/>
@@ -20,7 +20,7 @@ The processing server holds the core functionality of the system. In this compon
 SOFTWARE DEPENDENCIES
 ---------
 [ICA-SVP web client] (https://github.com/centosGit/RSVP-Client) </br>
-.NET Framework 4.5 <br/>
+[.NET Framework 4.5] (https://www.microsoft.com/en-us/download/details.aspx?id=30653) <br/>
 [The EyeTribe SDK 0.9.49] (https://theeyetribe.com/) <br/>
 [Weka 3.6.12] (http://www.cs.waikato.ac.nz/) </br>
 [MATLAB Wavelet Toolbox 8.5.0.197613 (R2015a)] (http://se.mathworks.com/products/wavelet/) </br>
