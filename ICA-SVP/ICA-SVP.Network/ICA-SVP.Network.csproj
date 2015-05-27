@@ -54,9 +54,9 @@
     <Compile Include="Network\NetworkCalibratorCallbacks.cs" />
     <Compile Include="Network\NetworkConstants.cs" />
     <Compile Include="Network\NetworkDispatcher.cs" />
-    <Compile Include="Network\NetworkDispatcherRsvpClient.cs" />
+    <Compile Include="Network\NetworkDispatcherSvpClient.cs" />
     <Compile Include="Ports\PortBlockingInputEyeTribe.cs" />
-    <Compile Include="Ports\PortNonBlockingInputSpritz.cs" />
+    <Compile Include="Ports\PortNonBlockingInputSVP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

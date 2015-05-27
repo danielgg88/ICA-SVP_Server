@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace ICA_SVP.Test
 {
     [TestClass]
-    public class BrokerEyeTribeSVPTest
+    public class TestBrokerEyeTribeSVP
     {
         private Port inputPortEyeTribe;
         private Port inputPortSVP;
@@ -18,8 +18,8 @@ namespace ICA_SVP.Test
         public void Initialize()
         {
             //Create inputs
-            inputPortEyeTribe = new PortBlockingEyeTribeTest(false);
-            inputPortSVP = new PortNonBlockingSVPTest();
+            inputPortEyeTribe = new TestPortBlockingEyeTribe(false);
+            inputPortSVP = new TestPortNonBlockingSVP();
             //Create Outputs
             outputPort = new Misc.PortBlockingDefaultImpl();
 
@@ -45,7 +45,7 @@ namespace ICA_SVP.Test
             long wordDuration = 0;
             long oldTimestamp = 0;
 
-            for(int i = 0;i < PortNonBlockingSVPTest.WORD_COUNT * PortNonBlockingSVPTest.NUMBER_TRIALS;i++)
+            for(int i = 0;i < TestPortNonBlockingSVP.WORD_COUNT * TestPortNonBlockingSVP.NUMBER_TRIALS;i++)
             {
                 item = this.outputPort.GetItem();
                 if(item.Type == ItemTypes.DisplayItemAndEyes)

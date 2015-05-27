@@ -9,8 +9,8 @@ namespace ICA_SVP
         {
             //Create EyeTribe input ports
             Misc.Config.EyeTribe.ALLOW_CURSOR_CONTROL = false;
-            Misc.Port inputPortEyeTribe = new PortBlockingEyeTribeTest(true);
-            Misc.Port inputPortEyeTribeCalib = new PortBlockingEyeTribeTest(false);
+            Misc.Port inputPortEyeTribe = new TestPortBlockingEyeTribe(true);
+            Misc.Port inputPortEyeTribeCalib = new TestPortBlockingEyeTribe(false);
             Program.Run(inputPortEyeTribe,inputPortEyeTribeCalib);
         }
     }

@@ -4,17 +4,17 @@ using System.Collections.Generic;
 
 namespace ICA_SVP.ICA
 {
-    public class ICAExecutor : ExecutorSingleThread
+    public class ExecutorICA : ExecutorSingleThread
     {
         // 0 = LEFT
         // 1 = RIGT
         protected IDenoiser denoiser;
         protected double[][] avgCalibrationArray;
 
-        public ICAExecutor()
+        public ExecutorICA()
             : base()
         {
-            denoiser = new MatlabDenoiser();
+            denoiser = new DenoiserMatlab();
             avgCalibrationArray = new double[2][];
             avgCalibrationArray[0] = new double[Config.ICA.AVG_MOVING_WINDOW_SIZE];
             avgCalibrationArray[1] = new double[Config.ICA.AVG_MOVING_WINDOW_SIZE];

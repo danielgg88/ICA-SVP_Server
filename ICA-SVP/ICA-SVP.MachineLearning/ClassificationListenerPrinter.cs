@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ICA_SVP.MachineLearning
 {
-    public class Printer : IClassificationListener
+    public class ClassificationListenerPrinter : IClassificationListener
     {
         public void onClassification(String stimulus,String leftEyeLabel,String rightEyeLabel,int portion)
         {

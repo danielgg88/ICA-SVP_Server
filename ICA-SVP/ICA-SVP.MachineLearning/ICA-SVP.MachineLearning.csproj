@@ -126,7 +126,7 @@
     <Compile Include="ClassifierWrapper.cs" />
     <Compile Include="IClassificationListener.cs" />
     <Compile Include="MLComponent.cs" />
-    <Compile Include="Printer.cs" />
+    <Compile Include="ClassificationListenerPrinter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

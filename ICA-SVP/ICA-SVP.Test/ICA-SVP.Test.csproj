@@ -53,15 +53,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CleanerExecutorTest.cs" />
-    <Compile Include="ICAExecutorTest.cs" />
-    <Compile Include="MockupImplementations\FilterTest.cs" />
-    <Compile Include="MockupImplementations\PortBlockingEyeTribeTest.cs" />
-    <Compile Include="MockupImplementations\PortNonBlockingSVPTest.cs" />
-    <Compile Include="BrokerEyeTribeSpritzTest.cs" />
+    <Compile Include="TestCleanerExecutor.cs" />
+    <Compile Include="TestICAExecutor.cs" />
+    <Compile Include="MockupImplementations\TestFilter.cs" />
+    <Compile Include="MockupImplementations\TestPortBlockingEyeTribe.cs" />
+    <Compile Include="MockupImplementations\TestPortNonBlockingSVP.cs" />
+    <Compile Include="TestBrokerEyeTribeSVP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MLComponentTests.cs" />
-    <Compile Include="UtilsMathTest.cs" />
+    <Compile Include="TestMLComponent.cs" />
+    <Compile Include="TestUtilsMath.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ICA-SVP.Broker\ICA-SVP.Broker.csproj">

@@ -4,9 +4,9 @@ using ICA_SVP.Misc.Filters;
 
 namespace ICA_SVP.Test.MockupImplementations
 {
-    public class FilterTest : Filter
+    public class TestFilter : Filter
     {
-        public FilterTest()
+        public TestFilter()
             : base("test")
         {
         }

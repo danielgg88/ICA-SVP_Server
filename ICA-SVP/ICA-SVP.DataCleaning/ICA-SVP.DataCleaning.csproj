@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Filters\EmptyFilter.cs" />
+    <Compile Include="Filters\FilterTest.cs" />
     <Compile Include="Filters\FilterBlinkDetection.cs" />
     <Compile Include="Filters\FilterScaling.cs" />
     <Compile Include="Filters\FilterSlopeOutliersDetection.cs" />

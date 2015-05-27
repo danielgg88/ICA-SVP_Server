@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ICA_SVP.Test
 {
     [TestClass]
-    public class CleanerExecutorTest
+    public class TestCleanerExecutor
     {
         private int NO_SAMPLES = 1000000;
 
@@ -24,14 +24,14 @@ namespace ICA_SVP.Test
 
             //Create data cleaning executor
             dataCleaner = new ExecutorMultiThreadFilters(inputPort,outputPort);
-            dataCleaner.AddFilter(new FilterTest());
-            dataCleaner.AddFilter(new FilterTest());
-            dataCleaner.AddFilter(new FilterTest());
+            dataCleaner.AddFilter(new TestFilter());
+            dataCleaner.AddFilter(new TestFilter());
+            dataCleaner.AddFilter(new TestFilter());
             dataCleaner.startInBackground();
         }
 
         [TestMethod]
-        public void TestCleanerExecutor()
+        public void TestExecutor()
         {
             int i;
             for(i = 0;i < NO_SAMPLES;i++)

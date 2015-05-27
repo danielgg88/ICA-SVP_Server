@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace ICA_SVP.Test.MockupImplementations
 {
-    public class PortNonBlockingSVPTest : PortNonBlocking
+    public class TestPortNonBlockingSVP : PortNonBlocking
     {
         public static readonly int NUMBER_TRIALS = 1;
         public static readonly int WORD_COUNT = 10;
@@ -27,7 +27,7 @@ namespace ICA_SVP.Test.MockupImplementations
         }
         #endregion
 
-        public PortNonBlockingSVPTest()
+        public TestPortNonBlockingSVP()
             : base()
         {
             _workerThread = new Thread(DoWork);

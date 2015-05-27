@@ -39,9 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICAExecutor.cs" />
+    <Compile Include="ExecutorICA.cs" />
     <Compile Include="IDenoiser.cs" />
-    <Compile Include="MatlabDenoiser.cs" />
+    <Compile Include="DenoiserMatlab.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

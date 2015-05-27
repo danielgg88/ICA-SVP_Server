@@ -5,7 +5,7 @@ namespace ICA_SVP.Test
 {
 
     [TestClass]
-    public class UtilsMathTest
+    public class TestUtilsMath
     {
 
         private double[] data;

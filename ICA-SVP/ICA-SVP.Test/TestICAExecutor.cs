@@ -21,7 +21,7 @@ using System.Collections.Generic;
 namespace ICA_SVP.Test
 {
     [TestClass]
-    public class ICAExecutorTest : ICAExecutor
+    public class TestICAExecutor : ExecutorICA
     {
 
         public const int SIZE = 5;
@@ -29,10 +29,10 @@ namespace ICA_SVP.Test
         public const int AVG_PUPIL_SIZE = 3;
 
         private Misc.DisplayItemAndEyes<String> displayItem;
-        private ICAExecutorTest executor;
+        private TestICAExecutor executor;
         double[][] avg = new double[2][];
 
-        public ICAExecutorTest()
+        public TestICAExecutor()
             : base()
         {
             Assert.AreEqual(2,Config.ICA.AVG_MOVING_WINDOW_SIZE,"Window size is not 2. Test will fail");
@@ -41,7 +41,7 @@ namespace ICA_SVP.Test
         [TestInitialize]
         public void Initialize()
         {
-            executor = new ICAExecutorTest();
+            executor = new TestICAExecutor();
             Misc.DisplayItem<String> word = new DisplayItem<String>(0,0,"test");
 
             Queue<Eyes> eyes = new Queue<Eyes>();

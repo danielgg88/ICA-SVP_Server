@@ -58,14 +58,14 @@ namespace ICA_SVP
             Misc.Port icaOutputPort = new Misc.PortBlockingDefaultImpl();
 
             //Create ICA
-            ICAExecutor icaExecutor = new ICAExecutor();
+            ExecutorICA icaExecutor = new ExecutorICA();
             icaExecutor.AddInput(brokerOutputPort);
             icaExecutor.AddOutput(icaOutputPort);
 
             //Create weka component
             MLComponent weka = new MLComponent(Config.WEKA.WEKA_EXTERNAL_MODEL);
             Misc.Port wekaOutputPort = new Misc.PortBlockingDefaultImpl();
-            weka.setClassificationListener(new Printer());
+            weka.setClassificationListener(new ClassificationListenerPrinter());
             weka.AddInput(icaOutputPort);
             weka.AddOutput(wekaOutputPort);
 

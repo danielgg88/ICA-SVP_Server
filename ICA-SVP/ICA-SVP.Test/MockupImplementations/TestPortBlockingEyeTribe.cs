@@ -6,7 +6,7 @@ using System.Threading;
 namespace ICA_SVP.Test.MockupImplementations
 {
     //Test simulating EyeTribe data input
-    public class PortBlockingEyeTribeTest : PortBlocking
+    public class TestPortBlockingEyeTribe : PortBlocking
     {
         public static readonly int SLEEP = 1000 / Config.EyeTribe.SAMPLING_FREQUENCY;
         private Thread _workerThread;
@@ -28,7 +28,7 @@ namespace ICA_SVP.Test.MockupImplementations
         }
         #endregion
 
-        public PortBlockingEyeTribeTest(bool produce_blinks)
+        public TestPortBlockingEyeTribe(bool produce_blinks)
             : base()
         {
             if(produce_blinks)

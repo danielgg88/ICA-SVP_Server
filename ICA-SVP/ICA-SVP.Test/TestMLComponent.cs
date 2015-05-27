@@ -7,16 +7,16 @@ using System.Collections.Generic;
 namespace ICA_SVP.Test
 {
     [TestClass]
-    public class MLComponentTests : MachineLearning.MLComponent
+    public class TestMLComponent : MachineLearning.MLComponent
     {
         private List<Misc.Eyes> eyes;
-        private MLComponentTests component;
+        private TestMLComponent component;
 
         [TestInitialize]
         public void Initialize()
         {
             setUpEyesArray();
-            component = new MLComponentTests();
+            component = new TestMLComponent();
         }
 
         [TestMethod]
