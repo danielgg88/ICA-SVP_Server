@@ -61,3 +61,8 @@ Collaborators:
 Daniel Garcia <dgac@itu.dk>, Ioannis Sintos <isin@itu.dk>, John Paulin Hansen <paulin@itu.dk>
 
 [IT University of Copenhagen](http://www.itu.dk/en)
+
+DISCLAIMER
+--------------
+
+The software is an experimental tool built for research and educational purposes. The reliability of the of the results cannot be guaranteed. 
